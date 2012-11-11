@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<service-builder package-path="net.sareweb.barazkide">
+	<author>A.Galdos</author>
+	<namespace>Barazkide</namespace>
+
+	<entity name="Garden" local-service="true" remote-service="true" cache-enabled="false">
+
+		<!-- PK fields -->
+		<column name="gardenId" type="long" primary="true" />
+		
+		<!-- Audit fields -->
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		
+		<column name="ownerUserId" type="long" />
+		<column name="name" type="String" />
+		<column name="lat" type="double" />
+		<column name="lng" type="double" />
+		
+		<column name="imgId" type="long" />
+		<column name="imgName" type="String" />
+
+		<!-- Order -->
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+	</entity>
+
+	<entity name="Membership" local-service="true" remote-service="true" cache-enabled="false">
+
+	    <!-- PK fields -->
+		<column name="membershipId" type="long" primary="true" />
+		
+		<column name="userId" type="long"/>
+		<column name="gardenId" type="long"/>
+		
+	</entity>
+
+	<entity name="Following" local-service="true" remote-service="true" cache-enabled="false">
+
+	    <!-- PK fields -->
+		<column name="followingId" type="long" primary="true" />
+		
+		<column name="userId" type="long"/>
+		<column name="gardenId" type="long"/>
+		
+	</entity>
+
+	<entity name="event" local-service="true" remote-service="true" cache-enabled="false">
+
+	    <!-- PK fields -->
+		<column name="eventId" type="long" primary="true" />
+		
+		<!-- FK fields -->
+		<column name="gardenId" type="long"/>
+		<column name="creatorUserId" type="long"/>
+		<column name="destinationUserId" type="long"/>
+		
+		<column name="createDate" type="Date" />
+		<column name="eventType" type="String"/>
+		<column name="eventText" type="String" />
+		<column name="imgId" type="long" />
+		<column name="imgName" type="String" />
+		
+	</entity>
+	
+		
+	
+</service-builder>
