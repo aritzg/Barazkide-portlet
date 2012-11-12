@@ -55,7 +55,7 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 	public Garden addGarden(String name, String comment, double lat, double lng, long gardenImageId) throws SystemException, PrincipalException{
 		Garden garden = GardenLocalServiceUtil.createGarden(CounterLocalServiceUtil.increment());
 		
-		garden.setOwnerUserId(getUserId());
+		garden.setOwnerUserId(getGuestOrUserId());
 		garden.setCreateDate(new Date());
 		garden.setModifiedDate(new Date());
 		garden.setName(name);
