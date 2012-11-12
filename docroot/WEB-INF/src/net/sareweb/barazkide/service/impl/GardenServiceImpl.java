@@ -64,7 +64,7 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 		garden.setLng(lng);
 		garden.setGardenImageId(gardenImageId);
 		
-		return garden;
+		return GardenLocalServiceUtil.addGarden(garden);
 	}
 	
 	public List<Garden> getGardens() throws SystemException{
@@ -87,6 +87,24 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 		dq.add(dateCr);
 		dq.addOrder(order);
 		return GardenLocalServiceUtil.dynamicQuery(dq);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Garden> getNGardensFromDate(int blockSize, long date, boolean ascending) throws SystemException{
+		DynamicQuery dq = DynamicQueryFactoryUtil.forClass(Garden.class);
+		Criterion dateCr = null;
+		Order order = null;
+		if(ascending){
+			dateCr = PropertyFactoryUtil.forName("createDate").ge(new Date(date));
+			order = OrderFactoryUtil.asc("createDate");
+		}
+		else{
+			dateCr = PropertyFactoryUtil.forName("createDate").le(new Date(date));
+			order = OrderFactoryUtil.desc("createDate");
+		}
+		dq.add(dateCr);
+		dq.addOrder(order);
+		return GardenLocalServiceUtil.dynamicQuery(dq,0,blockSize);
 	}
 	
 	

@@ -110,5 +110,20 @@ public class GardenServiceSoap {
 		}
 	}
 
+	public static net.sareweb.barazkide.model.GardenSoap[] getNGardensFromDate(
+		int blockSize, long date, boolean ascending) throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getNGardensFromDate(blockSize,
+					date, ascending);
+
+			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(GardenServiceSoap.class);
 }
