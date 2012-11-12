@@ -9,17 +9,18 @@
 		<!-- PK fields -->
 		<column name="gardenId" type="long" primary="true" />
 		
+		<!-- FK fields -->
+		<column name="gardenImageId" type="long"/>
+		<column name="ownerUserId" type="long" />
+		
 		<!-- Audit fields -->
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		
-		<column name="ownerUserId" type="long" />
 		<column name="name" type="String" />
+		<column name="comment" type="String" />
 		<column name="lat" type="double" />
 		<column name="lng" type="double" />
-		
-		<column name="imgId" type="long" />
-		<column name="imgName" type="String" />
 
 		<!-- Order -->
 		<order by="desc">
@@ -48,7 +49,7 @@
 		
 	</entity>
 
-	<entity name="event" local-service="true" remote-service="true" cache-enabled="false">
+	<entity name="Event" local-service="true" remote-service="true" cache-enabled="false">
 
 	    <!-- PK fields -->
 		<column name="eventId" type="long" primary="true" />
@@ -57,15 +58,28 @@
 		<column name="gardenId" type="long"/>
 		<column name="creatorUserId" type="long"/>
 		<column name="destinationUserId" type="long"/>
+		<column name="gardenImageId" type="long"/>
 		
 		<column name="createDate" type="Date" />
 		<column name="eventType" type="String"/>
 		<column name="eventText" type="String" />
-		<column name="imgId" type="long" />
-		<column name="imgName" type="String" />
+
 		
 	</entity>
 	
+	<entity name="GardenImage" local-service="true" remote-service="true" cache-enabled="false">
+
+	    <!-- PK fields -->
+		<column name="gardenImageId" type="long" primary="true" />
 		
+		<!-- FK fields -->
+		<column name="gardenId" type="long"/>
+		
+		<column name="imgId" type="long" />
+		<column name="imgName" type="String" />
+		<column name="imgUrl" type="String" />
+		<column name="createDate" type="Date" />
+		
+	</entity>
 	
 </service-builder>

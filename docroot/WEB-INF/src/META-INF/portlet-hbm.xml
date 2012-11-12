@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="net.sareweb.barazkide.model.Event" />
+	<import class="net.sareweb.barazkide.model.Following" />
+	<import class="net.sareweb.barazkide.model.Garden" />
+	<import class="net.sareweb.barazkide.model.GardenImage" />
+	<import class="net.sareweb.barazkide.model.Membership" />
+	<class name="net.sareweb.barazkide.model.impl.EventImpl" table="Barazkide_Event">
+		<id name="eventId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="creatorUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="destinationUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="gardenImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="eventText" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="net.sareweb.barazkide.model.impl.FollowingImpl" table="Barazkide_Following">
+		<id name="followingId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="net.sareweb.barazkide.model.impl.GardenImpl" table="Barazkide_Garden">
+		<id name="gardenId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="gardenImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="ownerUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="comment" type="com.liferay.portal.dao.orm.hibernate.StringType" column="comment_" />
+		<property name="lat" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="lng" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="net.sareweb.barazkide.model.impl.GardenImageImpl" table="Barazkide_GardenImage">
+		<id name="gardenImageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="imgId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="imgName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="imgUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="net.sareweb.barazkide.model.impl.MembershipImpl" table="Barazkide_Membership">
+		<id name="membershipId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+</hibernate-mapping>

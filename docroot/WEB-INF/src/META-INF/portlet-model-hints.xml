@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="net.sareweb.barazkide.model.Event">
+		<field name="eventId" type="long" />
+		<field name="gardenId" type="long" />
+		<field name="creatorUserId" type="long" />
+		<field name="destinationUserId" type="long" />
+		<field name="gardenImageId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="eventType" type="String" />
+		<field name="eventText" type="String" />
+	</model>
+	<model name="net.sareweb.barazkide.model.Following">
+		<field name="followingId" type="long" />
+		<field name="userId" type="long" />
+		<field name="gardenId" type="long" />
+	</model>
+	<model name="net.sareweb.barazkide.model.Garden">
+		<field name="gardenId" type="long" />
+		<field name="gardenImageId" type="long" />
+		<field name="ownerUserId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="comment" type="String" />
+		<field name="lat" type="double" />
+		<field name="lng" type="double" />
+	</model>
+	<model name="net.sareweb.barazkide.model.GardenImage">
+		<field name="gardenImageId" type="long" />
+		<field name="gardenId" type="long" />
+		<field name="imgId" type="long" />
+		<field name="imgName" type="String" />
+		<field name="imgUrl" type="String" />
+		<field name="createDate" type="Date" />
+	</model>
+	<model name="net.sareweb.barazkide.model.Membership">
+		<field name="membershipId" type="long" />
+		<field name="userId" type="long" />
+		<field name="gardenId" type="long" />
+	</model>
+</model-hints>

@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.EventModelImpl">
+		<attributes>
+			<id name="eventId" />
+			<basic name="gardenId" />
+			<basic name="creatorUserId" />
+			<basic name="destinationUserId" />
+			<basic name="gardenImageId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="eventType" />
+			<basic name="eventText" />
+			<transient name="creatorUserUuid" />
+			<transient name="destinationUserUuid" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.FollowingModelImpl">
+		<attributes>
+			<id name="followingId" />
+			<basic name="userId" />
+			<basic name="gardenId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.GardenModelImpl">
+		<attributes>
+			<id name="gardenId" />
+			<basic name="gardenImageId" />
+			<basic name="ownerUserId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="name" />
+			<basic name="comment">
+				<column name="COMMENT_" />
+			</basic>
+			<basic name="lat" />
+			<basic name="lng" />
+			<transient name="modelAttributes" />
+			<transient name="ownerUserUuid" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.GardenImageModelImpl">
+		<attributes>
+			<id name="gardenImageId" />
+			<basic name="gardenId" />
+			<basic name="imgId" />
+			<basic name="imgName" />
+			<basic name="imgUrl" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.MembershipModelImpl">
+		<attributes>
+			<id name="membershipId" />
+			<basic name="userId" />
+			<basic name="gardenId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="net.sareweb.barazkide.model.impl.EventImpl" name="Event">
+		<table name="Barazkide_Event" />
+		<attributes />
+	</entity>
+	<entity class="net.sareweb.barazkide.model.impl.FollowingImpl" name="Following">
+		<table name="Barazkide_Following" />
+		<attributes />
+	</entity>
+	<entity class="net.sareweb.barazkide.model.impl.GardenImpl" name="Garden">
+		<table name="Barazkide_Garden" />
+		<attributes />
+	</entity>
+	<entity class="net.sareweb.barazkide.model.impl.GardenImageImpl" name="GardenImage">
+		<table name="Barazkide_GardenImage" />
+		<attributes />
+	</entity>
+	<entity class="net.sareweb.barazkide.model.impl.MembershipImpl" name="Membership">
+		<table name="Barazkide_Membership" />
+		<attributes />
+	</entity>
+</entity-mappings>
