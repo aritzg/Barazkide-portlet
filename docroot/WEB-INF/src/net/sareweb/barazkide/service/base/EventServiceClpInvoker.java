@@ -23,32 +23,45 @@ import java.util.Arrays;
  */
 public class EventServiceClpInvoker {
 	public EventServiceClpInvoker() {
-		_methodName46 = "getBeanIdentifier";
+		_methodName48 = "getBeanIdentifier";
 
-		_methodParameterTypes46 = new String[] {  };
+		_methodParameterTypes48 = new String[] {  };
 
-		_methodName47 = "setBeanIdentifier";
+		_methodName49 = "setBeanIdentifier";
 
-		_methodParameterTypes47 = new String[] { "java.lang.String" };
+		_methodParameterTypes49 = new String[] { "java.lang.String" };
+
+		_methodName54 = "findEventsInFollowedGardens";
+
+		_methodParameterTypes54 = new String[] { "long", "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName46.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return EventServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName47.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
 			EventServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName54.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+			return EventServiceUtil.findEventsInFollowedGardens(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName46;
-	private String[] _methodParameterTypes46;
-	private String _methodName47;
-	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
+	private String _methodName54;
+	private String[] _methodParameterTypes54;
 }

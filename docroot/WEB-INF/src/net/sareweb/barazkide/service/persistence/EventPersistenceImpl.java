@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -75,6 +77,25 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GARDENID = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGardenId",
+			new String[] {
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID =
+		new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGardenId",
+			new String[] { Long.class.getName() },
+			EventModelImpl.GARDENID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_GARDENID = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
+			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGardenId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
 			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
@@ -259,6 +280,8 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		boolean isNew = event.isNew();
 
+		EventModelImpl eventModelImpl = (EventModelImpl)event;
+
 		Session session = null;
 
 		try {
@@ -277,8 +300,27 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !EventModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
+		else {
+			if ((eventModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(eventModelImpl.getOriginalGardenId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GARDENID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID,
+					args);
+
+				args = new Object[] { Long.valueOf(eventModelImpl.getGardenId()) };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GARDENID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
@@ -408,6 +450,383 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
+	 * Returns all the events where gardenId = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @return the matching events
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Event> findByGardenId(long gardenId) throws SystemException {
+		return findByGardenId(gardenId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the events where gardenId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param gardenId the garden ID
+	 * @param start the lower bound of the range of events
+	 * @param end the upper bound of the range of events (not inclusive)
+	 * @return the range of matching events
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Event> findByGardenId(long gardenId, int start, int end)
+		throws SystemException {
+		return findByGardenId(gardenId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the events where gardenId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param gardenId the garden ID
+	 * @param start the lower bound of the range of events
+	 * @param end the upper bound of the range of events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching events
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Event> findByGardenId(long gardenId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID;
+			finderArgs = new Object[] { gardenId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GARDENID;
+			finderArgs = new Object[] { gardenId, start, end, orderByComparator };
+		}
+
+		List<Event> list = (List<Event>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Event event : list) {
+				if ((gardenId != event.getGardenId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_EVENT_WHERE);
+
+			query.append(_FINDER_COLUMN_GARDENID_GARDENID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(EventModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(gardenId);
+
+				list = (List<Event>)QueryUtil.list(q, getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first event in the ordered set where gardenId = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event
+	 * @throws net.sareweb.barazkide.NoSuchEventException if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Event findByGardenId_First(long gardenId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEventException, SystemException {
+		Event event = fetchByGardenId_First(gardenId, orderByComparator);
+
+		if (event != null) {
+			return event;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("gardenId=");
+		msg.append(gardenId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first event in the ordered set where gardenId = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event, or <code>null</code> if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Event fetchByGardenId_First(long gardenId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Event> list = findByGardenId(gardenId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last event in the ordered set where gardenId = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event
+	 * @throws net.sareweb.barazkide.NoSuchEventException if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Event findByGardenId_Last(long gardenId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEventException, SystemException {
+		Event event = fetchByGardenId_Last(gardenId, orderByComparator);
+
+		if (event != null) {
+			return event;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("gardenId=");
+		msg.append(gardenId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last event in the ordered set where gardenId = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event, or <code>null</code> if a matching event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Event fetchByGardenId_Last(long gardenId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByGardenId(gardenId);
+
+		List<Event> list = findByGardenId(gardenId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the events before and after the current event in the ordered set where gardenId = &#63;.
+	 *
+	 * @param eventId the primary key of the current event
+	 * @param gardenId the garden ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next event
+	 * @throws net.sareweb.barazkide.NoSuchEventException if a event with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Event[] findByGardenId_PrevAndNext(long eventId, long gardenId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEventException, SystemException {
+		Event event = findByPrimaryKey(eventId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Event[] array = new EventImpl[3];
+
+			array[0] = getByGardenId_PrevAndNext(session, event, gardenId,
+					orderByComparator, true);
+
+			array[1] = event;
+
+			array[2] = getByGardenId_PrevAndNext(session, event, gardenId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Event getByGardenId_PrevAndNext(Session session, Event event,
+		long gardenId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_EVENT_WHERE);
+
+		query.append(_FINDER_COLUMN_GARDENID_GARDENID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(EventModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(gardenId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(event);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Event> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Returns all the events.
 	 *
 	 * @return the events
@@ -480,7 +899,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_EVENT;
+				sql = _SQL_SELECT_EVENT.concat(EventModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -522,6 +941,18 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
+	 * Removes all the events where gardenId = &#63; from the database.
+	 *
+	 * @param gardenId the garden ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByGardenId(long gardenId) throws SystemException {
+		for (Event event : findByGardenId(gardenId)) {
+			remove(event);
+		}
+	}
+
+	/**
 	 * Removes all the events from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
@@ -530,6 +961,59 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		for (Event event : findAll()) {
 			remove(event);
 		}
+	}
+
+	/**
+	 * Returns the number of events where gardenId = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @return the number of matching events
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByGardenId(long gardenId) throws SystemException {
+		Object[] finderArgs = new Object[] { gardenId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_GARDENID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_EVENT_WHERE);
+
+			query.append(_FINDER_COLUMN_GARDENID_GARDENID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(gardenId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_GARDENID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -616,9 +1100,13 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_EVENT = "SELECT event FROM Event event";
+	private static final String _SQL_SELECT_EVENT_WHERE = "SELECT event FROM Event event WHERE ";
 	private static final String _SQL_COUNT_EVENT = "SELECT COUNT(event) FROM Event event";
+	private static final String _SQL_COUNT_EVENT_WHERE = "SELECT COUNT(event) FROM Event event WHERE ";
+	private static final String _FINDER_COLUMN_GARDENID_GARDENID_2 = "event.gardenId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "event.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Event exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Event exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(EventPersistenceImpl.class);

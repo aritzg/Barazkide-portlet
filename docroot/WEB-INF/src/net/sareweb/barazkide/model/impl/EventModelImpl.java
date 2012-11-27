@@ -17,6 +17,7 @@ package net.sareweb.barazkide.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -76,6 +77,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		};
 	public static final String TABLE_SQL_CREATE = "create table Barazkide_Event (eventId LONG not null primary key,gardenId LONG,creatorUserId LONG,destinationUserId LONG,gardenImageId LONG,createDate DATE null,eventType VARCHAR(75) null,eventText VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Event";
+	public static final String ORDER_BY_JPQL = " ORDER BY event.createDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY Barazkide_Event.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -85,7 +88,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.net.sareweb.barazkide.model.Event"),
 			false);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.net.sareweb.barazkide.model.Event"),
+			true);
+	public static long GARDENID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -244,7 +250,19 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	public void setGardenId(long gardenId) {
+		_columnBitmask |= GARDENID_COLUMN_BITMASK;
+
+		if (!_setOriginalGardenId) {
+			_setOriginalGardenId = true;
+
+			_originalGardenId = _gardenId;
+		}
+
 		_gardenId = gardenId;
+	}
+
+	public long getOriginalGardenId() {
+		return _originalGardenId;
 	}
 
 	@JSON
@@ -298,6 +316,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -327,6 +347,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	public void setEventText(String eventText) {
 		_eventText = eventText;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -372,17 +396,17 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	public int compareTo(Event event) {
-		long primaryKey = event.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(getCreateDate(), event.getCreateDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -417,6 +441,13 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public void resetOriginalValues() {
+		EventModelImpl eventModelImpl = this;
+
+		eventModelImpl._originalGardenId = eventModelImpl._gardenId;
+
+		eventModelImpl._setOriginalGardenId = false;
+
+		eventModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -537,6 +568,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		};
 	private long _eventId;
 	private long _gardenId;
+	private long _originalGardenId;
+	private boolean _setOriginalGardenId;
 	private long _creatorUserId;
 	private String _creatorUserUuid;
 	private long _destinationUserId;
@@ -545,5 +578,6 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	private Date _createDate;
 	private String _eventType;
 	private String _eventText;
+	private long _columnBitmask;
 	private Event _escapedModelProxy;
 }

@@ -14,6 +14,13 @@
 
 package net.sareweb.barazkide.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import net.sareweb.barazkide.service.EventServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,20 @@ package net.sareweb.barazkide.service.http;
  * @generated
  */
 public class EventServiceSoap {
+	public static net.sareweb.barazkide.model.EventSoap[] findEventsInFollowedGardens(
+		long userId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInFollowedGardens(userId,
+					start, end);
+
+			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(EventServiceSoap.class);
 }

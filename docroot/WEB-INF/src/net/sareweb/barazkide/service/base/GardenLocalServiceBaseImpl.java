@@ -48,6 +48,7 @@ import net.sareweb.barazkide.service.GardenLocalService;
 import net.sareweb.barazkide.service.GardenService;
 import net.sareweb.barazkide.service.MembershipLocalService;
 import net.sareweb.barazkide.service.MembershipService;
+import net.sareweb.barazkide.service.persistence.EventFinder;
 import net.sareweb.barazkide.service.persistence.EventPersistence;
 import net.sareweb.barazkide.service.persistence.FollowingPersistence;
 import net.sareweb.barazkide.service.persistence.GardenImagePersistence;
@@ -331,6 +332,24 @@ public abstract class GardenLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setEventPersistence(EventPersistence eventPersistence) {
 		this.eventPersistence = eventPersistence;
+	}
+
+	/**
+	 * Returns the event finder.
+	 *
+	 * @return the event finder
+	 */
+	public EventFinder getEventFinder() {
+		return eventFinder;
+	}
+
+	/**
+	 * Sets the event finder.
+	 *
+	 * @param eventFinder the event finder
+	 */
+	public void setEventFinder(EventFinder eventFinder) {
+		this.eventFinder = eventFinder;
 	}
 
 	/**
@@ -748,6 +767,8 @@ public abstract class GardenLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected EventService eventService;
 	@BeanReference(type = EventPersistence.class)
 	protected EventPersistence eventPersistence;
+	@BeanReference(type = EventFinder.class)
+	protected EventFinder eventFinder;
 	@BeanReference(type = FollowingLocalService.class)
 	protected FollowingLocalService followingLocalService;
 	@BeanReference(type = FollowingService.class)

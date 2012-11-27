@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql
+		id="net.sareweb.barazkide.service.persistence.EventFinder.findEventsInFollowedGardens">
+	<![CDATA[
+	SELECT Barazkide_Event.* 
+    FROM Barazkide_Event
+    WHERE
+    	creatorUserId = ?
+	ORDER BY
+		createDate ASC
+    ]]>
+	</sql>
+</custom-sql>

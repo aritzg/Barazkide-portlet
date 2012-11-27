@@ -4,6 +4,7 @@
 	<bean id="net.sareweb.barazkide.service.EventLocalService" class="net.sareweb.barazkide.service.impl.EventLocalServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.EventService" class="net.sareweb.barazkide.service.impl.EventServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.EventPersistence" class="net.sareweb.barazkide.service.persistence.EventPersistenceImpl" parent="basePersistence" />
+	<bean id="net.sareweb.barazkide.service.persistence.EventFinder" class="net.sareweb.barazkide.service.persistence.EventFinderImpl" parent="basePersistence" />
 	<bean id="net.sareweb.barazkide.service.FollowingLocalService" class="net.sareweb.barazkide.service.impl.FollowingLocalServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.FollowingService" class="net.sareweb.barazkide.service.impl.FollowingServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.FollowingPersistence" class="net.sareweb.barazkide.service.persistence.FollowingPersistenceImpl" parent="basePersistence" />

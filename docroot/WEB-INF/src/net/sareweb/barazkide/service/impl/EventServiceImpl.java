@@ -14,6 +14,11 @@
 
 package net.sareweb.barazkide.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
+import net.sareweb.barazkide.model.Event;
 import net.sareweb.barazkide.service.base.EventServiceBaseImpl;
 
 /**
@@ -36,4 +41,8 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link net.sareweb.barazkide.service.EventServiceUtil} to access the event remote service.
 	 */
+	
+	public List<Event> findEventsInFollowedGardens(long userId, int start, int end) throws SystemException{
+		return eventFinder.findEventsInFollowedGardens(userId, start, end);
+	}
 }

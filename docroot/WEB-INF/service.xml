@@ -63,7 +63,16 @@
 		<column name="createDate" type="Date" />
 		<column name="eventType" type="String"/>
 		<column name="eventText" type="String" />
-
+		
+		<!-- Order -->
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+		
+		<!-- Finder -->
+		<finder name="GardenId" return-type="Collection">
+		    <finder-column name="gardenId"/>
+		</finder>
 		
 	</entity>
 	
