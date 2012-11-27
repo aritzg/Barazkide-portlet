@@ -14,6 +14,7 @@
 
 package net.sareweb.barazkide.service.impl;
 
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 
@@ -58,8 +59,8 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 		garden.setOwnerUserId(getGuestOrUserId());
 		garden.setCreateDate(new Date());
 		garden.setModifiedDate(new Date());
-		garden.setName(name);
-		garden.setComment(comment);
+		garden.setName(decode(name));
+		garden.setComment(decode(comment));
 		garden.setLat(lat);
 		garden.setLng(lng);
 		garden.setGardenImageId(gardenImageId);
@@ -71,40 +72,43 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 		return GardenLocalServiceUtil.getGardens(-1, -1);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Garden> getGardensFromDate(long date, boolean ascending) throws SystemException{
-		DynamicQuery dq = DynamicQueryFactoryUtil.forClass(Garden.class);
-		Criterion dateCr = null;
-		Order order = null;
-		if(ascending){
-			dateCr = PropertyFactoryUtil.forName("createDate").ge(new Date(date));
-			order = OrderFactoryUtil.asc("createDate");
-		}
-		else{
-			dateCr = PropertyFactoryUtil.forName("createDate").le(new Date(date));
-			order = OrderFactoryUtil.desc("createDate");
-		}
-		dq.add(dateCr);
-		dq.addOrder(order);
-		return GardenLocalServiceUtil.dynamicQuery(dq);
-	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Garden> getNGardensFromDate(int blockSize, long date, boolean ascending) throws SystemException{
+	public List<Garden> getUserGardensFromDate(long ownerUserId, long date, boolean ascending, int blockSize) throws SystemException{
 		DynamicQuery dq = DynamicQueryFactoryUtil.forClass(Garden.class);
+		
+		//0 date means now
+		Date dateTmp = new Date(date);
+		if(date==0)dateTmp = new Date();
+		
+		if(ownerUserId!=0){
+			dq.add(PropertyFactoryUtil.forName("ownerUserId").eq(ownerUserId));
+		}
+		
 		Criterion dateCr = null;
 		Order order = null;
 		if(ascending){
-			dateCr = PropertyFactoryUtil.forName("createDate").ge(new Date(date));
+			dateCr = PropertyFactoryUtil.forName("createDate").ge(dateTmp);
 			order = OrderFactoryUtil.asc("createDate");
 		}
 		else{
-			dateCr = PropertyFactoryUtil.forName("createDate").le(new Date(date));
+			dateCr = PropertyFactoryUtil.forName("createDate").le(dateTmp);
 			order = OrderFactoryUtil.desc("createDate");
 		}
 		dq.add(dateCr);
 		dq.addOrder(order);
-		return GardenLocalServiceUtil.dynamicQuery(dq,0,blockSize);
+		if(blockSize>0)
+			return GardenLocalServiceUtil.dynamicQuery(dq,0,blockSize);
+		else
+			return GardenLocalServiceUtil.dynamicQuery(dq);
+	}
+	
+	private String decode(String codedString){
+		try {
+			return URLDecoder.decode(codedString, "UTF-8");
+		} catch (Exception e) {
+			return "ERROR";
+		}
 	}
 	
 	

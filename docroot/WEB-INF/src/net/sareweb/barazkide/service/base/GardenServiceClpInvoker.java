@@ -42,13 +42,9 @@ public class GardenServiceClpInvoker {
 
 		_methodParameterTypes53 = new String[] {  };
 
-		_methodName54 = "getGardensFromDate";
+		_methodName54 = "getUserGardensFromDate";
 
-		_methodParameterTypes54 = new String[] { "long", "boolean" };
-
-		_methodName55 = "getNGardensFromDate";
-
-		_methodParameterTypes55 = new String[] { "int", "long", "boolean" };
+		_methodParameterTypes54 = new String[] { "long", "long", "boolean", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -79,15 +75,10 @@ public class GardenServiceClpInvoker {
 
 		if (_methodName54.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
-			return GardenServiceUtil.getGardensFromDate(((Long)arguments[0]).longValue(),
-				((Boolean)arguments[1]).booleanValue());
-		}
-
-		if (_methodName55.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
-			return GardenServiceUtil.getNGardensFromDate(((Integer)arguments[0]).intValue(),
+			return GardenServiceUtil.getUserGardensFromDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
-				((Boolean)arguments[2]).booleanValue());
+				((Boolean)arguments[2]).booleanValue(),
+				((Integer)arguments[3]).intValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -103,6 +94,4 @@ public class GardenServiceClpInvoker {
 	private String[] _methodParameterTypes53;
 	private String _methodName54;
 	private String[] _methodParameterTypes54;
-	private String _methodName55;
-	private String[] _methodParameterTypes55;
 }

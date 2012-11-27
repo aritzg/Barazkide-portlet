@@ -95,26 +95,12 @@ public class GardenServiceSoap {
 		}
 	}
 
-	public static net.sareweb.barazkide.model.GardenSoap[] getGardensFromDate(
-		long date, boolean ascending) throws RemoteException {
+	public static net.sareweb.barazkide.model.GardenSoap[] getUserGardensFromDate(
+		long ownerUserId, long date, boolean ascending, int blockSize)
+		throws RemoteException {
 		try {
-			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getGardensFromDate(date,
-					ascending);
-
-			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static net.sareweb.barazkide.model.GardenSoap[] getNGardensFromDate(
-		int blockSize, long date, boolean ascending) throws RemoteException {
-		try {
-			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getNGardensFromDate(blockSize,
-					date, ascending);
+			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getUserGardensFromDate(ownerUserId,
+					date, ascending, blockSize);
 
 			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
 		}

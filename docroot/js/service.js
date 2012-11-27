@@ -5,6 +5,6 @@ Liferay.Service.registerClass(
 	{
 		addGarden: true,
 		getGardens: true,
-		getGardensFromDate: true
+		getUserGardensFromDate: true
 	}
 );
