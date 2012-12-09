@@ -111,5 +111,20 @@ public class GardenServiceSoap {
 		}
 	}
 
+	public static net.sareweb.barazkide.model.GardenSoap[] findFollowedGardens(
+		long userId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.findFollowedGardens(userId,
+					start, end);
+
+			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(GardenServiceSoap.class);
 }

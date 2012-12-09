@@ -51,6 +51,7 @@ import net.sareweb.barazkide.service.MembershipService;
 import net.sareweb.barazkide.service.persistence.EventFinder;
 import net.sareweb.barazkide.service.persistence.EventPersistence;
 import net.sareweb.barazkide.service.persistence.FollowingPersistence;
+import net.sareweb.barazkide.service.persistence.GardenFinder;
 import net.sareweb.barazkide.service.persistence.GardenImagePersistence;
 import net.sareweb.barazkide.service.persistence.GardenPersistence;
 import net.sareweb.barazkide.service.persistence.MembershipPersistence;
@@ -469,6 +470,24 @@ public abstract class GardenImageLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the garden finder.
+	 *
+	 * @return the garden finder
+	 */
+	public GardenFinder getGardenFinder() {
+		return gardenFinder;
+	}
+
+	/**
+	 * Sets the garden finder.
+	 *
+	 * @param gardenFinder the garden finder
+	 */
+	public void setGardenFinder(GardenFinder gardenFinder) {
+		this.gardenFinder = gardenFinder;
+	}
+
+	/**
 	 * Returns the garden image local service.
 	 *
 	 * @return the garden image local service
@@ -787,6 +806,8 @@ public abstract class GardenImageLocalServiceBaseImpl
 	protected GardenService gardenService;
 	@BeanReference(type = GardenPersistence.class)
 	protected GardenPersistence gardenPersistence;
+	@BeanReference(type = GardenFinder.class)
+	protected GardenFinder gardenFinder;
 	@BeanReference(type = GardenImageLocalService.class)
 	protected GardenImageLocalService gardenImageLocalService;
 	@BeanReference(type = GardenImageService.class)

@@ -23,32 +23,32 @@ import java.util.Arrays;
  */
 public class GardenImageServiceClpInvoker {
 	public GardenImageServiceClpInvoker() {
-		_methodName48 = "getBeanIdentifier";
+		_methodName50 = "getBeanIdentifier";
 
-		_methodParameterTypes48 = new String[] {  };
+		_methodParameterTypes50 = new String[] {  };
 
-		_methodName49 = "setBeanIdentifier";
+		_methodName51 = "setBeanIdentifier";
 
-		_methodParameterTypes49 = new String[] { "java.lang.String" };
+		_methodParameterTypes51 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName48.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
 			return GardenImageServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+		if (_methodName51.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
 			GardenImageServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName48;
-	private String[] _methodParameterTypes48;
-	private String _methodName49;
-	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
+	private String _methodName51;
+	private String[] _methodParameterTypes51;
 }

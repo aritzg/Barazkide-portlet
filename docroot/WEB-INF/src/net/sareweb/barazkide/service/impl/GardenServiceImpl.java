@@ -103,6 +103,11 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 			return GardenLocalServiceUtil.dynamicQuery(dq);
 	}
 	
+	public List<Garden> findFollowedGardens(long userId, int start,
+			int end) throws SystemException{
+		return gardenFinder.findFollowedGardens(userId, start, end);
+	}
+	
 	private String decode(String codedString){
 		try {
 			return URLDecoder.decode(codedString, "UTF-8");

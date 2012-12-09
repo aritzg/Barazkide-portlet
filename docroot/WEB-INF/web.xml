@@ -40,7 +40,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>Secure JSON Web Service Servlet Filter</filter-name>
-		<url-pattern>/api/jsonws/*</url-pattern>
+		<url-pattern>/api/secure/jsonws/*</url-pattern>
 	</filter-mapping>
 
 	<servlet>
@@ -54,7 +54,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>JSON Web Service Servlet</servlet-name>
-        <url-pattern>/api/jsonws/*</url-pattern>
+        <url-pattern>/api/secure/jsonws/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

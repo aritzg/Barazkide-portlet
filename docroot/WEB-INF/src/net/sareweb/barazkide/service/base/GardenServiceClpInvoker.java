@@ -23,44 +23,48 @@ import java.util.Arrays;
  */
 public class GardenServiceClpInvoker {
 	public GardenServiceClpInvoker() {
-		_methodName48 = "getBeanIdentifier";
+		_methodName50 = "getBeanIdentifier";
 
-		_methodParameterTypes48 = new String[] {  };
+		_methodParameterTypes50 = new String[] {  };
 
-		_methodName49 = "setBeanIdentifier";
+		_methodName51 = "setBeanIdentifier";
 
-		_methodParameterTypes49 = new String[] { "java.lang.String" };
+		_methodParameterTypes51 = new String[] { "java.lang.String" };
 
-		_methodName54 = "addGarden";
+		_methodName56 = "addGarden";
 
-		_methodParameterTypes54 = new String[] {
+		_methodParameterTypes56 = new String[] {
 				"java.lang.String", "java.lang.String", "double", "double",
 				"long"
 			};
 
-		_methodName55 = "getGardens";
+		_methodName57 = "getGardens";
 
-		_methodParameterTypes55 = new String[] {  };
+		_methodParameterTypes57 = new String[] {  };
 
-		_methodName56 = "getUserGardensFromDate";
+		_methodName58 = "getUserGardensFromDate";
 
-		_methodParameterTypes56 = new String[] { "long", "long", "boolean", "int" };
+		_methodParameterTypes58 = new String[] { "long", "long", "boolean", "int" };
+
+		_methodName59 = "findFollowedGardens";
+
+		_methodParameterTypes59 = new String[] { "long", "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName48.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
 			return GardenServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+		if (_methodName51.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
 			GardenServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName54.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
 			return GardenServiceUtil.addGarden((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1],
 				((Double)arguments[2]).doubleValue(),
@@ -68,30 +72,39 @@ public class GardenServiceClpInvoker {
 				((Long)arguments[4]).longValue());
 		}
 
-		if (_methodName55.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+		if (_methodName57.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
 			return GardenServiceUtil.getGardens();
 		}
 
-		if (_methodName56.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+		if (_methodName58.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
 			return GardenServiceUtil.getUserGardensFromDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
+		if (_methodName59.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+			return GardenServiceUtil.findFollowedGardens(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName48;
-	private String[] _methodParameterTypes48;
-	private String _methodName49;
-	private String[] _methodParameterTypes49;
-	private String _methodName54;
-	private String[] _methodParameterTypes54;
-	private String _methodName55;
-	private String[] _methodParameterTypes55;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
+	private String _methodName51;
+	private String[] _methodParameterTypes51;
 	private String _methodName56;
 	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
+	private String _methodName58;
+	private String[] _methodParameterTypes58;
+	private String _methodName59;
+	private String[] _methodParameterTypes59;
 }

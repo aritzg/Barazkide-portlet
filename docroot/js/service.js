@@ -12,6 +12,7 @@ Liferay.Service.registerClass(
 	{
 		addGarden: true,
 		getGardens: true,
-		getUserGardensFromDate: true
+		getUserGardensFromDate: true,
+		findFollowedGardens: true
 	}
 );

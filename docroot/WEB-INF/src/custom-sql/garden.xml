@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql
+		id="net.sareweb.barazkide.service.persistence.GardenFinder.findFollowedGardens">
+	<![CDATA[
+	SELECT Barazkide_Garden.* 
+    FROM 
+    	Barazkide_Garden 
+    JOIN
+    	Barazkide_Following
+    ON
+    	Barazkide_Garden.gardenId=Barazkide_Following.gardenId
+    WHERE
+    	Barazkide_Following.userId = ?
+	ORDER BY
+		Barazkide_Garden.createDate ASC
+    ]]>
+	</sql>
+</custom-sql>

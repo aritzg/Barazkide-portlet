@@ -11,6 +11,7 @@
 	<bean id="net.sareweb.barazkide.service.GardenLocalService" class="net.sareweb.barazkide.service.impl.GardenLocalServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.GardenService" class="net.sareweb.barazkide.service.impl.GardenServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.GardenPersistence" class="net.sareweb.barazkide.service.persistence.GardenPersistenceImpl" parent="basePersistence" />
+	<bean id="net.sareweb.barazkide.service.persistence.GardenFinder" class="net.sareweb.barazkide.service.persistence.GardenFinderImpl" parent="basePersistence" />
 	<bean id="net.sareweb.barazkide.service.GardenImageLocalService" class="net.sareweb.barazkide.service.impl.GardenImageLocalServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.GardenImageService" class="net.sareweb.barazkide.service.impl.GardenImageServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.GardenImagePersistence" class="net.sareweb.barazkide.service.persistence.GardenImagePersistenceImpl" parent="basePersistence" />
