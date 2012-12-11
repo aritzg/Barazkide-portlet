@@ -36,6 +36,13 @@
 		
 		<column name="userId" type="long"/>
 		<column name="gardenId" type="long"/>
+		<column name="membershipDate" type="Date" />
+		
+		<!-- Finder -->
+		<finder name="UserAndGarden" return-type="Membership">
+		    <finder-column name="userId"/>
+		    <finder-column name="gardenId"/>
+		</finder>
 		
 	</entity>
 
@@ -46,6 +53,13 @@
 		
 		<column name="userId" type="long"/>
 		<column name="gardenId" type="long"/>
+		<column name="followingDate" type="Date" />
+		
+		<!-- Finder -->
+		<finder name="UserAndGarden" return-type="Membership">
+		    <finder-column name="userId"/>
+		    <finder-column name="gardenId"/>
+		</finder>
 		
 	</entity>
 

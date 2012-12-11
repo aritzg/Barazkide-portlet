@@ -14,6 +14,13 @@
 
 package net.sareweb.barazkide.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import net.sareweb.barazkide.service.FollowingServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,35 @@ package net.sareweb.barazkide.service.http;
  * @generated
  */
 public class FollowingServiceSoap {
+	public static boolean addFollowing(long userId, long gardenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = FollowingServiceUtil.addFollowing(userId,
+					gardenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean removeFollowing(long userId, long gardenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = FollowingServiceUtil.removeFollowing(userId,
+					gardenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(FollowingServiceSoap.class);
 }

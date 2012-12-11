@@ -103,9 +103,24 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 			return GardenLocalServiceUtil.dynamicQuery(dq);
 	}
 	
-	public List<Garden> findFollowedGardens(long userId, int start,
-			int end) throws SystemException{
-		return gardenFinder.findFollowedGardens(userId, start, end);
+	public List<Garden> getFollowedGardensOlderThanDate(long userId, long followingDate, int blockSize)
+			throws SystemException{
+		return gardenFinder.findFollowedGardensOlderThanDate(userId, followingDate, blockSize);
+	}
+	
+	public List<Garden> getFollowedGardensNewerThanDate(long userId, long followingDate, int blockSize)
+			throws SystemException{
+		return gardenFinder.findFollowedGardensNewerThanDate(userId, followingDate, blockSize);
+	}
+	
+	public List<Garden> getParticipatingGardensOlderThanDate(long userId, long participatingDate, int blockSize)
+			throws SystemException{
+		return gardenFinder.findParticipatingGardensOlderThanDate(userId, participatingDate, blockSize);
+	}
+	
+	public List<Garden> getParticipatingGardensNewerThanDate(long userId, long participatingDate, int blockSize)
+			throws SystemException{
+		return gardenFinder.findParticipatingGardensNewerThanDate(userId, participatingDate, blockSize);
 	}
 	
 	private String decode(String codedString){

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -75,6 +77,16 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_FETCH_BY_USERANDGARDEN = new FinderPath(MembershipModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipModelImpl.FINDER_CACHE_ENABLED, MembershipImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUserAndGarden",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			MembershipModelImpl.USERID_COLUMN_BITMASK |
+			MembershipModelImpl.GARDENID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_USERANDGARDEN = new FinderPath(MembershipModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserAndGarden",
+			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(MembershipModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipModelImpl.FINDER_CACHE_ENABLED, MembershipImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
@@ -93,6 +105,12 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 	public void cacheResult(Membership membership) {
 		EntityCacheUtil.putResult(MembershipModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipImpl.class, membership.getPrimaryKey(), membership);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+			new Object[] {
+				Long.valueOf(membership.getUserId()),
+				Long.valueOf(membership.getGardenId())
+			}, membership);
 
 		membership.resetOriginalValues();
 	}
@@ -149,6 +167,8 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(membership);
 	}
 
 	@Override
@@ -159,7 +179,17 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 		for (Membership membership : memberships) {
 			EntityCacheUtil.removeResult(MembershipModelImpl.ENTITY_CACHE_ENABLED,
 				MembershipImpl.class, membership.getPrimaryKey());
+
+			clearUniqueFindersCache(membership);
 		}
+	}
+
+	protected void clearUniqueFindersCache(Membership membership) {
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+			new Object[] {
+				Long.valueOf(membership.getUserId()),
+				Long.valueOf(membership.getGardenId())
+			});
 	}
 
 	/**
@@ -263,6 +293,8 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 
 		boolean isNew = membership.isNew();
 
+		MembershipModelImpl membershipModelImpl = (MembershipModelImpl)membership;
+
 		Session session = null;
 
 		try {
@@ -281,12 +313,41 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !MembershipModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		EntityCacheUtil.putResult(MembershipModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipImpl.class, membership.getPrimaryKey(), membership);
+
+		if (isNew) {
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+				new Object[] {
+					Long.valueOf(membership.getUserId()),
+					Long.valueOf(membership.getGardenId())
+				}, membership);
+		}
+		else {
+			if ((membershipModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_USERANDGARDEN.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(membershipModelImpl.getOriginalUserId()),
+						Long.valueOf(membershipModelImpl.getOriginalGardenId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERANDGARDEN,
+					args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+					args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+					new Object[] {
+						Long.valueOf(membership.getUserId()),
+						Long.valueOf(membership.getGardenId())
+					}, membership);
+			}
+		}
 
 		return membership;
 	}
@@ -304,6 +365,7 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 		membershipImpl.setMembershipId(membership.getMembershipId());
 		membershipImpl.setUserId(membership.getUserId());
 		membershipImpl.setGardenId(membership.getGardenId());
+		membershipImpl.setMembershipDate(membership.getMembershipDate());
 
 		return membershipImpl;
 	}
@@ -405,6 +467,154 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 		}
 
 		return membership;
+	}
+
+	/**
+	 * Returns the membership where userId = &#63; and gardenId = &#63; or throws a {@link net.sareweb.barazkide.NoSuchMembershipException} if it could not be found.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the matching membership
+	 * @throws net.sareweb.barazkide.NoSuchMembershipException if a matching membership could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership findByUserAndGarden(long userId, long gardenId)
+		throws NoSuchMembershipException, SystemException {
+		Membership membership = fetchByUserAndGarden(userId, gardenId);
+
+		if (membership == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", gardenId=");
+			msg.append(gardenId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchMembershipException(msg.toString());
+		}
+
+		return membership;
+	}
+
+	/**
+	 * Returns the membership where userId = &#63; and gardenId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the matching membership, or <code>null</code> if a matching membership could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership fetchByUserAndGarden(long userId, long gardenId)
+		throws SystemException {
+		return fetchByUserAndGarden(userId, gardenId, true);
+	}
+
+	/**
+	 * Returns the membership where userId = &#63; and gardenId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching membership, or <code>null</code> if a matching membership could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership fetchByUserAndGarden(long userId, long gardenId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { userId, gardenId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+					finderArgs, this);
+		}
+
+		if (result instanceof Membership) {
+			Membership membership = (Membership)result;
+
+			if ((userId != membership.getUserId()) ||
+					(gardenId != membership.getGardenId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_MEMBERSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_USERID_2);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_GARDENID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(gardenId);
+
+				List<Membership> list = q.list();
+
+				result = list;
+
+				Membership membership = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+						finderArgs, list);
+				}
+				else {
+					membership = list.get(0);
+
+					cacheResult(membership);
+
+					if ((membership.getUserId() != userId) ||
+							(membership.getGardenId() != gardenId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+							finderArgs, membership);
+					}
+				}
+
+				return membership;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Membership)result;
+			}
+		}
 	}
 
 	/**
@@ -523,6 +733,21 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 	}
 
 	/**
+	 * Removes the membership where userId = &#63; and gardenId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the membership that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership removeByUserAndGarden(long userId, long gardenId)
+		throws NoSuchMembershipException, SystemException {
+		Membership membership = findByUserAndGarden(userId, gardenId);
+
+		return remove(membership);
+	}
+
+	/**
 	 * Removes all the memberships from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
@@ -531,6 +756,65 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 		for (Membership membership : findAll()) {
 			remove(membership);
 		}
+	}
+
+	/**
+	 * Returns the number of memberships where userId = &#63; and gardenId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the number of matching memberships
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByUserAndGarden(long userId, long gardenId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { userId, gardenId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_USERANDGARDEN,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_MEMBERSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_USERID_2);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_GARDENID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(gardenId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERANDGARDEN,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -617,9 +901,14 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_MEMBERSHIP = "SELECT membership FROM Membership membership";
+	private static final String _SQL_SELECT_MEMBERSHIP_WHERE = "SELECT membership FROM Membership membership WHERE ";
 	private static final String _SQL_COUNT_MEMBERSHIP = "SELECT COUNT(membership) FROM Membership membership";
+	private static final String _SQL_COUNT_MEMBERSHIP_WHERE = "SELECT COUNT(membership) FROM Membership membership WHERE ";
+	private static final String _FINDER_COLUMN_USERANDGARDEN_USERID_2 = "membership.userId = ? AND ";
+	private static final String _FINDER_COLUMN_USERANDGARDEN_GARDENID_2 = "membership.gardenId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "membership.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Membership exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Membership exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(MembershipPersistenceImpl.class);

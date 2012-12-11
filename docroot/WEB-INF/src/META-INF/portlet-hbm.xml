@@ -25,6 +25,7 @@
 		</id>
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="followingDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="net.sareweb.barazkide.model.impl.GardenImpl" table="Barazkide_Garden">
 		<id name="gardenId" type="long">
@@ -55,5 +56,6 @@
 		</id>
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="membershipDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

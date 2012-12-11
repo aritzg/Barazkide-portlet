@@ -37,6 +37,7 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,9 +67,10 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "membershipId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "gardenId", Types.BIGINT }
+			{ "gardenId", Types.BIGINT },
+			{ "membershipDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Barazkide_Membership (membershipId LONG not null primary key,userId LONG,gardenId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Barazkide_Membership (membershipId LONG not null primary key,userId LONG,gardenId LONG,membershipDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Membership";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -79,7 +81,11 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.net.sareweb.barazkide.model.Membership"),
 			false);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.net.sareweb.barazkide.model.Membership"),
+			true);
+	public static long GARDENID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -97,6 +103,7 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		model.setMembershipId(soapModel.getMembershipId());
 		model.setUserId(soapModel.getUserId());
 		model.setGardenId(soapModel.getGardenId());
+		model.setMembershipDate(soapModel.getMembershipDate());
 
 		return model;
 	}
@@ -158,6 +165,7 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		attributes.put("membershipId", getMembershipId());
 		attributes.put("userId", getUserId());
 		attributes.put("gardenId", getGardenId());
+		attributes.put("membershipDate", getMembershipDate());
 
 		return attributes;
 	}
@@ -181,6 +189,12 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		if (gardenId != null) {
 			setGardenId(gardenId);
 		}
+
+		Date membershipDate = (Date)attributes.get("membershipDate");
+
+		if (membershipDate != null) {
+			setMembershipDate(membershipDate);
+		}
 	}
 
 	@JSON
@@ -198,6 +212,14 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -209,13 +231,42 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		_userUuid = userUuid;
 	}
 
+	public long getOriginalUserId() {
+		return _originalUserId;
+	}
+
 	@JSON
 	public long getGardenId() {
 		return _gardenId;
 	}
 
 	public void setGardenId(long gardenId) {
+		_columnBitmask |= GARDENID_COLUMN_BITMASK;
+
+		if (!_setOriginalGardenId) {
+			_setOriginalGardenId = true;
+
+			_originalGardenId = _gardenId;
+		}
+
 		_gardenId = gardenId;
+	}
+
+	public long getOriginalGardenId() {
+		return _originalGardenId;
+	}
+
+	@JSON
+	public Date getMembershipDate() {
+		return _membershipDate;
+	}
+
+	public void setMembershipDate(Date membershipDate) {
+		_membershipDate = membershipDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -249,6 +300,7 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		membershipImpl.setMembershipId(getMembershipId());
 		membershipImpl.setUserId(getUserId());
 		membershipImpl.setGardenId(getGardenId());
+		membershipImpl.setMembershipDate(getMembershipDate());
 
 		membershipImpl.resetOriginalValues();
 
@@ -301,6 +353,17 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 
 	@Override
 	public void resetOriginalValues() {
+		MembershipModelImpl membershipModelImpl = this;
+
+		membershipModelImpl._originalUserId = membershipModelImpl._userId;
+
+		membershipModelImpl._setOriginalUserId = false;
+
+		membershipModelImpl._originalGardenId = membershipModelImpl._gardenId;
+
+		membershipModelImpl._setOriginalGardenId = false;
+
+		membershipModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -313,12 +376,21 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 
 		membershipCacheModel.gardenId = getGardenId();
 
+		Date membershipDate = getMembershipDate();
+
+		if (membershipDate != null) {
+			membershipCacheModel.membershipDate = membershipDate.getTime();
+		}
+		else {
+			membershipCacheModel.membershipDate = Long.MIN_VALUE;
+		}
+
 		return membershipCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{membershipId=");
 		sb.append(getMembershipId());
@@ -326,13 +398,15 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		sb.append(getUserId());
 		sb.append(", gardenId=");
 		sb.append(getGardenId());
+		sb.append(", membershipDate=");
+		sb.append(getMembershipDate());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("net.sareweb.barazkide.model.Membership");
@@ -350,6 +424,10 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 			"<column><column-name>gardenId</column-name><column-value><![CDATA[");
 		sb.append(getGardenId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>membershipDate</column-name><column-value><![CDATA[");
+		sb.append(getMembershipDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -363,6 +441,12 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 	private long _membershipId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private long _gardenId;
+	private long _originalGardenId;
+	private boolean _setOriginalGardenId;
+	private Date _membershipDate;
+	private long _columnBitmask;
 	private Membership _escapedModelProxy;
 }

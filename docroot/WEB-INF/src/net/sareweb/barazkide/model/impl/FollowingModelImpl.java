@@ -37,6 +37,7 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,9 +67,10 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "followingId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "gardenId", Types.BIGINT }
+			{ "gardenId", Types.BIGINT },
+			{ "followingDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Barazkide_Following (followingId LONG not null primary key,userId LONG,gardenId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Barazkide_Following (followingId LONG not null primary key,userId LONG,gardenId LONG,followingDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Following";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -79,7 +81,11 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.net.sareweb.barazkide.model.Following"),
 			false);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.net.sareweb.barazkide.model.Following"),
+			true);
+	public static long GARDENID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -97,6 +103,7 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 		model.setFollowingId(soapModel.getFollowingId());
 		model.setUserId(soapModel.getUserId());
 		model.setGardenId(soapModel.getGardenId());
+		model.setFollowingDate(soapModel.getFollowingDate());
 
 		return model;
 	}
@@ -158,6 +165,7 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 		attributes.put("followingId", getFollowingId());
 		attributes.put("userId", getUserId());
 		attributes.put("gardenId", getGardenId());
+		attributes.put("followingDate", getFollowingDate());
 
 		return attributes;
 	}
@@ -181,6 +189,12 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 		if (gardenId != null) {
 			setGardenId(gardenId);
 		}
+
+		Date followingDate = (Date)attributes.get("followingDate");
+
+		if (followingDate != null) {
+			setFollowingDate(followingDate);
+		}
 	}
 
 	@JSON
@@ -198,6 +212,14 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -209,13 +231,42 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 		_userUuid = userUuid;
 	}
 
+	public long getOriginalUserId() {
+		return _originalUserId;
+	}
+
 	@JSON
 	public long getGardenId() {
 		return _gardenId;
 	}
 
 	public void setGardenId(long gardenId) {
+		_columnBitmask |= GARDENID_COLUMN_BITMASK;
+
+		if (!_setOriginalGardenId) {
+			_setOriginalGardenId = true;
+
+			_originalGardenId = _gardenId;
+		}
+
 		_gardenId = gardenId;
+	}
+
+	public long getOriginalGardenId() {
+		return _originalGardenId;
+	}
+
+	@JSON
+	public Date getFollowingDate() {
+		return _followingDate;
+	}
+
+	public void setFollowingDate(Date followingDate) {
+		_followingDate = followingDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -249,6 +300,7 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 		followingImpl.setFollowingId(getFollowingId());
 		followingImpl.setUserId(getUserId());
 		followingImpl.setGardenId(getGardenId());
+		followingImpl.setFollowingDate(getFollowingDate());
 
 		followingImpl.resetOriginalValues();
 
@@ -301,6 +353,17 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 
 	@Override
 	public void resetOriginalValues() {
+		FollowingModelImpl followingModelImpl = this;
+
+		followingModelImpl._originalUserId = followingModelImpl._userId;
+
+		followingModelImpl._setOriginalUserId = false;
+
+		followingModelImpl._originalGardenId = followingModelImpl._gardenId;
+
+		followingModelImpl._setOriginalGardenId = false;
+
+		followingModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -313,12 +376,21 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 
 		followingCacheModel.gardenId = getGardenId();
 
+		Date followingDate = getFollowingDate();
+
+		if (followingDate != null) {
+			followingCacheModel.followingDate = followingDate.getTime();
+		}
+		else {
+			followingCacheModel.followingDate = Long.MIN_VALUE;
+		}
+
 		return followingCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{followingId=");
 		sb.append(getFollowingId());
@@ -326,13 +398,15 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 		sb.append(getUserId());
 		sb.append(", gardenId=");
 		sb.append(getGardenId());
+		sb.append(", followingDate=");
+		sb.append(getFollowingDate());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("net.sareweb.barazkide.model.Following");
@@ -350,6 +424,10 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 			"<column><column-name>gardenId</column-name><column-value><![CDATA[");
 		sb.append(getGardenId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>followingDate</column-name><column-value><![CDATA[");
+		sb.append(getFollowingDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -363,6 +441,12 @@ public class FollowingModelImpl extends BaseModelImpl<Following>
 	private long _followingId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private long _gardenId;
+	private long _originalGardenId;
+	private boolean _setOriginalGardenId;
+	private Date _followingDate;
+	private long _columnBitmask;
 	private Following _escapedModelProxy;
 }

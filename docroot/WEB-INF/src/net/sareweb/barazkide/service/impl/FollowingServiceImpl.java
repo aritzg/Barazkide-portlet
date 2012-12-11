@@ -14,6 +14,12 @@
 
 package net.sareweb.barazkide.service.impl;
 
+import java.util.Date;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
+
+import net.sareweb.barazkide.model.Following;
+import net.sareweb.barazkide.service.FollowingLocalServiceUtil;
 import net.sareweb.barazkide.service.base.FollowingServiceBaseImpl;
 
 /**
@@ -31,9 +37,31 @@ import net.sareweb.barazkide.service.base.FollowingServiceBaseImpl;
  * @see net.sareweb.barazkide.service.FollowingServiceUtil
  */
 public class FollowingServiceImpl extends FollowingServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link net.sareweb.barazkide.service.FollowingServiceUtil} to access the following remote service.
-	 */
+	
+	public boolean addFollowing(long userId, long gardenId){
+		try{
+			Following following = FollowingLocalServiceUtil.createFollowing(CounterLocalServiceUtil.increment());
+			following.setUserId(userId);
+			following.setGardenId(gardenId);
+			following.setFollowingDate(new Date());
+			FollowingLocalServiceUtil.addFollowing(following);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean removeFollowing(long userId, long gardenId){
+		try{
+			Following following = followingPersistence.fetchByUserAndGarden(userId, gardenId);
+			FollowingLocalServiceUtil.deleteFollowing(following);
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
 }

@@ -14,7 +14,13 @@
 
 package net.sareweb.barazkide.service.impl;
 
+import java.util.Date;
+
+import net.sareweb.barazkide.model.Membership;
+import net.sareweb.barazkide.service.MembershipLocalServiceUtil;
 import net.sareweb.barazkide.service.base.MembershipServiceBaseImpl;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
 
 /**
  * The implementation of the membership remote service.
@@ -31,9 +37,31 @@ import net.sareweb.barazkide.service.base.MembershipServiceBaseImpl;
  * @see net.sareweb.barazkide.service.MembershipServiceUtil
  */
 public class MembershipServiceImpl extends MembershipServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link net.sareweb.barazkide.service.MembershipServiceUtil} to access the membership remote service.
-	 */
+	
+	public boolean addMembership(long userId, long gardenId){
+		try{
+			Membership membership = MembershipLocalServiceUtil.createMembership(CounterLocalServiceUtil.increment());
+			membership.setUserId(userId);
+			membership.setGardenId(gardenId);
+			membership.setMembershipDate(new Date());
+			MembershipLocalServiceUtil.addMembership(membership);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean removeMembership(long userId, long gardenId){
+		try{
+			Membership membership = membershipPersistence.fetchByUserAndGarden(userId, gardenId);
+			MembershipLocalServiceUtil.deleteMembership(membership);
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
 }

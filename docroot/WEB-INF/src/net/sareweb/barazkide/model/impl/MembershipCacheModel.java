@@ -21,6 +21,8 @@ import net.sareweb.barazkide.model.Membership;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Membership in entity cache.
  *
@@ -32,7 +34,7 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{membershipId=");
 		sb.append(membershipId);
@@ -40,6 +42,8 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 		sb.append(userId);
 		sb.append(", gardenId=");
 		sb.append(gardenId);
+		sb.append(", membershipDate=");
+		sb.append(membershipDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -52,6 +56,13 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 		membershipImpl.setUserId(userId);
 		membershipImpl.setGardenId(gardenId);
 
+		if (membershipDate == Long.MIN_VALUE) {
+			membershipImpl.setMembershipDate(null);
+		}
+		else {
+			membershipImpl.setMembershipDate(new Date(membershipDate));
+		}
+
 		membershipImpl.resetOriginalValues();
 
 		return membershipImpl;
@@ -60,4 +71,5 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 	public long membershipId;
 	public long userId;
 	public long gardenId;
+	public long membershipDate;
 }

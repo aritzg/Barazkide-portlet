@@ -14,6 +14,13 @@
 
 package net.sareweb.barazkide.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import net.sareweb.barazkide.service.MembershipServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,35 @@ package net.sareweb.barazkide.service.http;
  * @generated
  */
 public class MembershipServiceSoap {
+	public static boolean addMembership(long userId, long gardenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = MembershipServiceUtil.addMembership(userId,
+					gardenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean removeMembership(long userId, long gardenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = MembershipServiceUtil.removeMembership(userId,
+					gardenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MembershipServiceSoap.class);
 }

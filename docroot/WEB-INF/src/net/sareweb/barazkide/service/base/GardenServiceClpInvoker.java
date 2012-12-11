@@ -46,9 +46,21 @@ public class GardenServiceClpInvoker {
 
 		_methodParameterTypes58 = new String[] { "long", "long", "boolean", "int" };
 
-		_methodName59 = "findFollowedGardens";
+		_methodName59 = "getFollowedGardensOlderThanDate";
 
-		_methodParameterTypes59 = new String[] { "long", "int", "int" };
+		_methodParameterTypes59 = new String[] { "long", "long", "int" };
+
+		_methodName60 = "getFollowedGardensNewerThanDate";
+
+		_methodParameterTypes60 = new String[] { "long", "long", "int" };
+
+		_methodName61 = "getParticipatingGardensOlderThanDate";
+
+		_methodParameterTypes61 = new String[] { "long", "long", "int" };
+
+		_methodName62 = "getParticipatingGardensNewerThanDate";
+
+		_methodParameterTypes62 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -87,8 +99,29 @@ public class GardenServiceClpInvoker {
 
 		if (_methodName59.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-			return GardenServiceUtil.findFollowedGardens(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
+			return GardenServiceUtil.getFollowedGardensOlderThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+			return GardenServiceUtil.getFollowedGardensNewerThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName61.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+			return GardenServiceUtil.getParticipatingGardensOlderThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName62.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+			return GardenServiceUtil.getParticipatingGardensNewerThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
@@ -107,4 +140,10 @@ public class GardenServiceClpInvoker {
 	private String[] _methodParameterTypes58;
 	private String _methodName59;
 	private String[] _methodParameterTypes59;
+	private String _methodName60;
+	private String[] _methodParameterTypes60;
+	private String _methodName61;
+	private String[] _methodParameterTypes61;
+	private String _methodName62;
+	private String[] _methodParameterTypes62;
 }

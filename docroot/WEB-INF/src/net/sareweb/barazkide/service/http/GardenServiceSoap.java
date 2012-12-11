@@ -111,11 +111,60 @@ public class GardenServiceSoap {
 		}
 	}
 
-	public static net.sareweb.barazkide.model.GardenSoap[] findFollowedGardens(
-		long userId, int start, int end) throws RemoteException {
+	public static net.sareweb.barazkide.model.GardenSoap[] getFollowedGardensOlderThanDate(
+		long userId, long followingDate, int blockSize)
+		throws RemoteException {
 		try {
-			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.findFollowedGardens(userId,
-					start, end);
+			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getFollowedGardensOlderThanDate(userId,
+					followingDate, blockSize);
+
+			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static net.sareweb.barazkide.model.GardenSoap[] getFollowedGardensNewerThanDate(
+		long userId, long followingDate, int blockSize)
+		throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getFollowedGardensNewerThanDate(userId,
+					followingDate, blockSize);
+
+			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static net.sareweb.barazkide.model.GardenSoap[] getParticipatingGardensOlderThanDate(
+		long userId, long participatingDate, int blockSize)
+		throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getParticipatingGardensOlderThanDate(userId,
+					participatingDate, blockSize);
+
+			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static net.sareweb.barazkide.model.GardenSoap[] getParticipatingGardensNewerThanDate(
+		long userId, long participatingDate, int blockSize)
+		throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Garden> returnValue = GardenServiceUtil.getParticipatingGardensNewerThanDate(userId,
+					participatingDate, blockSize);
 
 			return net.sareweb.barazkide.model.GardenSoap.toSoapModels(returnValue);
 		}

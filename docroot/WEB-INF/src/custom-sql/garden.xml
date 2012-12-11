@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
     <sql
-		id="net.sareweb.barazkide.service.persistence.GardenFinder.findFollowedGardens">
+		id="net.sareweb.barazkide.service.persistence.GardenFinder.findFollowedGardensOlderThanDate">
 	<![CDATA[
 	SELECT Barazkide_Garden.* 
     FROM 
@@ -12,8 +12,67 @@
     	Barazkide_Garden.gardenId=Barazkide_Following.gardenId
     WHERE
     	Barazkide_Following.userId = ?
+    	AND
+    	Barazkide_Following.followingDate < ?
 	ORDER BY
-		Barazkide_Garden.createDate ASC
+		Barazkide_Following.followingDate DESC
+    ]]>
+	</sql>
+	
+    <sql
+		id="net.sareweb.barazkide.service.persistence.GardenFinder.findFollowedGardensNewerThanDate">
+	<![CDATA[
+	SELECT Barazkide_Garden.* 
+    FROM 
+    	Barazkide_Garden 
+    JOIN
+    	Barazkide_Following
+    ON
+    	Barazkide_Garden.gardenId=Barazkide_Following.gardenId
+    WHERE
+    	Barazkide_Following.userId = ?
+    	AND
+    	Barazkide_Following.followingDate > ?
+	ORDER BY
+		Barazkide_Following.followingDate ASC
+    ]]>
+	</sql>
+	
+	<sql
+		id="net.sareweb.barazkide.service.persistence.GardenFinder.findParticipatingGardensOlderThanDate">
+	<![CDATA[
+	SELECT Barazkide_Garden.* 
+    FROM 
+    	Barazkide_Garden 
+    JOIN
+    	Barazkide_Membership
+    ON
+    	Barazkide_Garden.gardenId=Barazkide_Membership.gardenId
+    WHERE
+    	Barazkide_Membership.userId = ?
+    	AND
+    	Barazkide_Membership.membershipDate < ?
+	ORDER BY
+		Barazkide_Membership.membershipDate DESC
+    ]]>
+	</sql>
+	
+    <sql
+		id="net.sareweb.barazkide.service.persistence.GardenFinder.findParticipatingGardensNewerThanDate">
+	<![CDATA[
+	SELECT Barazkide_Garden.* 
+    FROM 
+    	Barazkide_Garden 
+    JOIN
+    	Barazkide_Membership
+    ON
+    	Barazkide_Garden.gardenId=Barazkide_Membership.gardenId
+    WHERE
+    	Barazkide_Membership.userId = ?
+    	AND
+    	Barazkide_Membership.membershipDate > ?
+	ORDER BY
+		Barazkide_Membership.membershipDate ASC
     ]]>
 	</sql>
 </custom-sql>

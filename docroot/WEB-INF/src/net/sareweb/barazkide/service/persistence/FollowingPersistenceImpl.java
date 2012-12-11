@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -75,6 +77,16 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_FETCH_BY_USERANDGARDEN = new FinderPath(FollowingModelImpl.ENTITY_CACHE_ENABLED,
+			FollowingModelImpl.FINDER_CACHE_ENABLED, FollowingImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUserAndGarden",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			FollowingModelImpl.USERID_COLUMN_BITMASK |
+			FollowingModelImpl.GARDENID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_USERANDGARDEN = new FinderPath(FollowingModelImpl.ENTITY_CACHE_ENABLED,
+			FollowingModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserAndGarden",
+			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(FollowingModelImpl.ENTITY_CACHE_ENABLED,
 			FollowingModelImpl.FINDER_CACHE_ENABLED, FollowingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
@@ -93,6 +105,12 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 	public void cacheResult(Following following) {
 		EntityCacheUtil.putResult(FollowingModelImpl.ENTITY_CACHE_ENABLED,
 			FollowingImpl.class, following.getPrimaryKey(), following);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+			new Object[] {
+				Long.valueOf(following.getUserId()),
+				Long.valueOf(following.getGardenId())
+			}, following);
 
 		following.resetOriginalValues();
 	}
@@ -149,6 +167,8 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(following);
 	}
 
 	@Override
@@ -159,7 +179,17 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 		for (Following following : followings) {
 			EntityCacheUtil.removeResult(FollowingModelImpl.ENTITY_CACHE_ENABLED,
 				FollowingImpl.class, following.getPrimaryKey());
+
+			clearUniqueFindersCache(following);
 		}
+	}
+
+	protected void clearUniqueFindersCache(Following following) {
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+			new Object[] {
+				Long.valueOf(following.getUserId()),
+				Long.valueOf(following.getGardenId())
+			});
 	}
 
 	/**
@@ -263,6 +293,8 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 
 		boolean isNew = following.isNew();
 
+		FollowingModelImpl followingModelImpl = (FollowingModelImpl)following;
+
 		Session session = null;
 
 		try {
@@ -281,12 +313,41 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !FollowingModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		EntityCacheUtil.putResult(FollowingModelImpl.ENTITY_CACHE_ENABLED,
 			FollowingImpl.class, following.getPrimaryKey(), following);
+
+		if (isNew) {
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+				new Object[] {
+					Long.valueOf(following.getUserId()),
+					Long.valueOf(following.getGardenId())
+				}, following);
+		}
+		else {
+			if ((followingModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_USERANDGARDEN.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(followingModelImpl.getOriginalUserId()),
+						Long.valueOf(followingModelImpl.getOriginalGardenId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERANDGARDEN,
+					args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+					args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+					new Object[] {
+						Long.valueOf(following.getUserId()),
+						Long.valueOf(following.getGardenId())
+					}, following);
+			}
+		}
 
 		return following;
 	}
@@ -304,6 +365,7 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 		followingImpl.setFollowingId(following.getFollowingId());
 		followingImpl.setUserId(following.getUserId());
 		followingImpl.setGardenId(following.getGardenId());
+		followingImpl.setFollowingDate(following.getFollowingDate());
 
 		return followingImpl;
 	}
@@ -405,6 +467,154 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 		}
 
 		return following;
+	}
+
+	/**
+	 * Returns the following where userId = &#63; and gardenId = &#63; or throws a {@link net.sareweb.barazkide.NoSuchFollowingException} if it could not be found.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the matching following
+	 * @throws net.sareweb.barazkide.NoSuchFollowingException if a matching following could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Following findByUserAndGarden(long userId, long gardenId)
+		throws NoSuchFollowingException, SystemException {
+		Following following = fetchByUserAndGarden(userId, gardenId);
+
+		if (following == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", gardenId=");
+			msg.append(gardenId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchFollowingException(msg.toString());
+		}
+
+		return following;
+	}
+
+	/**
+	 * Returns the following where userId = &#63; and gardenId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the matching following, or <code>null</code> if a matching following could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Following fetchByUserAndGarden(long userId, long gardenId)
+		throws SystemException {
+		return fetchByUserAndGarden(userId, gardenId, true);
+	}
+
+	/**
+	 * Returns the following where userId = &#63; and gardenId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching following, or <code>null</code> if a matching following could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Following fetchByUserAndGarden(long userId, long gardenId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { userId, gardenId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+					finderArgs, this);
+		}
+
+		if (result instanceof Following) {
+			Following following = (Following)result;
+
+			if ((userId != following.getUserId()) ||
+					(gardenId != following.getGardenId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_FOLLOWING_WHERE);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_USERID_2);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_GARDENID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(gardenId);
+
+				List<Following> list = q.list();
+
+				result = list;
+
+				Following following = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+						finderArgs, list);
+				}
+				else {
+					following = list.get(0);
+
+					cacheResult(following);
+
+					if ((following.getUserId() != userId) ||
+							(following.getGardenId() != gardenId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+							finderArgs, following);
+					}
+				}
+
+				return following;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERANDGARDEN,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Following)result;
+			}
+		}
 	}
 
 	/**
@@ -523,6 +733,21 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 	}
 
 	/**
+	 * Removes the following where userId = &#63; and gardenId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the following that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Following removeByUserAndGarden(long userId, long gardenId)
+		throws NoSuchFollowingException, SystemException {
+		Following following = findByUserAndGarden(userId, gardenId);
+
+		return remove(following);
+	}
+
+	/**
 	 * Removes all the followings from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
@@ -531,6 +756,65 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 		for (Following following : findAll()) {
 			remove(following);
 		}
+	}
+
+	/**
+	 * Returns the number of followings where userId = &#63; and gardenId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param gardenId the garden ID
+	 * @return the number of matching followings
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByUserAndGarden(long userId, long gardenId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { userId, gardenId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_USERANDGARDEN,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_FOLLOWING_WHERE);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_USERID_2);
+
+			query.append(_FINDER_COLUMN_USERANDGARDEN_GARDENID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(gardenId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERANDGARDEN,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -617,9 +901,14 @@ public class FollowingPersistenceImpl extends BasePersistenceImpl<Following>
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_FOLLOWING = "SELECT following FROM Following following";
+	private static final String _SQL_SELECT_FOLLOWING_WHERE = "SELECT following FROM Following following WHERE ";
 	private static final String _SQL_COUNT_FOLLOWING = "SELECT COUNT(following) FROM Following following";
+	private static final String _SQL_COUNT_FOLLOWING_WHERE = "SELECT COUNT(following) FROM Following following WHERE ";
+	private static final String _FINDER_COLUMN_USERANDGARDEN_USERID_2 = "following.userId = ? AND ";
+	private static final String _FINDER_COLUMN_USERANDGARDEN_GARDENID_2 = "following.gardenId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "following.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Following exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Following exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(FollowingPersistenceImpl.class);

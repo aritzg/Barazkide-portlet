@@ -31,6 +31,9 @@
 			<id name="followingId" />
 			<basic name="userId" />
 			<basic name="gardenId" />
+			<basic name="followingDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -80,6 +83,9 @@
 			<id name="membershipId" />
 			<basic name="userId" />
 			<basic name="gardenId" />
+			<basic name="membershipDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

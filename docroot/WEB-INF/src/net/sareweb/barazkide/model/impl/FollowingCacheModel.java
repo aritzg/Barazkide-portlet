@@ -21,6 +21,8 @@ import net.sareweb.barazkide.model.Following;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Following in entity cache.
  *
@@ -31,7 +33,7 @@ import java.io.Serializable;
 public class FollowingCacheModel implements CacheModel<Following>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{followingId=");
 		sb.append(followingId);
@@ -39,6 +41,8 @@ public class FollowingCacheModel implements CacheModel<Following>, Serializable 
 		sb.append(userId);
 		sb.append(", gardenId=");
 		sb.append(gardenId);
+		sb.append(", followingDate=");
+		sb.append(followingDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -51,6 +55,13 @@ public class FollowingCacheModel implements CacheModel<Following>, Serializable 
 		followingImpl.setUserId(userId);
 		followingImpl.setGardenId(gardenId);
 
+		if (followingDate == Long.MIN_VALUE) {
+			followingImpl.setFollowingDate(null);
+		}
+		else {
+			followingImpl.setFollowingDate(new Date(followingDate));
+		}
+
 		followingImpl.resetOriginalValues();
 
 		return followingImpl;
@@ -59,4 +70,5 @@ public class FollowingCacheModel implements CacheModel<Following>, Serializable 
 	public long followingId;
 	public long userId;
 	public long gardenId;
+	public long followingDate;
 }

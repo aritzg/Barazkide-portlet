@@ -8,11 +8,30 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Barazkide, "Following",
+	{
+		addFollowing: true,
+		removeFollowing: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Garden",
 	{
 		addGarden: true,
 		getGardens: true,
 		getUserGardensFromDate: true,
-		findFollowedGardens: true
+		getFollowedGardensOlderThanDate: true,
+		getFollowedGardensNewerThanDate: true,
+		getParticipatingGardensOlderThanDate: true,
+		getParticipatingGardensNewerThanDate: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.Barazkide, "Membership",
+	{
+		addMembership: true,
+		removeMembership: true
 	}
 );

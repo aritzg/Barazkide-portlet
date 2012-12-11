@@ -15,6 +15,7 @@
 		<field name="followingId" type="long" />
 		<field name="userId" type="long" />
 		<field name="gardenId" type="long" />
+		<field name="followingDate" type="Date" />
 	</model>
 	<model name="net.sareweb.barazkide.model.Garden">
 		<field name="gardenId" type="long" />
@@ -39,5 +40,6 @@
 		<field name="membershipId" type="long" />
 		<field name="userId" type="long" />
 		<field name="gardenId" type="long" />
+		<field name="membershipDate" type="Date" />
 	</model>
 </model-hints>
