@@ -65,13 +65,13 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class FollowingServiceSoap {
-	public static boolean addFollowing(long userId, long gardenId)
-		throws RemoteException {
+	public static net.sareweb.barazkide.model.FollowingSoap addFollowing(
+		long userId, long gardenId) throws RemoteException {
 		try {
-			boolean returnValue = FollowingServiceUtil.addFollowing(userId,
+			net.sareweb.barazkide.model.Following returnValue = FollowingServiceUtil.addFollowing(userId,
 					gardenId);
 
-			return returnValue;
+			return net.sareweb.barazkide.model.FollowingSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -38,18 +38,16 @@ import net.sareweb.barazkide.service.base.FollowingServiceBaseImpl;
  */
 public class FollowingServiceImpl extends FollowingServiceBaseImpl {
 	
-	public boolean addFollowing(long userId, long gardenId){
+	public Following addFollowing(long userId, long gardenId){
 		try{
 			Following following = FollowingLocalServiceUtil.createFollowing(CounterLocalServiceUtil.increment());
 			following.setUserId(userId);
 			following.setGardenId(gardenId);
 			following.setFollowingDate(new Date());
-			FollowingLocalServiceUtil.addFollowing(following);
-			return true;
+			return FollowingLocalServiceUtil.addFollowing(following);
 		}
 		catch(Exception e){
-			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 	
