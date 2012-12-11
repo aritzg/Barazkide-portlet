@@ -65,11 +65,28 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class EventServiceSoap {
-	public static net.sareweb.barazkide.model.EventSoap[] findEventsInFollowedGardens(
-		long userId, int start, int end) throws RemoteException {
+	public static net.sareweb.barazkide.model.EventSoap[] findEventsInFollowedGardensOlderThanDate(
+		long userId, long followingDate, int blockSize)
+		throws RemoteException {
 		try {
-			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInFollowedGardens(userId,
-					start, end);
+			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInFollowedGardensOlderThanDate(userId,
+					followingDate, blockSize);
+
+			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static net.sareweb.barazkide.model.EventSoap[] findEventsInFollowedGardensNewerThanDate(
+		long userId, long followingDate, int blockSize)
+		throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInFollowedGardensNewerThanDate(userId,
+					followingDate, blockSize);
 
 			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
 		}

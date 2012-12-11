@@ -42,7 +42,11 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link net.sareweb.barazkide.service.EventServiceUtil} to access the event remote service.
 	 */
 	
-	public List<Event> findEventsInFollowedGardens(long userId, int start, int end) throws SystemException{
-		return eventFinder.findEventsInFollowedGardens(userId, start, end);
+	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, long followingDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInFollowedGardensOlderThanDate(userId, followingDate, blockSize);
+	}
+	
+	public List<Event> findEventsInFollowedGardensNewerThanDate(long userId, long followingDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInFollowedGardensNewerThanDate(userId, followingDate, blockSize);
 	}
 }

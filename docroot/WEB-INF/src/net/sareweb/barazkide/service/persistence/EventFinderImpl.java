@@ -1,6 +1,7 @@
 package net.sareweb.barazkide.service.persistence;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import net.sareweb.barazkide.model.Event;
@@ -17,24 +18,49 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 		EventFinder {
 
-	public static String FIND_EVENTS_IN_FOLLOWED_GARDENS = EventFinder.class
-			.getName() + ".findEventsInFollowedGardens";
+	public static String FIND_EVENTS_IN_FOLLOWED_GARDENS_OLDER = EventFinder.class
+			.getName() + ".findEventsInFollowedGardensOlderThanDate";
+	public static String FIND_EVENTS_IN_FOLLOWED_GARDENS_NEWER = EventFinder.class
+			.getName() + ".findEventsInFollowedGardensNewerThanDate";
 
-	public List<Event> findEventsInFollowedGardens(long userId, int start,
-			int end) throws SystemException {
+	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, long followingDate, int blockSize) throws SystemException {
 
 		List<Event> events = new ArrayList<Event>();
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_EVENTS_IN_FOLLOWED_GARDENS);
+			String sql = CustomSQLUtil.get(FIND_EVENTS_IN_FOLLOWED_GARDENS_OLDER);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addEntity("event", EventImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(userId);
+			qPos.add(new Date(followingDate));
 
-			events = (List<Event>) QueryUtil.list(q, getDialect(), start, end);
+			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
+		} catch (Exception e) {
+			throw new SystemException(e);
+		} finally {
+			closeSession(session);
+		}
+		return events;
+	}
+	
+	public List<Event> findEventsInFollowedGardensNewerThanDate(long userId, long followingDate, int blockSize) throws SystemException {
+
+		List<Event> events = new ArrayList<Event>();
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_EVENTS_IN_FOLLOWED_GARDENS_NEWER);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addEntity("event", EventImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(userId);
+			qPos.add(new Date(followingDate));
+
+			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
 		} catch (Exception e) {
 			throw new SystemException(e);
 		} finally {

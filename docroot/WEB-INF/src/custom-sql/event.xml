@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
     <sql
-		id="net.sareweb.barazkide.service.persistence.EventFinder.findEventsInFollowedGardens">
+		id="net.sareweb.barazkide.service.persistence.EventFinder.findEventsInFollowedGardensOlderThanDate">
 	<![CDATA[
-	SELECT Barazkide_Event.* 
-    FROM Barazkide_Event
+	SELECT Barazkide_Event.*
+    FROM
+    	Barazkide_Event
+    jOIN
+    	Barazkide_Garden
+    ON
+    	Barazkide_Event.gardenId=Barazkide_Garden.gardenId
+    JOIN
+    	Barazkide_Following
+    ON
+    	Barazkide_Garden.gardenId=Barazkide_Following.gardenId
     WHERE
-    	creatorUserId = ?
+    	Barazkide_Following.userId = ?
+    	AND
+    	Barazkide_Event.creategDate < ?
+
 	ORDER BY
-		createDate ASC
+		Barazkide_Event.creategDate DESC
+    ]]>
+	</sql>
+	<sql
+		id="net.sareweb.barazkide.service.persistence.EventFinder.findEventsInFollowedGardensNewerThanDate">
+	<![CDATA[
+	SELECT Barazkide_Event.*
+    FROM
+    	Barazkide_Event
+    jOIN
+    	Barazkide_Garden
+    ON
+    	Barazkide_Event.gardenId=Barazkide_Garden.gardenId
+    JOIN
+    	Barazkide_Following
+    ON
+    	Barazkide_Garden.gardenId=Barazkide_Following.gardenId
+    WHERE
+    	Barazkide_Following.userId = ?
+    	AND
+    	Barazkide_Event.creategDate > ?
+
+	ORDER BY
+		Barazkide_Event.creategDate DESC
     ]]>
 	</sql>
 </custom-sql>

@@ -3,7 +3,8 @@ Liferay.Service.register("Liferay.Service.Barazkide", "net.sareweb.barazkide.ser
 Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Event",
 	{
-		findEventsInFollowedGardens: true
+		findEventsInFollowedGardensOlderThanDate: true,
+		findEventsInFollowedGardensNewerThanDate: true
 	}
 );
 

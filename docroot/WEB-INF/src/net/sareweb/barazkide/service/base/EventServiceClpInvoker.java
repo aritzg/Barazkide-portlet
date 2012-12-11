@@ -31,9 +31,13 @@ public class EventServiceClpInvoker {
 
 		_methodParameterTypes51 = new String[] { "java.lang.String" };
 
-		_methodName56 = "findEventsInFollowedGardens";
+		_methodName56 = "findEventsInFollowedGardensOlderThanDate";
 
-		_methodParameterTypes56 = new String[] { "long", "int", "int" };
+		_methodParameterTypes56 = new String[] { "long", "long", "int" };
+
+		_methodName57 = "findEventsInFollowedGardensNewerThanDate";
+
+		_methodParameterTypes57 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -50,8 +54,15 @@ public class EventServiceClpInvoker {
 
 		if (_methodName56.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-			return EventServiceUtil.findEventsInFollowedGardens(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
+			return EventServiceUtil.findEventsInFollowedGardensOlderThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName57.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
+			return EventServiceUtil.findEventsInFollowedGardensNewerThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
@@ -64,4 +75,6 @@ public class EventServiceClpInvoker {
 	private String[] _methodParameterTypes51;
 	private String _methodName56;
 	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
 }
