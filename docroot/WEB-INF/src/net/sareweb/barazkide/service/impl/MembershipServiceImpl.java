@@ -15,12 +15,22 @@
 package net.sareweb.barazkide.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import net.sareweb.barazkide.model.Membership;
 import net.sareweb.barazkide.service.MembershipLocalServiceUtil;
 import net.sareweb.barazkide.service.base.MembershipServiceBaseImpl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.support.tomcat.loader.PortalClassLoaderFactory;
 
 /**
  * The implementation of the membership remote service.
@@ -61,6 +71,35 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 		}
 		catch(Exception e){
 			return false;
+		}
+	}
+	
+	public List<User> findMemberUsers(long gardenId){
+		List<Membership> memberships;
+		try {
+			memberships = membershipPersistence.findByGarden(gardenId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+			return null;
+		}
+		if(memberships==null || memberships.size()<1){
+			return null;
+		}
+		Long[] users = new Long[memberships.size()];
+		int i =0;
+		for(Membership membership : memberships){
+			System.out.println("membership.getUserId() " + membership.getUserId());
+			users[i]=membership.getUserId();
+			i++;
+		}
+		DynamicQuery dq =DynamicQueryFactoryUtil.forClass(User.class, PortalClassLoaderFactory.getClassLoader());
+		Criterion inCr = RestrictionsFactoryUtil.in("userId", users);
+		dq.add(inCr);
+		try {
+			return UserLocalServiceUtil.dynamicQuery(dq);
+		} catch (SystemException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

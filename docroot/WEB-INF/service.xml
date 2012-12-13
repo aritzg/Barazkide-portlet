@@ -3,7 +3,7 @@
 <service-builder package-path="net.sareweb.barazkide">
 	<author>A.Galdos</author>
 	<namespace>Barazkide</namespace>
-
+	
 	<entity name="Garden" local-service="true" remote-service="true" cache-enabled="false">
 
 		<!-- PK fields -->
@@ -39,6 +39,9 @@
 		<column name="membershipDate" type="Date" />
 		
 		<!-- Finder -->
+		<finder name="Garden" return-type="Collection">
+		    <finder-column name="gardenId"/>
+		</finder>
 		<finder name="UserAndGarden" return-type="Membership">
 		    <finder-column name="userId"/>
 		    <finder-column name="gardenId"/>

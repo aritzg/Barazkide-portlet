@@ -18,4 +18,5 @@
 	<bean id="net.sareweb.barazkide.service.MembershipLocalService" class="net.sareweb.barazkide.service.impl.MembershipLocalServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.MembershipService" class="net.sareweb.barazkide.service.impl.MembershipServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.MembershipPersistence" class="net.sareweb.barazkide.service.persistence.MembershipPersistenceImpl" parent="basePersistence" />
+	<bean id="net.sareweb.barazkide.service.persistence.MembershipFinder" class="net.sareweb.barazkide.service.persistence.MembershipFinderImpl" parent="basePersistence" />
 </beans>

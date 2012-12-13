@@ -54,6 +54,7 @@ import net.sareweb.barazkide.service.persistence.FollowingPersistence;
 import net.sareweb.barazkide.service.persistence.GardenFinder;
 import net.sareweb.barazkide.service.persistence.GardenImagePersistence;
 import net.sareweb.barazkide.service.persistence.GardenPersistence;
+import net.sareweb.barazkide.service.persistence.MembershipFinder;
 import net.sareweb.barazkide.service.persistence.MembershipPersistence;
 
 import java.io.Serializable;
@@ -600,6 +601,24 @@ public abstract class MembershipLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the membership finder.
+	 *
+	 * @return the membership finder
+	 */
+	public MembershipFinder getMembershipFinder() {
+		return membershipFinder;
+	}
+
+	/**
+	 * Sets the membership finder.
+	 *
+	 * @param membershipFinder the membership finder
+	 */
+	public void setMembershipFinder(MembershipFinder membershipFinder) {
+		this.membershipFinder = membershipFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -820,6 +839,8 @@ public abstract class MembershipLocalServiceBaseImpl
 	protected MembershipService membershipService;
 	@BeanReference(type = MembershipPersistence.class)
 	protected MembershipPersistence membershipPersistence;
+	@BeanReference(type = MembershipFinder.class)
+	protected MembershipFinder membershipFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

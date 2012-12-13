@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql
+		id="net.sareweb.barazkide.service.persistence.MembershipFinder.findMemberUsers">
+	<![CDATA[
+	SELECT User_.* 
+    FROM 
+    	User_ 
+    JOIN
+    	Barazkide_Membership
+    ON
+    	User_.userId=Barazkide_Membership.userId
+    WHERE
+    	Barazkide_Membership.gardenId = ?
+	ORDER BY
+		Barazkide_Membership.membershipDate DESC
+    ]]>
+	</sql>
+</custom-sql>

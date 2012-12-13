@@ -33,6 +33,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Membership",
 	{
 		addMembership: true,
-		removeMembership: true
+		removeMembership: true,
+		findMemberUsers: true
 	}
 );
