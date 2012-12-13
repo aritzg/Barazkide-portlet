@@ -100,8 +100,7 @@ public class MembershipServiceSoap {
 		try {
 			java.util.List<com.liferay.portal.model.User> returnValue = MembershipServiceUtil.findMemberUsers(gardenId);
 
-			//return net.sareweb.barazkide.model.MembershipSoap.toSoapModels(returnValue);
-			return null;
+			return null;//net.sareweb.barazkide.model.MembershipSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

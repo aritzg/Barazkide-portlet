@@ -30,6 +30,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 
 import net.sareweb.barazkide.model.Garden;
 import net.sareweb.barazkide.service.GardenLocalServiceUtil;
+import net.sareweb.barazkide.service.MembershipServiceUtil;
 import net.sareweb.barazkide.service.base.GardenServiceBaseImpl;
 
 /**
@@ -65,7 +66,11 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 		garden.setLng(lng);
 		garden.setGardenImageId(gardenImageId);
 		
-		return GardenLocalServiceUtil.addGarden(garden);
+		garden = GardenLocalServiceUtil.addGarden(garden);
+		
+		MembershipServiceUtil.addMembership(garden.getOwnerUserId(), garden.getGardenId());
+		
+		return garden;
 	}
 	
 	public List<Garden> getGardens() throws SystemException{
