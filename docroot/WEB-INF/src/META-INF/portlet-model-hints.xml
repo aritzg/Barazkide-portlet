@@ -41,5 +41,6 @@
 		<field name="userId" type="long" />
 		<field name="gardenId" type="long" />
 		<field name="membershipDate" type="Date" />
+		<field name="status" type="int" />
 	</model>
 </model-hints>

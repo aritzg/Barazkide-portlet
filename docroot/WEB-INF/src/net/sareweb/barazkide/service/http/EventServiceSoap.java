@@ -97,5 +97,35 @@ public class EventServiceSoap {
 		}
 	}
 
+	public static net.sareweb.barazkide.model.EventSoap[] findEventsInGardenOlderThanDate(
+		long gardenId, long eventDate, int blockSize) throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInGardenOlderThanDate(gardenId,
+					eventDate, blockSize);
+
+			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static net.sareweb.barazkide.model.EventSoap[] findEventsInGardenNewerThanDate(
+		long gardenId, long eventDate, int blockSize) throws RemoteException {
+		try {
+			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInGardenNewerThanDate(gardenId,
+					eventDate, blockSize);
+
+			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(EventServiceSoap.class);
 }

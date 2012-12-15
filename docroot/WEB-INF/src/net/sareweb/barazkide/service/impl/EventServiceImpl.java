@@ -49,4 +49,12 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 	public List<Event> findEventsInFollowedGardensNewerThanDate(long userId, long followingDate, int blockSize) throws SystemException{
 		return eventFinder.findEventsInFollowedGardensNewerThanDate(userId, followingDate, blockSize);
 	}
+	
+	public List<Event> findEventsInGardenOlderThanDate(long gardenId, long eventDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInFollowedGardensOlderThanDate(gardenId, eventDate, blockSize);
+	}
+	
+	public List<Event> findEventsInGardenNewerThanDate(long gardenId, long eventDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInFollowedGardensNewerThanDate(gardenId, eventDate, blockSize);
+	}
 }

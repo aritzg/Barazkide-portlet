@@ -4,7 +4,9 @@ Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Event",
 	{
 		findEventsInFollowedGardensOlderThanDate: true,
-		findEventsInFollowedGardensNewerThanDate: true
+		findEventsInFollowedGardensNewerThanDate: true,
+		findEventsInGardenOlderThanDate: true,
+		findEventsInGardenNewerThanDate: true
 	}
 );
 

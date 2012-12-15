@@ -34,7 +34,7 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{membershipId=");
 		sb.append(membershipId);
@@ -44,6 +44,8 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 		sb.append(gardenId);
 		sb.append(", membershipDate=");
 		sb.append(membershipDate);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -63,6 +65,8 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 			membershipImpl.setMembershipDate(new Date(membershipDate));
 		}
 
+		membershipImpl.setStatus(status);
+
 		membershipImpl.resetOriginalValues();
 
 		return membershipImpl;
@@ -72,4 +76,5 @@ public class MembershipCacheModel implements CacheModel<Membership>,
 	public long userId;
 	public long gardenId;
 	public long membershipDate;
+	public int status;
 }

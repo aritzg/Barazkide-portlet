@@ -68,9 +68,10 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 			{ "membershipId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "gardenId", Types.BIGINT },
-			{ "membershipDate", Types.TIMESTAMP }
+			{ "membershipDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Barazkide_Membership (membershipId LONG not null primary key,userId LONG,gardenId LONG,membershipDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Barazkide_Membership (membershipId LONG not null primary key,userId LONG,gardenId LONG,membershipDate DATE null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Membership";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -104,6 +105,7 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		model.setUserId(soapModel.getUserId());
 		model.setGardenId(soapModel.getGardenId());
 		model.setMembershipDate(soapModel.getMembershipDate());
+		model.setStatus(soapModel.getStatus());
 
 		return model;
 	}
@@ -166,6 +168,7 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		attributes.put("userId", getUserId());
 		attributes.put("gardenId", getGardenId());
 		attributes.put("membershipDate", getMembershipDate());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -194,6 +197,12 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 
 		if (membershipDate != null) {
 			setMembershipDate(membershipDate);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -265,6 +274,15 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		_membershipDate = membershipDate;
 	}
 
+	@JSON
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -301,6 +319,7 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		membershipImpl.setUserId(getUserId());
 		membershipImpl.setGardenId(getGardenId());
 		membershipImpl.setMembershipDate(getMembershipDate());
+		membershipImpl.setStatus(getStatus());
 
 		membershipImpl.resetOriginalValues();
 
@@ -385,12 +404,14 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 			membershipCacheModel.membershipDate = Long.MIN_VALUE;
 		}
 
+		membershipCacheModel.status = getStatus();
+
 		return membershipCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{membershipId=");
 		sb.append(getMembershipId());
@@ -400,13 +421,15 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 		sb.append(getGardenId());
 		sb.append(", membershipDate=");
 		sb.append(getMembershipDate());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("net.sareweb.barazkide.model.Membership");
@@ -428,6 +451,10 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 			"<column><column-name>membershipDate</column-name><column-value><![CDATA[");
 		sb.append(getMembershipDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -447,6 +474,7 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 	private long _originalGardenId;
 	private boolean _setOriginalGardenId;
 	private Date _membershipDate;
+	private int _status;
 	private long _columnBitmask;
 	private Membership _escapedModelProxy;
 }

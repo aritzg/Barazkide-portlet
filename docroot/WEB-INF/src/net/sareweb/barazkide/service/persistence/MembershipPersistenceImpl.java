@@ -406,6 +406,7 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 		membershipImpl.setUserId(membership.getUserId());
 		membershipImpl.setGardenId(membership.getGardenId());
 		membershipImpl.setMembershipDate(membership.getMembershipDate());
+		membershipImpl.setStatus(membership.getStatus());
 
 		return membershipImpl;
 	}

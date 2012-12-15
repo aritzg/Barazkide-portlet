@@ -54,6 +54,49 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 			membership.setUserId(userId);
 			membership.setGardenId(gardenId);
 			membership.setMembershipDate(new Date());
+			membership.setStatus(1);
+			MembershipLocalServiceUtil.addMembership(membership);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean addMembershipRequest(long userId, long gardenId){
+		try{
+			Membership membership = MembershipLocalServiceUtil.createMembership(CounterLocalServiceUtil.increment());
+			membership.setUserId(userId);
+			membership.setGardenId(gardenId);
+			membership.setMembershipDate(new Date());
+			membership.setStatus(0);
+			MembershipLocalServiceUtil.addMembership(membership);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean acceptMembershipRequest(long userId, long gardenId){
+		try{
+			Membership membership = membershipPersistence.fetchByUserAndGarden(userId, gardenId);
+			membership.setStatus(1);
+			MembershipLocalServiceUtil.addMembership(membership);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean rejectMembershipRequest(long userId, long gardenId){
+		try{
+			Membership membership = membershipPersistence.fetchByUserAndGarden(userId, gardenId);
+			membership.setStatus(2);
 			MembershipLocalServiceUtil.addMembership(membership);
 			return true;
 		}

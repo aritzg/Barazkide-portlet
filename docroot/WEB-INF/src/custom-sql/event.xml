@@ -17,10 +17,10 @@
     WHERE
     	Barazkide_Following.userId = ?
     	AND
-    	Barazkide_Event.creategDate < ?
+    	Barazkide_Event.createDate < ?
 
 	ORDER BY
-		Barazkide_Event.creategDate DESC
+		Barazkide_Event.createDate DESC
     ]]>
 	</sql>
 	<sql
@@ -40,10 +40,40 @@
     WHERE
     	Barazkide_Following.userId = ?
     	AND
-    	Barazkide_Event.creategDate > ?
+    	Barazkide_Event.createDate > ?
 
 	ORDER BY
-		Barazkide_Event.creategDate DESC
+		Barazkide_Event.createDate DESC
+    ]]>
+	</sql>
+	<sql
+		id="net.sareweb.barazkide.service.persistence.EventFinder.findEventsInGardenOlderThanDate">
+	<![CDATA[
+	SELECT Barazkide_Event.*
+    FROM
+    	Barazkide_Event
+    WHERE
+    	Barazkide_Event.gardenId = ?
+    	AND
+    	Barazkide_Event.createDate < ?
+
+	ORDER BY
+		Barazkide_Event.createDate DESC
+    ]]>
+	</sql>
+	<sql
+		id="net.sareweb.barazkide.service.persistence.EventFinder.findEventsInGardenNewerThanDate">
+	<![CDATA[
+	SELECT Barazkide_Event.*
+    FROM
+    	Barazkide_Event
+    WHERE
+    	Barazkide_Event.gardenId = ?
+    	AND
+    	Barazkide_Event.createDate > ?
+
+	ORDER BY
+		Barazkide_Event.createDate DESC
     ]]>
 	</sql>
 </custom-sql>

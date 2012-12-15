@@ -37,6 +37,7 @@
 		<column name="userId" type="long"/>
 		<column name="gardenId" type="long"/>
 		<column name="membershipDate" type="Date" />
+		<column name="status" type="int" />
 		
 		<!-- Finder -->
 		<finder name="Garden" return-type="Collection">

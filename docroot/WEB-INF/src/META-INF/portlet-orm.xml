@@ -86,6 +86,7 @@
 			<basic name="membershipDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
