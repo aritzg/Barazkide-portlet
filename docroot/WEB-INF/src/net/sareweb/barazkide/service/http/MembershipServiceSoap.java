@@ -80,6 +80,51 @@ public class MembershipServiceSoap {
 		}
 	}
 
+	public static boolean addMembershipRequest(long userId, long gardenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = MembershipServiceUtil.addMembershipRequest(userId,
+					gardenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean acceptMembershipRequest(long userId, long gardenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = MembershipServiceUtil.acceptMembershipRequest(userId,
+					gardenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean rejectMembershipRequest(long userId, long gardenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = MembershipServiceUtil.rejectMembershipRequest(userId,
+					gardenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static boolean removeMembership(long userId, long gardenId)
 		throws RemoteException {
 		try {
@@ -100,7 +145,7 @@ public class MembershipServiceSoap {
 		try {
 			java.util.List<com.liferay.portal.model.User> returnValue = MembershipServiceUtil.findMemberUsers(gardenId);
 
-			return null;//net.sareweb.barazkide.model.MembershipSoap.toSoapModels(returnValue);
+			return null; //net.sareweb.barazkide.model.MembershipSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

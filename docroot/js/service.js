@@ -35,6 +35,9 @@ Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Membership",
 	{
 		addMembership: true,
+		addMembershipRequest: true,
+		acceptMembershipRequest: true,
+		rejectMembershipRequest: true,
 		removeMembership: true,
 		findMemberUsers: true
 	}

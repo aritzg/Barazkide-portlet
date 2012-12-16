@@ -35,13 +35,25 @@ public class MembershipServiceClpInvoker {
 
 		_methodParameterTypes58 = new String[] { "long", "long" };
 
-		_methodName59 = "removeMembership";
+		_methodName59 = "addMembershipRequest";
 
 		_methodParameterTypes59 = new String[] { "long", "long" };
 
-		_methodName60 = "findMemberUsers";
+		_methodName60 = "acceptMembershipRequest";
 
-		_methodParameterTypes60 = new String[] { "long" };
+		_methodParameterTypes60 = new String[] { "long", "long" };
+
+		_methodName61 = "rejectMembershipRequest";
+
+		_methodParameterTypes61 = new String[] { "long", "long" };
+
+		_methodName62 = "removeMembership";
+
+		_methodParameterTypes62 = new String[] { "long", "long" };
+
+		_methodName63 = "findMemberUsers";
+
+		_methodParameterTypes63 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -64,12 +76,30 @@ public class MembershipServiceClpInvoker {
 
 		if (_methodName59.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-			return MembershipServiceUtil.removeMembership(((Long)arguments[0]).longValue(),
+			return MembershipServiceUtil.addMembershipRequest(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName60.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+			return MembershipServiceUtil.acceptMembershipRequest(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName61.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+			return MembershipServiceUtil.rejectMembershipRequest(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName62.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+			return MembershipServiceUtil.removeMembership(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName63.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
 			return MembershipServiceUtil.findMemberUsers(((Long)arguments[0]).longValue());
 		}
 
@@ -86,4 +116,10 @@ public class MembershipServiceClpInvoker {
 	private String[] _methodParameterTypes59;
 	private String _methodName60;
 	private String[] _methodParameterTypes60;
+	private String _methodName61;
+	private String[] _methodParameterTypes61;
+	private String _methodName62;
+	private String[] _methodParameterTypes62;
+	private String _methodName63;
+	private String[] _methodParameterTypes63;
 }
