@@ -14,6 +14,7 @@
 
 package net.sareweb.barazkide.service.impl;
 
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 		event.setGardenId(gardenId);
 		event.setCreateDate(new Date());
 		event.setEventType(eventType);
-		event.setEventText(eventText);
+		event.setEventText(decode(eventText));
 		
 		return EventLocalServiceUtil.addEvent(event);
 	}
@@ -72,5 +73,13 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 	
 	public List<Event> findEventsInGardenNewerThanDate(long gardenId, long eventDate, int blockSize) throws SystemException{
 		return eventFinder.findEventsInFollowedGardensNewerThanDate(gardenId, eventDate, blockSize);
+	}
+	
+	private String decode(String codedString){
+		try {
+			return URLDecoder.decode(codedString, "UTF-8");
+		} catch (Exception e) {
+			return "ERROR";
+		}
 	}
 }
