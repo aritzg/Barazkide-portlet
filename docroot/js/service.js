@@ -3,6 +3,7 @@ Liferay.Service.register("Liferay.Service.Barazkide", "net.sareweb.barazkide.ser
 Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Event",
 	{
+		addEvent: true,
 		findEventsInFollowedGardensOlderThanDate: true,
 		findEventsInFollowedGardensNewerThanDate: true,
 		findEventsInGardenOlderThanDate: true,
@@ -40,5 +41,13 @@ Liferay.Service.registerClass(
 		rejectMembershipRequest: true,
 		removeMembership: true,
 		findMemberUsers: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.Barazkide, "Rating",
+	{
+		addRating: true,
+		getAvgRating: true
 	}
 );

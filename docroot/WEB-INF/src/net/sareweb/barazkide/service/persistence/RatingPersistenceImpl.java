@@ -42,10 +42,10 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import net.sareweb.barazkide.NoSuchEventException;
-import net.sareweb.barazkide.model.Event;
-import net.sareweb.barazkide.model.impl.EventImpl;
-import net.sareweb.barazkide.model.impl.EventModelImpl;
+import net.sareweb.barazkide.NoSuchRatingException;
+import net.sareweb.barazkide.model.Rating;
+import net.sareweb.barazkide.model.impl.RatingImpl;
+import net.sareweb.barazkide.model.impl.RatingModelImpl;
 
 import java.io.Serializable;
 
@@ -54,89 +54,91 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The persistence implementation for the event service.
+ * The persistence implementation for the rating service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
  * @author A.Galdos
- * @see EventPersistence
- * @see EventUtil
+ * @see RatingPersistence
+ * @see RatingUtil
  * @generated
  */
-public class EventPersistenceImpl extends BasePersistenceImpl<Event>
-	implements EventPersistence {
+public class RatingPersistenceImpl extends BasePersistenceImpl<Rating>
+	implements RatingPersistence {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link EventUtil} to access the event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link RatingUtil} to access the rating persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = EventImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_ENTITY = RatingImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GARDENID = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGardenId",
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_RATEDOBJECTID =
+		new FinderPath(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingModelImpl.FINDER_CACHE_ENABLED, RatingImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRatedObjectId",
 			new String[] {
 				Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID =
-		new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGardenId",
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RATEDOBJECTID =
+		new FinderPath(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingModelImpl.FINDER_CACHE_ENABLED, RatingImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRatedObjectId",
 			new String[] { Long.class.getName() },
-			EventModelImpl.GARDENID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_GARDENID = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGardenId",
+			RatingModelImpl.RATEDOBJECTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_RATEDOBJECTID = new FinderPath(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRatedObjectId",
 			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingModelImpl.FINDER_CACHE_ENABLED, RatingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventModelImpl.FINDER_CACHE_ENABLED, EventImpl.class,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingModelImpl.FINDER_CACHE_ENABLED, RatingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 
 	/**
-	 * Caches the event in the entity cache if it is enabled.
+	 * Caches the rating in the entity cache if it is enabled.
 	 *
-	 * @param event the event
+	 * @param rating the rating
 	 */
-	public void cacheResult(Event event) {
-		EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventImpl.class, event.getPrimaryKey(), event);
+	public void cacheResult(Rating rating) {
+		EntityCacheUtil.putResult(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingImpl.class, rating.getPrimaryKey(), rating);
 
-		event.resetOriginalValues();
+		rating.resetOriginalValues();
 	}
 
 	/**
-	 * Caches the events in the entity cache if it is enabled.
+	 * Caches the ratings in the entity cache if it is enabled.
 	 *
-	 * @param events the events
+	 * @param ratings the ratings
 	 */
-	public void cacheResult(List<Event> events) {
-		for (Event event : events) {
-			if (EntityCacheUtil.getResult(EventModelImpl.ENTITY_CACHE_ENABLED,
-						EventImpl.class, event.getPrimaryKey()) == null) {
-				cacheResult(event);
+	public void cacheResult(List<Rating> ratings) {
+		for (Rating rating : ratings) {
+			if (EntityCacheUtil.getResult(
+						RatingModelImpl.ENTITY_CACHE_ENABLED, RatingImpl.class,
+						rating.getPrimaryKey()) == null) {
+				cacheResult(rating);
 			}
 			else {
-				event.resetOriginalValues();
+				rating.resetOriginalValues();
 			}
 		}
 	}
 
 	/**
-	 * Clears the cache for all events.
+	 * Clears the cache for all ratings.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -145,10 +147,10 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	@Override
 	public void clearCache() {
 		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(EventImpl.class.getName());
+			CacheRegistryUtil.clear(RatingImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(EventImpl.class.getName());
+		EntityCacheUtil.clearCache(RatingImpl.class.getName());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -156,90 +158,90 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
-	 * Clears the cache for the event.
+	 * Clears the cache for the rating.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
-	public void clearCache(Event event) {
-		EntityCacheUtil.removeResult(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventImpl.class, event.getPrimaryKey());
+	public void clearCache(Rating rating) {
+		EntityCacheUtil.removeResult(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingImpl.class, rating.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
-	public void clearCache(List<Event> events) {
+	public void clearCache(List<Rating> ratings) {
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (Event event : events) {
-			EntityCacheUtil.removeResult(EventModelImpl.ENTITY_CACHE_ENABLED,
-				EventImpl.class, event.getPrimaryKey());
+		for (Rating rating : ratings) {
+			EntityCacheUtil.removeResult(RatingModelImpl.ENTITY_CACHE_ENABLED,
+				RatingImpl.class, rating.getPrimaryKey());
 		}
 	}
 
 	/**
-	 * Creates a new event with the primary key. Does not add the event to the database.
+	 * Creates a new rating with the primary key. Does not add the rating to the database.
 	 *
-	 * @param eventId the primary key for the new event
-	 * @return the new event
+	 * @param ratingId the primary key for the new rating
+	 * @return the new rating
 	 */
-	public Event create(long eventId) {
-		Event event = new EventImpl();
+	public Rating create(long ratingId) {
+		Rating rating = new RatingImpl();
 
-		event.setNew(true);
-		event.setPrimaryKey(eventId);
+		rating.setNew(true);
+		rating.setPrimaryKey(ratingId);
 
-		return event;
+		return rating;
 	}
 
 	/**
-	 * Removes the event with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the rating with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param eventId the primary key of the event
-	 * @return the event that was removed
-	 * @throws net.sareweb.barazkide.NoSuchEventException if a event with the primary key could not be found
+	 * @param ratingId the primary key of the rating
+	 * @return the rating that was removed
+	 * @throws net.sareweb.barazkide.NoSuchRatingException if a rating with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Event remove(long eventId)
-		throws NoSuchEventException, SystemException {
-		return remove(Long.valueOf(eventId));
+	public Rating remove(long ratingId)
+		throws NoSuchRatingException, SystemException {
+		return remove(Long.valueOf(ratingId));
 	}
 
 	/**
-	 * Removes the event with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the rating with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the event
-	 * @return the event that was removed
-	 * @throws net.sareweb.barazkide.NoSuchEventException if a event with the primary key could not be found
+	 * @param primaryKey the primary key of the rating
+	 * @return the rating that was removed
+	 * @throws net.sareweb.barazkide.NoSuchRatingException if a rating with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event remove(Serializable primaryKey)
-		throws NoSuchEventException, SystemException {
+	public Rating remove(Serializable primaryKey)
+		throws NoSuchRatingException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Event event = (Event)session.get(EventImpl.class, primaryKey);
+			Rating rating = (Rating)session.get(RatingImpl.class, primaryKey);
 
-			if (event == null) {
+			if (rating == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				throw new NoSuchRatingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
 					primaryKey);
 			}
 
-			return remove(event);
+			return remove(rating);
 		}
-		catch (NoSuchEventException nsee) {
+		catch (NoSuchRatingException nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -251,15 +253,15 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	@Override
-	protected Event removeImpl(Event event) throws SystemException {
-		event = toUnwrappedModel(event);
+	protected Rating removeImpl(Rating rating) throws SystemException {
+		rating = toUnwrappedModel(rating);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, event);
+			BatchSessionUtil.delete(session, rating);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -268,28 +270,28 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			closeSession(session);
 		}
 
-		clearCache(event);
+		clearCache(rating);
 
-		return event;
+		return rating;
 	}
 
 	@Override
-	public Event updateImpl(net.sareweb.barazkide.model.Event event,
+	public Rating updateImpl(net.sareweb.barazkide.model.Rating rating,
 		boolean merge) throws SystemException {
-		event = toUnwrappedModel(event);
+		rating = toUnwrappedModel(rating);
 
-		boolean isNew = event.isNew();
+		boolean isNew = rating.isNew();
 
-		EventModelImpl eventModelImpl = (EventModelImpl)event;
+		RatingModelImpl ratingModelImpl = (RatingModelImpl)rating;
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, event, merge);
+			BatchSessionUtil.update(session, rating, merge);
 
-			event.setNew(false);
+			rating.setNew(false);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -300,124 +302,126 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew || !EventModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (isNew || !RatingModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
-			if ((eventModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID.getColumnBitmask()) != 0) {
+			if ((ratingModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RATEDOBJECTID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(eventModelImpl.getOriginalGardenId())
+						Long.valueOf(ratingModelImpl.getOriginalRatedObjectId())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GARDENID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RATEDOBJECTID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RATEDOBJECTID,
 					args);
 
-				args = new Object[] { Long.valueOf(eventModelImpl.getGardenId()) };
+				args = new Object[] {
+						Long.valueOf(ratingModelImpl.getRatedObjectId())
+					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GARDENID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RATEDOBJECTID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RATEDOBJECTID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
-			EventImpl.class, event.getPrimaryKey(), event);
+		EntityCacheUtil.putResult(RatingModelImpl.ENTITY_CACHE_ENABLED,
+			RatingImpl.class, rating.getPrimaryKey(), rating);
 
-		return event;
+		return rating;
 	}
 
-	protected Event toUnwrappedModel(Event event) {
-		if (event instanceof EventImpl) {
-			return event;
+	protected Rating toUnwrappedModel(Rating rating) {
+		if (rating instanceof RatingImpl) {
+			return rating;
 		}
 
-		EventImpl eventImpl = new EventImpl();
+		RatingImpl ratingImpl = new RatingImpl();
 
-		eventImpl.setNew(event.isNew());
-		eventImpl.setPrimaryKey(event.getPrimaryKey());
+		ratingImpl.setNew(rating.isNew());
+		ratingImpl.setPrimaryKey(rating.getPrimaryKey());
 
-		eventImpl.setEventId(event.getEventId());
-		eventImpl.setGardenId(event.getGardenId());
-		eventImpl.setCreatorUserId(event.getCreatorUserId());
-		eventImpl.setDestinationUserId(event.getDestinationUserId());
-		eventImpl.setGardenImageId(event.getGardenImageId());
-		eventImpl.setCreateDate(event.getCreateDate());
-		eventImpl.setEventType(event.getEventType());
-		eventImpl.setEventText(event.getEventText());
+		ratingImpl.setRatingId(rating.getRatingId());
+		ratingImpl.setUserId(rating.getUserId());
+		ratingImpl.setRateType(rating.getRateType());
+		ratingImpl.setRatedObjectId(rating.getRatedObjectId());
+		ratingImpl.setRatingDate(rating.getRatingDate());
+		ratingImpl.setRate(rating.getRate());
 
-		return eventImpl;
+		return ratingImpl;
 	}
 
 	/**
-	 * Returns the event with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the rating with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the event
-	 * @return the event
-	 * @throws com.liferay.portal.NoSuchModelException if a event with the primary key could not be found
+	 * @param primaryKey the primary key of the rating
+	 * @return the rating
+	 * @throws com.liferay.portal.NoSuchModelException if a rating with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event findByPrimaryKey(Serializable primaryKey)
+	public Rating findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchModelException, SystemException {
 		return findByPrimaryKey(((Long)primaryKey).longValue());
 	}
 
 	/**
-	 * Returns the event with the primary key or throws a {@link net.sareweb.barazkide.NoSuchEventException} if it could not be found.
+	 * Returns the rating with the primary key or throws a {@link net.sareweb.barazkide.NoSuchRatingException} if it could not be found.
 	 *
-	 * @param eventId the primary key of the event
-	 * @return the event
-	 * @throws net.sareweb.barazkide.NoSuchEventException if a event with the primary key could not be found
+	 * @param ratingId the primary key of the rating
+	 * @return the rating
+	 * @throws net.sareweb.barazkide.NoSuchRatingException if a rating with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Event findByPrimaryKey(long eventId)
-		throws NoSuchEventException, SystemException {
-		Event event = fetchByPrimaryKey(eventId);
+	public Rating findByPrimaryKey(long ratingId)
+		throws NoSuchRatingException, SystemException {
+		Rating rating = fetchByPrimaryKey(ratingId);
 
-		if (event == null) {
+		if (rating == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + eventId);
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + ratingId);
 			}
 
-			throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				eventId);
+			throw new NoSuchRatingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				ratingId);
 		}
 
-		return event;
+		return rating;
 	}
 
 	/**
-	 * Returns the event with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the rating with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the event
-	 * @return the event, or <code>null</code> if a event with the primary key could not be found
+	 * @param primaryKey the primary key of the rating
+	 * @return the rating, or <code>null</code> if a rating with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Event fetchByPrimaryKey(Serializable primaryKey)
+	public Rating fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
 		return fetchByPrimaryKey(((Long)primaryKey).longValue());
 	}
 
 	/**
-	 * Returns the event with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the rating with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param eventId the primary key of the event
-	 * @return the event, or <code>null</code> if a event with the primary key could not be found
+	 * @param ratingId the primary key of the rating
+	 * @return the rating, or <code>null</code> if a rating with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Event fetchByPrimaryKey(long eventId) throws SystemException {
-		Event event = (Event)EntityCacheUtil.getResult(EventModelImpl.ENTITY_CACHE_ENABLED,
-				EventImpl.class, eventId);
+	public Rating fetchByPrimaryKey(long ratingId) throws SystemException {
+		Rating rating = (Rating)EntityCacheUtil.getResult(RatingModelImpl.ENTITY_CACHE_ENABLED,
+				RatingImpl.class, ratingId);
 
-		if (event == _nullEvent) {
+		if (rating == _nullRating) {
 			return null;
 		}
 
-		if (event == null) {
+		if (rating == null) {
 			Session session = null;
 
 			boolean hasException = false;
@@ -425,8 +429,8 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			try {
 				session = openSession();
 
-				event = (Event)session.get(EventImpl.class,
-						Long.valueOf(eventId));
+				rating = (Rating)session.get(RatingImpl.class,
+						Long.valueOf(ratingId));
 			}
 			catch (Exception e) {
 				hasException = true;
@@ -434,86 +438,91 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 				throw processException(e);
 			}
 			finally {
-				if (event != null) {
-					cacheResult(event);
+				if (rating != null) {
+					cacheResult(rating);
 				}
 				else if (!hasException) {
-					EntityCacheUtil.putResult(EventModelImpl.ENTITY_CACHE_ENABLED,
-						EventImpl.class, eventId, _nullEvent);
+					EntityCacheUtil.putResult(RatingModelImpl.ENTITY_CACHE_ENABLED,
+						RatingImpl.class, ratingId, _nullRating);
 				}
 
 				closeSession(session);
 			}
 		}
 
-		return event;
+		return rating;
 	}
 
 	/**
-	 * Returns all the events where gardenId = &#63;.
+	 * Returns all the ratings where ratedObjectId = &#63;.
 	 *
-	 * @param gardenId the garden ID
-	 * @return the matching events
+	 * @param ratedObjectId the rated object ID
+	 * @return the matching ratings
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Event> findByGardenId(long gardenId) throws SystemException {
-		return findByGardenId(gardenId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the events where gardenId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param gardenId the garden ID
-	 * @param start the lower bound of the range of events
-	 * @param end the upper bound of the range of events (not inclusive)
-	 * @return the range of matching events
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Event> findByGardenId(long gardenId, int start, int end)
+	public List<Rating> findByRatedObjectId(long ratedObjectId)
 		throws SystemException {
-		return findByGardenId(gardenId, start, end, null);
+		return findByRatedObjectId(ratedObjectId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the events where gardenId = &#63;.
+	 * Returns a range of all the ratings where ratedObjectId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param gardenId the garden ID
-	 * @param start the lower bound of the range of events
-	 * @param end the upper bound of the range of events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching events
+	 * @param ratedObjectId the rated object ID
+	 * @param start the lower bound of the range of ratings
+	 * @param end the upper bound of the range of ratings (not inclusive)
+	 * @return the range of matching ratings
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Event> findByGardenId(long gardenId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<Rating> findByRatedObjectId(long ratedObjectId, int start,
+		int end) throws SystemException {
+		return findByRatedObjectId(ratedObjectId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ratings where ratedObjectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param ratedObjectId the rated object ID
+	 * @param start the lower bound of the range of ratings
+	 * @param end the upper bound of the range of ratings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ratings
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Rating> findByRatedObjectId(long ratedObjectId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENID;
-			finderArgs = new Object[] { gardenId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RATEDOBJECTID;
+			finderArgs = new Object[] { ratedObjectId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GARDENID;
-			finderArgs = new Object[] { gardenId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_RATEDOBJECTID;
+			finderArgs = new Object[] {
+					ratedObjectId,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		List<Event> list = (List<Event>)FinderCacheUtil.getResult(finderPath,
+		List<Rating> list = (List<Rating>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
-			for (Event event : list) {
-				if ((gardenId != event.getGardenId())) {
+			for (Rating rating : list) {
+				if ((ratedObjectId != rating.getRatedObjectId())) {
 					list = null;
 
 					break;
@@ -529,20 +538,16 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(2);
 			}
 
-			query.append(_SQL_SELECT_EVENT_WHERE);
+			query.append(_SQL_SELECT_RATING_WHERE);
 
-			query.append(_FINDER_COLUMN_GARDENID_GARDENID_2);
+			query.append(_FINDER_COLUMN_RATEDOBJECTID_RATEDOBJECTID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
 					orderByComparator);
-			}
-
-			else {
-				query.append(EventModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -556,9 +561,9 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(gardenId);
+				qPos.add(ratedObjectId);
 
-				list = (List<Event>)QueryUtil.list(q, getDialect(), start, end);
+				list = (List<Rating>)QueryUtil.list(q, getDialect(), start, end);
 			}
 			catch (Exception e) {
 				throw processException(e);
@@ -581,97 +586,47 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
-	 * Returns the first event in the ordered set where gardenId = &#63;.
+	 * Returns the first rating in the ordered set where ratedObjectId = &#63;.
 	 *
-	 * @param gardenId the garden ID
+	 * @param ratedObjectId the rated object ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching event
-	 * @throws net.sareweb.barazkide.NoSuchEventException if a matching event could not be found
+	 * @return the first matching rating
+	 * @throws net.sareweb.barazkide.NoSuchRatingException if a matching rating could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Event findByGardenId_First(long gardenId,
+	public Rating findByRatedObjectId_First(long ratedObjectId,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
-		Event event = fetchByGardenId_First(gardenId, orderByComparator);
+		throws NoSuchRatingException, SystemException {
+		Rating rating = fetchByRatedObjectId_First(ratedObjectId,
+				orderByComparator);
 
-		if (event != null) {
-			return event;
+		if (rating != null) {
+			return rating;
 		}
 
 		StringBundler msg = new StringBundler(4);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("gardenId=");
-		msg.append(gardenId);
+		msg.append("ratedObjectId=");
+		msg.append(ratedObjectId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchRatingException(msg.toString());
 	}
 
 	/**
-	 * Returns the first event in the ordered set where gardenId = &#63;.
+	 * Returns the first rating in the ordered set where ratedObjectId = &#63;.
 	 *
-	 * @param gardenId the garden ID
+	 * @param ratedObjectId the rated object ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching event, or <code>null</code> if a matching event could not be found
+	 * @return the first matching rating, or <code>null</code> if a matching rating could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Event fetchByGardenId_First(long gardenId,
+	public Rating fetchByRatedObjectId_First(long ratedObjectId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Event> list = findByGardenId(gardenId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last event in the ordered set where gardenId = &#63;.
-	 *
-	 * @param gardenId the garden ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching event
-	 * @throws net.sareweb.barazkide.NoSuchEventException if a matching event could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Event findByGardenId_Last(long gardenId,
-		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
-		Event event = fetchByGardenId_Last(gardenId, orderByComparator);
-
-		if (event != null) {
-			return event;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("gardenId=");
-		msg.append(gardenId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchEventException(msg.toString());
-	}
-
-	/**
-	 * Returns the last event in the ordered set where gardenId = &#63;.
-	 *
-	 * @param gardenId the garden ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching event, or <code>null</code> if a matching event could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Event fetchByGardenId_Last(long gardenId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByGardenId(gardenId);
-
-		List<Event> list = findByGardenId(gardenId, count - 1, count,
+		List<Rating> list = findByRatedObjectId(ratedObjectId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -682,34 +637,87 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
-	 * Returns the events before and after the current event in the ordered set where gardenId = &#63;.
+	 * Returns the last rating in the ordered set where ratedObjectId = &#63;.
 	 *
-	 * @param eventId the primary key of the current event
-	 * @param gardenId the garden ID
+	 * @param ratedObjectId the rated object ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next event
-	 * @throws net.sareweb.barazkide.NoSuchEventException if a event with the primary key could not be found
+	 * @return the last matching rating
+	 * @throws net.sareweb.barazkide.NoSuchRatingException if a matching rating could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Event[] findByGardenId_PrevAndNext(long eventId, long gardenId,
+	public Rating findByRatedObjectId_Last(long ratedObjectId,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
-		Event event = findByPrimaryKey(eventId);
+		throws NoSuchRatingException, SystemException {
+		Rating rating = fetchByRatedObjectId_Last(ratedObjectId,
+				orderByComparator);
+
+		if (rating != null) {
+			return rating;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ratedObjectId=");
+		msg.append(ratedObjectId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRatingException(msg.toString());
+	}
+
+	/**
+	 * Returns the last rating in the ordered set where ratedObjectId = &#63;.
+	 *
+	 * @param ratedObjectId the rated object ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching rating, or <code>null</code> if a matching rating could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Rating fetchByRatedObjectId_Last(long ratedObjectId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByRatedObjectId(ratedObjectId);
+
+		List<Rating> list = findByRatedObjectId(ratedObjectId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ratings before and after the current rating in the ordered set where ratedObjectId = &#63;.
+	 *
+	 * @param ratingId the primary key of the current rating
+	 * @param ratedObjectId the rated object ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next rating
+	 * @throws net.sareweb.barazkide.NoSuchRatingException if a rating with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Rating[] findByRatedObjectId_PrevAndNext(long ratingId,
+		long ratedObjectId, OrderByComparator orderByComparator)
+		throws NoSuchRatingException, SystemException {
+		Rating rating = findByPrimaryKey(ratingId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Event[] array = new EventImpl[3];
+			Rating[] array = new RatingImpl[3];
 
-			array[0] = getByGardenId_PrevAndNext(session, event, gardenId,
-					orderByComparator, true);
+			array[0] = getByRatedObjectId_PrevAndNext(session, rating,
+					ratedObjectId, orderByComparator, true);
 
-			array[1] = event;
+			array[1] = rating;
 
-			array[2] = getByGardenId_PrevAndNext(session, event, gardenId,
-					orderByComparator, false);
+			array[2] = getByRatedObjectId_PrevAndNext(session, rating,
+					ratedObjectId, orderByComparator, false);
 
 			return array;
 		}
@@ -721,8 +729,9 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		}
 	}
 
-	protected Event getByGardenId_PrevAndNext(Session session, Event event,
-		long gardenId, OrderByComparator orderByComparator, boolean previous) {
+	protected Rating getByRatedObjectId_PrevAndNext(Session session,
+		Rating rating, long ratedObjectId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -733,9 +742,9 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_EVENT_WHERE);
+		query.append(_SQL_SELECT_RATING_WHERE);
 
-		query.append(_FINDER_COLUMN_GARDENID_GARDENID_2);
+		query.append(_FINDER_COLUMN_RATEDOBJECTID_RATEDOBJECTID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -793,10 +802,6 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			}
 		}
 
-		else {
-			query.append(EventModelImpl.ORDER_BY_JPQL);
-		}
-
 		String sql = query.toString();
 
 		Query q = session.createQuery(sql);
@@ -806,17 +811,17 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(gardenId);
+		qPos.add(ratedObjectId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(event);
+			Object[] values = orderByComparator.getOrderByConditionValues(rating);
 
 			for (Object value : values) {
 				qPos.add(value);
 			}
 		}
 
-		List<Event> list = q.list();
+		List<Rating> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -827,45 +832,45 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
-	 * Returns all the events.
+	 * Returns all the ratings.
 	 *
-	 * @return the events
+	 * @return the ratings
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Event> findAll() throws SystemException {
+	public List<Rating> findAll() throws SystemException {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the events.
+	 * Returns a range of all the ratings.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of events
-	 * @param end the upper bound of the range of events (not inclusive)
-	 * @return the range of events
+	 * @param start the lower bound of the range of ratings
+	 * @param end the upper bound of the range of ratings (not inclusive)
+	 * @return the range of ratings
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Event> findAll(int start, int end) throws SystemException {
+	public List<Rating> findAll(int start, int end) throws SystemException {
 		return findAll(start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the events.
+	 * Returns an ordered range of all the ratings.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of events
-	 * @param end the upper bound of the range of events (not inclusive)
+	 * @param start the lower bound of the range of ratings
+	 * @param end the upper bound of the range of ratings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of events
+	 * @return the ordered range of ratings
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Event> findAll(int start, int end,
+	public List<Rating> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = new Object[] { start, end, orderByComparator };
@@ -880,7 +885,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Event> list = (List<Event>)FinderCacheUtil.getResult(finderPath,
+		List<Rating> list = (List<Rating>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -891,7 +896,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 				query = new StringBundler(2 +
 						(orderByComparator.getOrderByFields().length * 3));
 
-				query.append(_SQL_SELECT_EVENT);
+				query.append(_SQL_SELECT_RATING);
 
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
 					orderByComparator);
@@ -899,7 +904,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_EVENT.concat(EventModelImpl.ORDER_BY_JPQL);
+				sql = _SQL_SELECT_RATING;
 			}
 
 			Session session = null;
@@ -910,13 +915,13 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 				Query q = session.createQuery(sql);
 
 				if (orderByComparator == null) {
-					list = (List<Event>)QueryUtil.list(q, getDialect(), start,
+					list = (List<Rating>)QueryUtil.list(q, getDialect(), start,
 							end, false);
 
 					Collections.sort(list);
 				}
 				else {
-					list = (List<Event>)QueryUtil.list(q, getDialect(), start,
+					list = (List<Rating>)QueryUtil.list(q, getDialect(), start,
 							end);
 				}
 			}
@@ -941,47 +946,49 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
-	 * Removes all the events where gardenId = &#63; from the database.
+	 * Removes all the ratings where ratedObjectId = &#63; from the database.
 	 *
-	 * @param gardenId the garden ID
+	 * @param ratedObjectId the rated object ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByGardenId(long gardenId) throws SystemException {
-		for (Event event : findByGardenId(gardenId)) {
-			remove(event);
+	public void removeByRatedObjectId(long ratedObjectId)
+		throws SystemException {
+		for (Rating rating : findByRatedObjectId(ratedObjectId)) {
+			remove(rating);
 		}
 	}
 
 	/**
-	 * Removes all the events from the database.
+	 * Removes all the ratings from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void removeAll() throws SystemException {
-		for (Event event : findAll()) {
-			remove(event);
+		for (Rating rating : findAll()) {
+			remove(rating);
 		}
 	}
 
 	/**
-	 * Returns the number of events where gardenId = &#63;.
+	 * Returns the number of ratings where ratedObjectId = &#63;.
 	 *
-	 * @param gardenId the garden ID
-	 * @return the number of matching events
+	 * @param ratedObjectId the rated object ID
+	 * @return the number of matching ratings
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByGardenId(long gardenId) throws SystemException {
-		Object[] finderArgs = new Object[] { gardenId };
+	public int countByRatedObjectId(long ratedObjectId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { ratedObjectId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_GARDENID,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_RATEDOBJECTID,
 				finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_EVENT_WHERE);
+			query.append(_SQL_COUNT_RATING_WHERE);
 
-			query.append(_FINDER_COLUMN_GARDENID_GARDENID_2);
+			query.append(_FINDER_COLUMN_RATEDOBJECTID_RATEDOBJECTID_2);
 
 			String sql = query.toString();
 
@@ -994,7 +1001,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(gardenId);
+				qPos.add(ratedObjectId);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1006,7 +1013,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_GARDENID,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_RATEDOBJECTID,
 					finderArgs, count);
 
 				closeSession(session);
@@ -1017,9 +1024,9 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
-	 * Returns the number of events.
+	 * Returns the number of ratings.
 	 *
-	 * @return the number of events
+	 * @return the number of ratings
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
@@ -1032,7 +1039,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_EVENT);
+				Query q = session.createQuery(_SQL_COUNT_RATING);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1055,19 +1062,19 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	/**
-	 * Initializes the event persistence.
+	 * Initializes the rating persistence.
 	 */
 	public void afterPropertiesSet() {
 		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
 					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.net.sareweb.barazkide.model.Event")));
+						"value.object.listener.net.sareweb.barazkide.model.Rating")));
 
 		if (listenerClassNames.length > 0) {
 			try {
-				List<ModelListener<Event>> listenersList = new ArrayList<ModelListener<Event>>();
+				List<ModelListener<Rating>> listenersList = new ArrayList<ModelListener<Rating>>();
 
 				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<Event>)InstanceFactory.newInstance(
+					listenersList.add((ModelListener<Rating>)InstanceFactory.newInstance(
 							listenerClassName));
 				}
 
@@ -1080,7 +1087,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(EventImpl.class.getName());
+		EntityCacheUtil.removeCache(RatingImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
@@ -1101,32 +1108,32 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private static final String _SQL_SELECT_EVENT = "SELECT event FROM Event event";
-	private static final String _SQL_SELECT_EVENT_WHERE = "SELECT event FROM Event event WHERE ";
-	private static final String _SQL_COUNT_EVENT = "SELECT COUNT(event) FROM Event event";
-	private static final String _SQL_COUNT_EVENT_WHERE = "SELECT COUNT(event) FROM Event event WHERE ";
-	private static final String _FINDER_COLUMN_GARDENID_GARDENID_2 = "event.gardenId = ?";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "event.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Event exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Event exists with the key {";
+	private static final String _SQL_SELECT_RATING = "SELECT rating FROM Rating rating";
+	private static final String _SQL_SELECT_RATING_WHERE = "SELECT rating FROM Rating rating WHERE ";
+	private static final String _SQL_COUNT_RATING = "SELECT COUNT(rating) FROM Rating rating";
+	private static final String _SQL_COUNT_RATING_WHERE = "SELECT COUNT(rating) FROM Rating rating WHERE ";
+	private static final String _FINDER_COLUMN_RATEDOBJECTID_RATEDOBJECTID_2 = "rating.ratedObjectId = ?";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "rating.";
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Rating exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Rating exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(EventPersistenceImpl.class);
-	private static Event _nullEvent = new EventImpl() {
+	private static Log _log = LogFactoryUtil.getLog(RatingPersistenceImpl.class);
+	private static Rating _nullRating = new RatingImpl() {
 			@Override
 			public Object clone() {
 				return this;
 			}
 
 			@Override
-			public CacheModel<Event> toCacheModel() {
-				return _nullEventCacheModel;
+			public CacheModel<Rating> toCacheModel() {
+				return _nullRatingCacheModel;
 			}
 		};
 
-	private static CacheModel<Event> _nullEventCacheModel = new CacheModel<Event>() {
-			public Event toEntityModel() {
-				return _nullEvent;
+	private static CacheModel<Rating> _nullRatingCacheModel = new CacheModel<Rating>() {
+			public Rating toEntityModel() {
+				return _nullRating;
 			}
 		};
 }

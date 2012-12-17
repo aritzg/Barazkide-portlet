@@ -104,13 +104,13 @@ public class GardenLocalServiceClpInvoker {
 				"net.sareweb.barazkide.model.Garden", "boolean"
 			};
 
-		_methodName68 = "getBeanIdentifier";
+		_methodName76 = "getBeanIdentifier";
 
-		_methodParameterTypes68 = new String[] {  };
+		_methodParameterTypes76 = new String[] {  };
 
-		_methodName69 = "setBeanIdentifier";
+		_methodName77 = "setBeanIdentifier";
 
-		_methodParameterTypes69 = new String[] { "java.lang.String" };
+		_methodParameterTypes77 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -202,13 +202,13 @@ public class GardenLocalServiceClpInvoker {
 				((Boolean)arguments[1]).booleanValue());
 		}
 
-		if (_methodName68.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+		if (_methodName76.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
 			return GardenLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName69.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+		if (_methodName77.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
 			GardenLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
@@ -247,8 +247,8 @@ public class GardenLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName68;
-	private String[] _methodParameterTypes68;
-	private String _methodName69;
-	private String[] _methodParameterTypes69;
+	private String _methodName76;
+	private String[] _methodParameterTypes76;
+	private String _methodName77;
+	private String[] _methodParameterTypes77;
 }

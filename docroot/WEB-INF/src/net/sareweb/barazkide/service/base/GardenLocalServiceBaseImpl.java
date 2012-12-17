@@ -48,6 +48,8 @@ import net.sareweb.barazkide.service.GardenLocalService;
 import net.sareweb.barazkide.service.GardenService;
 import net.sareweb.barazkide.service.MembershipLocalService;
 import net.sareweb.barazkide.service.MembershipService;
+import net.sareweb.barazkide.service.RatingLocalService;
+import net.sareweb.barazkide.service.RatingService;
 import net.sareweb.barazkide.service.persistence.EventFinder;
 import net.sareweb.barazkide.service.persistence.EventPersistence;
 import net.sareweb.barazkide.service.persistence.FollowingPersistence;
@@ -56,6 +58,8 @@ import net.sareweb.barazkide.service.persistence.GardenImagePersistence;
 import net.sareweb.barazkide.service.persistence.GardenPersistence;
 import net.sareweb.barazkide.service.persistence.MembershipFinder;
 import net.sareweb.barazkide.service.persistence.MembershipPersistence;
+import net.sareweb.barazkide.service.persistence.RatingFinder;
+import net.sareweb.barazkide.service.persistence.RatingPersistence;
 
 import java.io.Serializable;
 
@@ -613,6 +617,78 @@ public abstract class GardenLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the rating local service.
+	 *
+	 * @return the rating local service
+	 */
+	public RatingLocalService getRatingLocalService() {
+		return ratingLocalService;
+	}
+
+	/**
+	 * Sets the rating local service.
+	 *
+	 * @param ratingLocalService the rating local service
+	 */
+	public void setRatingLocalService(RatingLocalService ratingLocalService) {
+		this.ratingLocalService = ratingLocalService;
+	}
+
+	/**
+	 * Returns the rating remote service.
+	 *
+	 * @return the rating remote service
+	 */
+	public RatingService getRatingService() {
+		return ratingService;
+	}
+
+	/**
+	 * Sets the rating remote service.
+	 *
+	 * @param ratingService the rating remote service
+	 */
+	public void setRatingService(RatingService ratingService) {
+		this.ratingService = ratingService;
+	}
+
+	/**
+	 * Returns the rating persistence.
+	 *
+	 * @return the rating persistence
+	 */
+	public RatingPersistence getRatingPersistence() {
+		return ratingPersistence;
+	}
+
+	/**
+	 * Sets the rating persistence.
+	 *
+	 * @param ratingPersistence the rating persistence
+	 */
+	public void setRatingPersistence(RatingPersistence ratingPersistence) {
+		this.ratingPersistence = ratingPersistence;
+	}
+
+	/**
+	 * Returns the rating finder.
+	 *
+	 * @return the rating finder
+	 */
+	public RatingFinder getRatingFinder() {
+		return ratingFinder;
+	}
+
+	/**
+	 * Sets the rating finder.
+	 *
+	 * @param ratingFinder the rating finder
+	 */
+	public void setRatingFinder(RatingFinder ratingFinder) {
+		this.ratingFinder = ratingFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -835,6 +911,14 @@ public abstract class GardenLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected MembershipPersistence membershipPersistence;
 	@BeanReference(type = MembershipFinder.class)
 	protected MembershipFinder membershipFinder;
+	@BeanReference(type = RatingLocalService.class)
+	protected RatingLocalService ratingLocalService;
+	@BeanReference(type = RatingService.class)
+	protected RatingService ratingService;
+	@BeanReference(type = RatingPersistence.class)
+	protected RatingPersistence ratingPersistence;
+	@BeanReference(type = RatingFinder.class)
+	protected RatingFinder ratingFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

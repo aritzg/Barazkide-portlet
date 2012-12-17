@@ -3,4 +3,5 @@
 	<sql file="custom-sql/event.xml" />
 	<sql file="custom-sql/garden.xml" />
 	<sql file="custom-sql/membership.xml" />
+	<sql file="custom-sql/rating.xml" />
 </custom-sql>

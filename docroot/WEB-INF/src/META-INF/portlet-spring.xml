@@ -19,4 +19,8 @@
 	<bean id="net.sareweb.barazkide.service.MembershipService" class="net.sareweb.barazkide.service.impl.MembershipServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.MembershipPersistence" class="net.sareweb.barazkide.service.persistence.MembershipPersistenceImpl" parent="basePersistence" />
 	<bean id="net.sareweb.barazkide.service.persistence.MembershipFinder" class="net.sareweb.barazkide.service.persistence.MembershipFinderImpl" parent="basePersistence" />
+	<bean id="net.sareweb.barazkide.service.RatingLocalService" class="net.sareweb.barazkide.service.impl.RatingLocalServiceImpl" />
+	<bean id="net.sareweb.barazkide.service.RatingService" class="net.sareweb.barazkide.service.impl.RatingServiceImpl" />
+	<bean id="net.sareweb.barazkide.service.persistence.RatingPersistence" class="net.sareweb.barazkide.service.persistence.RatingPersistenceImpl" parent="basePersistence" />
+	<bean id="net.sareweb.barazkide.service.persistence.RatingFinder" class="net.sareweb.barazkide.service.persistence.RatingFinderImpl" parent="basePersistence" />
 </beans>

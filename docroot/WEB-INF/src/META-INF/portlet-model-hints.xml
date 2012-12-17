@@ -43,4 +43,12 @@
 		<field name="membershipDate" type="Date" />
 		<field name="status" type="int" />
 	</model>
+	<model name="net.sareweb.barazkide.model.Rating">
+		<field name="ratingId" type="long" />
+		<field name="userId" type="long" />
+		<field name="rateType" type="String" />
+		<field name="ratedObjectId" type="long" />
+		<field name="ratingDate" type="Date" />
+		<field name="rate" type="double" />
+	</model>
 </model-hints>

@@ -109,4 +109,22 @@
 		
 	</entity>
 	
+	<entity name="Rating" local-service="true" remote-service="true" cache-enabled="false">
+
+	    <!-- PK fields -->
+		<column name="ratingId" type="long" primary="true" />
+		
+		<column name="userId" type="long"/>
+		<column name="rateType" type="String"/>
+		<column name="ratedObjectId" type="long"/>
+		<column name="ratingDate" type="Date" />
+		<column name="rate" type="double" />
+		
+		<!-- Finder -->
+		<finder name="RatedObjectId" return-type="Collection">
+		    <finder-column name="ratedObjectId"/>
+		</finder>
+		
+	</entity>
+	
 </service-builder>

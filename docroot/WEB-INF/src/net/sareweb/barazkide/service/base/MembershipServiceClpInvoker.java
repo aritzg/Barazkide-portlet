@@ -23,103 +23,103 @@ import java.util.Arrays;
  */
 public class MembershipServiceClpInvoker {
 	public MembershipServiceClpInvoker() {
-		_methodName52 = "getBeanIdentifier";
+		_methodName60 = "getBeanIdentifier";
 
-		_methodParameterTypes52 = new String[] {  };
+		_methodParameterTypes60 = new String[] {  };
 
-		_methodName53 = "setBeanIdentifier";
+		_methodName61 = "setBeanIdentifier";
 
-		_methodParameterTypes53 = new String[] { "java.lang.String" };
+		_methodParameterTypes61 = new String[] { "java.lang.String" };
 
-		_methodName58 = "addMembership";
+		_methodName66 = "addMembership";
 
-		_methodParameterTypes58 = new String[] { "long", "long" };
+		_methodParameterTypes66 = new String[] { "long", "long" };
 
-		_methodName59 = "addMembershipRequest";
+		_methodName67 = "addMembershipRequest";
 
-		_methodParameterTypes59 = new String[] { "long", "long" };
+		_methodParameterTypes67 = new String[] { "long", "long" };
 
-		_methodName60 = "acceptMembershipRequest";
+		_methodName68 = "acceptMembershipRequest";
 
-		_methodParameterTypes60 = new String[] { "long", "long" };
+		_methodParameterTypes68 = new String[] { "long", "long" };
 
-		_methodName61 = "rejectMembershipRequest";
+		_methodName69 = "rejectMembershipRequest";
 
-		_methodParameterTypes61 = new String[] { "long", "long" };
+		_methodParameterTypes69 = new String[] { "long", "long" };
 
-		_methodName62 = "removeMembership";
+		_methodName70 = "removeMembership";
 
-		_methodParameterTypes62 = new String[] { "long", "long" };
+		_methodParameterTypes70 = new String[] { "long", "long" };
 
-		_methodName63 = "findMemberUsers";
+		_methodName71 = "findMemberUsers";
 
-		_methodParameterTypes63 = new String[] { "long" };
+		_methodParameterTypes71 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName52.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
-			return MembershipServiceUtil.getBeanIdentifier();
-		}
-
-		if (_methodName53.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
-			MembershipServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName58.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
-			return MembershipServiceUtil.addMembership(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
-		}
-
-		if (_methodName59.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-			return MembershipServiceUtil.addMembershipRequest(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
-		}
-
 		if (_methodName60.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
-			return MembershipServiceUtil.acceptMembershipRequest(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return MembershipServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName61.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+			MembershipServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName66.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+			return MembershipServiceUtil.addMembership(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName67.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+			return MembershipServiceUtil.addMembershipRequest(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName68.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+			return MembershipServiceUtil.acceptMembershipRequest(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			return MembershipServiceUtil.rejectMembershipRequest(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName62.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+		if (_methodName70.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
 			return MembershipServiceUtil.removeMembership(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName63.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
+		if (_methodName71.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
 			return MembershipServiceUtil.findMemberUsers(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName52;
-	private String[] _methodParameterTypes52;
-	private String _methodName53;
-	private String[] _methodParameterTypes53;
-	private String _methodName58;
-	private String[] _methodParameterTypes58;
-	private String _methodName59;
-	private String[] _methodParameterTypes59;
 	private String _methodName60;
 	private String[] _methodParameterTypes60;
 	private String _methodName61;
 	private String[] _methodParameterTypes61;
-	private String _methodName62;
-	private String[] _methodParameterTypes62;
-	private String _methodName63;
-	private String[] _methodParameterTypes63;
+	private String _methodName66;
+	private String[] _methodParameterTypes66;
+	private String _methodName67;
+	private String[] _methodParameterTypes67;
+	private String _methodName68;
+	private String[] _methodParameterTypes68;
+	private String _methodName69;
+	private String[] _methodParameterTypes69;
+	private String _methodName70;
+	private String[] _methodParameterTypes70;
+	private String _methodName71;
+	private String[] _methodParameterTypes71;
 }

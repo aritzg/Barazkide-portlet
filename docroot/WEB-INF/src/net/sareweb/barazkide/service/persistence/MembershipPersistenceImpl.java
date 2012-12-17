@@ -1373,6 +1373,8 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 	protected GardenImagePersistence gardenImagePersistence;
 	@BeanReference(type = MembershipPersistence.class)
 	protected MembershipPersistence membershipPersistence;
+	@BeanReference(type = RatingPersistence.class)
+	protected RatingPersistence ratingPersistence;
 	@BeanReference(type = ResourcePersistence.class)
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)

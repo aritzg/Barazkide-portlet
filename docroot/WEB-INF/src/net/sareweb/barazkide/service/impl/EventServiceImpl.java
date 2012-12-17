@@ -14,11 +14,14 @@
 
 package net.sareweb.barazkide.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import net.sareweb.barazkide.model.Event;
+import net.sareweb.barazkide.service.EventLocalServiceUtil;
 import net.sareweb.barazkide.service.base.EventServiceBaseImpl;
 
 /**
@@ -41,6 +44,19 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link net.sareweb.barazkide.service.EventServiceUtil} to access the event remote service.
 	 */
+	
+	public Event addEvent(long gardenId, long creatorUserId, long destinationUserId, long gardenImageId, String eventType, String eventText) throws SystemException{
+		Event event = EventLocalServiceUtil.createEvent(CounterLocalServiceUtil.increment());
+		event.setGardenId(gardenId);
+		event.setCreatorUserId(creatorUserId);
+		event.setDestinationUserId(destinationUserId);
+		event.setGardenId(gardenId);
+		event.setCreateDate(new Date());
+		event.setEventType(eventType);
+		event.setEventText(eventText);
+		
+		return EventLocalServiceUtil.addEvent(event);
+	}
 	
 	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, long followingDate, int blockSize) throws SystemException{
 		return eventFinder.findEventsInFollowedGardensOlderThanDate(userId, followingDate, blockSize);

@@ -93,6 +93,22 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.RatingModelImpl">
+		<attributes>
+			<id name="ratingId" />
+			<basic name="userId" />
+			<basic name="rateType" />
+			<basic name="ratedObjectId" />
+			<basic name="ratingDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="rate" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="net.sareweb.barazkide.model.impl.EventImpl" name="Event">
 		<table name="Barazkide_Event" />
 		<attributes />
@@ -111,6 +127,10 @@
 	</entity>
 	<entity class="net.sareweb.barazkide.model.impl.MembershipImpl" name="Membership">
 		<table name="Barazkide_Membership" />
+		<attributes />
+	</entity>
+	<entity class="net.sareweb.barazkide.model.impl.RatingImpl" name="Rating">
+		<table name="Barazkide_Rating" />
 		<attributes />
 	</entity>
 </entity-mappings>

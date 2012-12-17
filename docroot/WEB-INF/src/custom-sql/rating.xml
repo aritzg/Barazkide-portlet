@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql
+		id="net.sareweb.barazkide.service.persistence.RatingFinder.getAvgRating">
+	<![CDATA[
+	SELECT avg(Barazkide_Rating.*) 
+    FROM 
+    	Barazkide_Rating 
+    WHERE
+    	Barazkide_Rating.ratedObjectId = ?
+    ]]>
+	</sql>
+
+</custom-sql>

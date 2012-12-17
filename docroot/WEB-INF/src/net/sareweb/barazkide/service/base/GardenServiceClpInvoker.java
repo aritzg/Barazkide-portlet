@@ -23,60 +23,60 @@ import java.util.Arrays;
  */
 public class GardenServiceClpInvoker {
 	public GardenServiceClpInvoker() {
-		_methodName52 = "getBeanIdentifier";
+		_methodName60 = "getBeanIdentifier";
 
-		_methodParameterTypes52 = new String[] {  };
+		_methodParameterTypes60 = new String[] {  };
 
-		_methodName53 = "setBeanIdentifier";
+		_methodName61 = "setBeanIdentifier";
 
-		_methodParameterTypes53 = new String[] { "java.lang.String" };
+		_methodParameterTypes61 = new String[] { "java.lang.String" };
 
-		_methodName58 = "addGarden";
+		_methodName66 = "addGarden";
 
-		_methodParameterTypes58 = new String[] {
+		_methodParameterTypes66 = new String[] {
 				"java.lang.String", "java.lang.String", "double", "double",
 				"long"
 			};
 
-		_methodName59 = "getGardens";
+		_methodName67 = "getGardens";
 
-		_methodParameterTypes59 = new String[] {  };
+		_methodParameterTypes67 = new String[] {  };
 
-		_methodName60 = "getUserGardensFromDate";
+		_methodName68 = "getUserGardensFromDate";
 
-		_methodParameterTypes60 = new String[] { "long", "long", "boolean", "int" };
+		_methodParameterTypes68 = new String[] { "long", "long", "boolean", "int" };
 
-		_methodName61 = "getFollowedGardensOlderThanDate";
+		_methodName69 = "getFollowedGardensOlderThanDate";
 
-		_methodParameterTypes61 = new String[] { "long", "long", "int" };
+		_methodParameterTypes69 = new String[] { "long", "long", "int" };
 
-		_methodName62 = "getFollowedGardensNewerThanDate";
+		_methodName70 = "getFollowedGardensNewerThanDate";
 
-		_methodParameterTypes62 = new String[] { "long", "long", "int" };
+		_methodParameterTypes70 = new String[] { "long", "long", "int" };
 
-		_methodName63 = "getParticipatingGardensOlderThanDate";
+		_methodName71 = "getParticipatingGardensOlderThanDate";
 
-		_methodParameterTypes63 = new String[] { "long", "long", "int" };
+		_methodParameterTypes71 = new String[] { "long", "long", "int" };
 
-		_methodName64 = "getParticipatingGardensNewerThanDate";
+		_methodName72 = "getParticipatingGardensNewerThanDate";
 
-		_methodParameterTypes64 = new String[] { "long", "long", "int" };
+		_methodParameterTypes72 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName52.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
 			return GardenServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName53.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+		if (_methodName61.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
 			GardenServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName58.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+		if (_methodName66.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
 			return GardenServiceUtil.addGarden((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1],
 				((Double)arguments[2]).doubleValue(),
@@ -84,42 +84,42 @@ public class GardenServiceClpInvoker {
 				((Long)arguments[4]).longValue());
 		}
 
-		if (_methodName59.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+		if (_methodName67.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
 			return GardenServiceUtil.getGardens();
 		}
 
-		if (_methodName60.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+		if (_methodName68.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
 			return GardenServiceUtil.getUserGardensFromDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName61.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			return GardenServiceUtil.getFollowedGardensOlderThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName62.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+		if (_methodName70.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
 			return GardenServiceUtil.getFollowedGardensNewerThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName63.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
+		if (_methodName71.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
 			return GardenServiceUtil.getParticipatingGardensOlderThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName64.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
+		if (_methodName72.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
 			return GardenServiceUtil.getParticipatingGardensNewerThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
@@ -128,22 +128,22 @@ public class GardenServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName52;
-	private String[] _methodParameterTypes52;
-	private String _methodName53;
-	private String[] _methodParameterTypes53;
-	private String _methodName58;
-	private String[] _methodParameterTypes58;
-	private String _methodName59;
-	private String[] _methodParameterTypes59;
 	private String _methodName60;
 	private String[] _methodParameterTypes60;
 	private String _methodName61;
 	private String[] _methodParameterTypes61;
-	private String _methodName62;
-	private String[] _methodParameterTypes62;
-	private String _methodName63;
-	private String[] _methodParameterTypes63;
-	private String _methodName64;
-	private String[] _methodParameterTypes64;
+	private String _methodName66;
+	private String[] _methodParameterTypes66;
+	private String _methodName67;
+	private String[] _methodParameterTypes67;
+	private String _methodName68;
+	private String[] _methodParameterTypes68;
+	private String _methodName69;
+	private String[] _methodParameterTypes69;
+	private String _methodName70;
+	private String[] _methodParameterTypes70;
+	private String _methodName71;
+	private String[] _methodParameterTypes71;
+	private String _methodName72;
+	private String[] _methodParameterTypes72;
 }

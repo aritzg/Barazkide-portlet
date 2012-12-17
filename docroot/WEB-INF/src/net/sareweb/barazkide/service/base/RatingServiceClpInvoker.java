@@ -14,15 +14,15 @@
 
 package net.sareweb.barazkide.service.base;
 
-import net.sareweb.barazkide.service.FollowingServiceUtil;
+import net.sareweb.barazkide.service.RatingServiceUtil;
 
 import java.util.Arrays;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FollowingServiceClpInvoker {
-	public FollowingServiceClpInvoker() {
+public class RatingServiceClpInvoker {
+	public RatingServiceClpInvoker() {
 		_methodName60 = "getBeanIdentifier";
 
 		_methodParameterTypes60 = new String[] {  };
@@ -31,37 +31,40 @@ public class FollowingServiceClpInvoker {
 
 		_methodParameterTypes61 = new String[] { "java.lang.String" };
 
-		_methodName66 = "addFollowing";
+		_methodName66 = "addRating";
 
-		_methodParameterTypes66 = new String[] { "long", "long" };
+		_methodParameterTypes66 = new String[] {
+				"long", "java.lang.String", "long", "double"
+			};
 
-		_methodName67 = "removeFollowing";
+		_methodName67 = "getAvgRating";
 
-		_methodParameterTypes67 = new String[] { "long", "long" };
+		_methodParameterTypes67 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
 		if (_methodName60.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
-			return FollowingServiceUtil.getBeanIdentifier();
+			return RatingServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName61.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
-			FollowingServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			RatingServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName66.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
-			return FollowingServiceUtil.addFollowing(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			RatingServiceUtil.addRating(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(),
+				((Double)arguments[3]).doubleValue());
 		}
 
 		if (_methodName67.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
-			return FollowingServiceUtil.removeFollowing(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return RatingServiceUtil.getAvgRating(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();

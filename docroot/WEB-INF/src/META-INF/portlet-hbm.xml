@@ -7,6 +7,7 @@
 	<import class="net.sareweb.barazkide.model.Garden" />
 	<import class="net.sareweb.barazkide.model.GardenImage" />
 	<import class="net.sareweb.barazkide.model.Membership" />
+	<import class="net.sareweb.barazkide.model.Rating" />
 	<class name="net.sareweb.barazkide.model.impl.EventImpl" table="Barazkide_Event">
 		<id name="eventId" type="long">
 			<generator class="assigned" />
@@ -58,5 +59,15 @@
 		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="membershipDate" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="net.sareweb.barazkide.model.impl.RatingImpl" table="Barazkide_Rating">
+		<id name="ratingId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rateType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ratedObjectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="ratingDate" type="org.hibernate.type.TimestampType" />
+		<property name="rate" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 </hibernate-mapping>

@@ -14,33 +14,33 @@
 
 package net.sareweb.barazkide.service.base;
 
-import net.sareweb.barazkide.service.MembershipLocalServiceUtil;
+import net.sareweb.barazkide.service.RatingLocalServiceUtil;
 
 import java.util.Arrays;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MembershipLocalServiceClpInvoker {
-	public MembershipLocalServiceClpInvoker() {
-		_methodName0 = "addMembership";
+public class RatingLocalServiceClpInvoker {
+	public RatingLocalServiceClpInvoker() {
+		_methodName0 = "addRating";
 
 		_methodParameterTypes0 = new String[] {
-				"net.sareweb.barazkide.model.Membership"
+				"net.sareweb.barazkide.model.Rating"
 			};
 
-		_methodName1 = "createMembership";
+		_methodName1 = "createRating";
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "deleteMembership";
+		_methodName2 = "deleteRating";
 
 		_methodParameterTypes2 = new String[] { "long" };
 
-		_methodName3 = "deleteMembership";
+		_methodName3 = "deleteRating";
 
 		_methodParameterTypes3 = new String[] {
-				"net.sareweb.barazkide.model.Membership"
+				"net.sareweb.barazkide.model.Rating"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -72,11 +72,11 @@ public class MembershipLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.dao.orm.DynamicQuery"
 			};
 
-		_methodName9 = "fetchMembership";
+		_methodName9 = "fetchRating";
 
 		_methodParameterTypes9 = new String[] { "long" };
 
-		_methodName10 = "getMembership";
+		_methodName10 = "getRating";
 
 		_methodParameterTypes10 = new String[] { "long" };
 
@@ -84,24 +84,24 @@ public class MembershipLocalServiceClpInvoker {
 
 		_methodParameterTypes11 = new String[] { "java.io.Serializable" };
 
-		_methodName12 = "getMemberships";
+		_methodName12 = "getRatings";
 
 		_methodParameterTypes12 = new String[] { "int", "int" };
 
-		_methodName13 = "getMembershipsCount";
+		_methodName13 = "getRatingsCount";
 
 		_methodParameterTypes13 = new String[] {  };
 
-		_methodName14 = "updateMembership";
+		_methodName14 = "updateRating";
 
 		_methodParameterTypes14 = new String[] {
-				"net.sareweb.barazkide.model.Membership"
+				"net.sareweb.barazkide.model.Rating"
 			};
 
-		_methodName15 = "updateMembership";
+		_methodName15 = "updateRating";
 
 		_methodParameterTypes15 = new String[] {
-				"net.sareweb.barazkide.model.Membership", "boolean"
+				"net.sareweb.barazkide.model.Rating", "boolean"
 			};
 
 		_methodName76 = "getBeanIdentifier";
@@ -117,44 +117,44 @@ public class MembershipLocalServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName0.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
-			return MembershipLocalServiceUtil.addMembership((net.sareweb.barazkide.model.Membership)arguments[0]);
+			return RatingLocalServiceUtil.addRating((net.sareweb.barazkide.model.Rating)arguments[0]);
 		}
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return MembershipLocalServiceUtil.createMembership(((Long)arguments[0]).longValue());
+			return RatingLocalServiceUtil.createRating(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return MembershipLocalServiceUtil.deleteMembership(((Long)arguments[0]).longValue());
+			return RatingLocalServiceUtil.deleteRating(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
-			return MembershipLocalServiceUtil.deleteMembership((net.sareweb.barazkide.model.Membership)arguments[0]);
+			return RatingLocalServiceUtil.deleteRating((net.sareweb.barazkide.model.Rating)arguments[0]);
 		}
 
 		if (_methodName4.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
-			return MembershipLocalServiceUtil.dynamicQuery();
+			return RatingLocalServiceUtil.dynamicQuery();
 		}
 
 		if (_methodName5.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
-			return MembershipLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return RatingLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName6.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
-			return MembershipLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return RatingLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName7.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
-			return MembershipLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return RatingLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
@@ -162,54 +162,54 @@ public class MembershipLocalServiceClpInvoker {
 
 		if (_methodName8.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
-			return MembershipLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return RatingLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName9.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
-			return MembershipLocalServiceUtil.fetchMembership(((Long)arguments[0]).longValue());
+			return RatingLocalServiceUtil.fetchRating(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return MembershipLocalServiceUtil.getMembership(((Long)arguments[0]).longValue());
+			return RatingLocalServiceUtil.getRating(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return MembershipLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
+			return RatingLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
 		}
 
 		if (_methodName12.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-			return MembershipLocalServiceUtil.getMemberships(((Integer)arguments[0]).intValue(),
+			return RatingLocalServiceUtil.getRatings(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName13.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-			return MembershipLocalServiceUtil.getMembershipsCount();
+			return RatingLocalServiceUtil.getRatingsCount();
 		}
 
 		if (_methodName14.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-			return MembershipLocalServiceUtil.updateMembership((net.sareweb.barazkide.model.Membership)arguments[0]);
+			return RatingLocalServiceUtil.updateRating((net.sareweb.barazkide.model.Rating)arguments[0]);
 		}
 
 		if (_methodName15.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-			return MembershipLocalServiceUtil.updateMembership((net.sareweb.barazkide.model.Membership)arguments[0],
+			return RatingLocalServiceUtil.updateRating((net.sareweb.barazkide.model.Rating)arguments[0],
 				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName76.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
-			return MembershipLocalServiceUtil.getBeanIdentifier();
+			return RatingLocalServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName77.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
-			MembershipLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			RatingLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

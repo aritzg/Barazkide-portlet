@@ -23,66 +23,82 @@ import java.util.Arrays;
  */
 public class EventServiceClpInvoker {
 	public EventServiceClpInvoker() {
-		_methodName52 = "getBeanIdentifier";
+		_methodName60 = "getBeanIdentifier";
 
-		_methodParameterTypes52 = new String[] {  };
+		_methodParameterTypes60 = new String[] {  };
 
-		_methodName53 = "setBeanIdentifier";
+		_methodName61 = "setBeanIdentifier";
 
-		_methodParameterTypes53 = new String[] { "java.lang.String" };
+		_methodParameterTypes61 = new String[] { "java.lang.String" };
 
-		_methodName58 = "findEventsInFollowedGardensOlderThanDate";
+		_methodName66 = "addEvent";
 
-		_methodParameterTypes58 = new String[] { "long", "long", "int" };
+		_methodParameterTypes66 = new String[] {
+				"long", "long", "long", "long", "java.lang.String",
+				"java.lang.String"
+			};
 
-		_methodName59 = "findEventsInFollowedGardensNewerThanDate";
+		_methodName67 = "findEventsInFollowedGardensOlderThanDate";
 
-		_methodParameterTypes59 = new String[] { "long", "long", "int" };
+		_methodParameterTypes67 = new String[] { "long", "long", "int" };
 
-		_methodName60 = "findEventsInGardenOlderThanDate";
+		_methodName68 = "findEventsInFollowedGardensNewerThanDate";
 
-		_methodParameterTypes60 = new String[] { "long", "long", "int" };
+		_methodParameterTypes68 = new String[] { "long", "long", "int" };
 
-		_methodName61 = "findEventsInGardenNewerThanDate";
+		_methodName69 = "findEventsInGardenOlderThanDate";
 
-		_methodParameterTypes61 = new String[] { "long", "long", "int" };
+		_methodParameterTypes69 = new String[] { "long", "long", "int" };
+
+		_methodName70 = "findEventsInGardenNewerThanDate";
+
+		_methodParameterTypes70 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName52.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
 			return EventServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName53.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+		if (_methodName61.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
 			EventServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName58.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+		if (_methodName66.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+			return EventServiceUtil.addEvent(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				(java.lang.String)arguments[4], (java.lang.String)arguments[5]);
+		}
+
+		if (_methodName67.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
 			return EventServiceUtil.findEventsInFollowedGardensOlderThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName59.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+		if (_methodName68.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
 			return EventServiceUtil.findEventsInFollowedGardensNewerThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName60.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			return EventServiceUtil.findEventsInGardenOlderThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName61.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+		if (_methodName70.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
 			return EventServiceUtil.findEventsInGardenNewerThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
@@ -91,16 +107,18 @@ public class EventServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName52;
-	private String[] _methodParameterTypes52;
-	private String _methodName53;
-	private String[] _methodParameterTypes53;
-	private String _methodName58;
-	private String[] _methodParameterTypes58;
-	private String _methodName59;
-	private String[] _methodParameterTypes59;
 	private String _methodName60;
 	private String[] _methodParameterTypes60;
 	private String _methodName61;
 	private String[] _methodParameterTypes61;
+	private String _methodName66;
+	private String[] _methodParameterTypes66;
+	private String _methodName67;
+	private String[] _methodParameterTypes67;
+	private String _methodName68;
+	private String[] _methodParameterTypes68;
+	private String _methodName69;
+	private String[] _methodParameterTypes69;
+	private String _methodName70;
+	private String[] _methodParameterTypes70;
 }
