@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -26,7 +27,7 @@ public class RatingFinderImpl extends BasePersistenceImpl<Rating> implements
 			session = openSession();
 			String sql = CustomSQLUtil.get(AVG_RATING);
 			SQLQuery q = session.createSQLQuery(sql);
-			q.addEntity("event", RatingImpl.class);
+			q.addScalar("avg", Type.DOUBLE);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(ratedObjectId);
