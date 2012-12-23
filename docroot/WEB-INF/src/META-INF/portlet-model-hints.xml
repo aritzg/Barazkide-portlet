@@ -7,6 +7,7 @@
 		<field name="creatorUserId" type="long" />
 		<field name="destinationUserId" type="long" />
 		<field name="gardenImageId" type="long" />
+		<field name="imageTitle" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="eventType" type="String" />
 		<field name="eventText" type="String" />
@@ -19,6 +20,7 @@
 	</model>
 	<model name="net.sareweb.barazkide.model.Garden">
 		<field name="gardenId" type="long" />
+		<field name="gardenFolderId" type="long" />
 		<field name="gardenImageId" type="long" />
 		<field name="ownerUserId" type="long" />
 		<field name="createDate" type="Date" />
@@ -27,6 +29,7 @@
 		<field name="comment" type="String" />
 		<field name="lat" type="double" />
 		<field name="lng" type="double" />
+		<field name="imageTitle" type="String" />
 	</model>
 	<model name="net.sareweb.barazkide.model.GardenImage">
 		<field name="gardenImageId" type="long" />

@@ -68,6 +68,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 	public static final String TABLE_NAME = "Barazkide_Garden";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "gardenId", Types.BIGINT },
+			{ "gardenFolderId", Types.BIGINT },
 			{ "gardenImageId", Types.BIGINT },
 			{ "ownerUserId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
@@ -75,9 +76,10 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 			{ "name", Types.VARCHAR },
 			{ "comment_", Types.VARCHAR },
 			{ "lat", Types.DOUBLE },
-			{ "lng", Types.DOUBLE }
+			{ "lng", Types.DOUBLE },
+			{ "imageTitle", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Barazkide_Garden (gardenId LONG not null primary key,gardenImageId LONG,ownerUserId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,comment_ VARCHAR(75) null,lat DOUBLE,lng DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table Barazkide_Garden (gardenId LONG not null primary key,gardenFolderId LONG,gardenImageId LONG,ownerUserId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,comment_ VARCHAR(75) null,lat DOUBLE,lng DOUBLE,imageTitle VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Garden";
 	public static final String ORDER_BY_JPQL = " ORDER BY garden.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Barazkide_Garden.createDate DESC";
@@ -106,6 +108,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		Garden model = new GardenImpl();
 
 		model.setGardenId(soapModel.getGardenId());
+		model.setGardenFolderId(soapModel.getGardenFolderId());
 		model.setGardenImageId(soapModel.getGardenImageId());
 		model.setOwnerUserId(soapModel.getOwnerUserId());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -114,6 +117,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		model.setComment(soapModel.getComment());
 		model.setLat(soapModel.getLat());
 		model.setLng(soapModel.getLng());
+		model.setImageTitle(soapModel.getImageTitle());
 
 		return model;
 	}
@@ -173,6 +177,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("gardenId", getGardenId());
+		attributes.put("gardenFolderId", getGardenFolderId());
 		attributes.put("gardenImageId", getGardenImageId());
 		attributes.put("ownerUserId", getOwnerUserId());
 		attributes.put("createDate", getCreateDate());
@@ -181,6 +186,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		attributes.put("comment", getComment());
 		attributes.put("lat", getLat());
 		attributes.put("lng", getLng());
+		attributes.put("imageTitle", getImageTitle());
 
 		return attributes;
 	}
@@ -191,6 +197,12 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 
 		if (gardenId != null) {
 			setGardenId(gardenId);
+		}
+
+		Long gardenFolderId = (Long)attributes.get("gardenFolderId");
+
+		if (gardenFolderId != null) {
+			setGardenFolderId(gardenFolderId);
 		}
 
 		Long gardenImageId = (Long)attributes.get("gardenImageId");
@@ -240,6 +252,12 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		if (lng != null) {
 			setLng(lng);
 		}
+
+		String imageTitle = (String)attributes.get("imageTitle");
+
+		if (imageTitle != null) {
+			setImageTitle(imageTitle);
+		}
 	}
 
 	@JSON
@@ -249,6 +267,15 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 
 	public void setGardenId(long gardenId) {
 		_gardenId = gardenId;
+	}
+
+	@JSON
+	public long getGardenFolderId() {
+		return _gardenFolderId;
+	}
+
+	public void setGardenFolderId(long gardenFolderId) {
+		_gardenFolderId = gardenFolderId;
 	}
 
 	@JSON
@@ -341,6 +368,20 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		_lng = lng;
 	}
 
+	@JSON
+	public String getImageTitle() {
+		if (_imageTitle == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _imageTitle;
+		}
+	}
+
+	public void setImageTitle(String imageTitle) {
+		_imageTitle = imageTitle;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
@@ -370,6 +411,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		GardenImpl gardenImpl = new GardenImpl();
 
 		gardenImpl.setGardenId(getGardenId());
+		gardenImpl.setGardenFolderId(getGardenFolderId());
 		gardenImpl.setGardenImageId(getGardenImageId());
 		gardenImpl.setOwnerUserId(getOwnerUserId());
 		gardenImpl.setCreateDate(getCreateDate());
@@ -378,6 +420,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		gardenImpl.setComment(getComment());
 		gardenImpl.setLat(getLat());
 		gardenImpl.setLng(getLng());
+		gardenImpl.setImageTitle(getImageTitle());
 
 		gardenImpl.resetOriginalValues();
 
@@ -438,6 +481,8 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 
 		gardenCacheModel.gardenId = getGardenId();
 
+		gardenCacheModel.gardenFolderId = getGardenFolderId();
+
 		gardenCacheModel.gardenImageId = getGardenImageId();
 
 		gardenCacheModel.ownerUserId = getOwnerUserId();
@@ -480,15 +525,25 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 
 		gardenCacheModel.lng = getLng();
 
+		gardenCacheModel.imageTitle = getImageTitle();
+
+		String imageTitle = gardenCacheModel.imageTitle;
+
+		if ((imageTitle != null) && (imageTitle.length() == 0)) {
+			gardenCacheModel.imageTitle = null;
+		}
+
 		return gardenCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{gardenId=");
 		sb.append(getGardenId());
+		sb.append(", gardenFolderId=");
+		sb.append(getGardenFolderId());
 		sb.append(", gardenImageId=");
 		sb.append(getGardenImageId());
 		sb.append(", ownerUserId=");
@@ -505,13 +560,15 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		sb.append(getLat());
 		sb.append(", lng=");
 		sb.append(getLng());
+		sb.append(", imageTitle=");
+		sb.append(getImageTitle());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("net.sareweb.barazkide.model.Garden");
@@ -520,6 +577,10 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 		sb.append(
 			"<column><column-name>gardenId</column-name><column-value><![CDATA[");
 		sb.append(getGardenId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>gardenFolderId</column-name><column-value><![CDATA[");
+		sb.append(getGardenFolderId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>gardenImageId</column-name><column-value><![CDATA[");
@@ -553,6 +614,10 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 			"<column><column-name>lng</column-name><column-value><![CDATA[");
 		sb.append(getLng());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>imageTitle</column-name><column-value><![CDATA[");
+		sb.append(getImageTitle());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -564,6 +629,7 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 			Garden.class
 		};
 	private long _gardenId;
+	private long _gardenFolderId;
 	private long _gardenImageId;
 	private long _ownerUserId;
 	private String _ownerUserUuid;
@@ -573,5 +639,6 @@ public class GardenModelImpl extends BaseModelImpl<Garden>
 	private String _comment;
 	private double _lat;
 	private double _lng;
+	private String _imageTitle;
 	private Garden _escapedModelProxy;
 }

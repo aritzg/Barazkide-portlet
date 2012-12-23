@@ -25,8 +25,12 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import net.sareweb.barazkide.model.Garden;
 import net.sareweb.barazkide.service.GardenLocalServiceUtil;
@@ -66,11 +70,25 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 		garden.setLng(lng);
 		garden.setGardenImageId(gardenImageId);
 		
+		try {
+			DLFolder folder = DLFolderLocalServiceUtil.addFolder(getGuestOrUserId(), 120849l, 120849l, false, 120874l, garden.getName(), garden.getName(), new ServiceContext());
+			garden.setGardenFolderId(folder.getFolderId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 		garden = GardenLocalServiceUtil.addGarden(garden);
 		
 		MembershipServiceUtil.addMembership(garden.getOwnerUserId(), garden.getGardenId());
 		
 		return garden;
+	}
+	
+	public Garden updateGardenImage(long gardenId, String imageTitle) throws PortalException, SystemException{
+		Garden garden = GardenLocalServiceUtil.getGarden(gardenId);
+		garden.setImageTitle(imageTitle);
+		return GardenLocalServiceUtil.updateGarden(garden);
 	}
 	
 	public List<Garden> getGardens() throws SystemException{

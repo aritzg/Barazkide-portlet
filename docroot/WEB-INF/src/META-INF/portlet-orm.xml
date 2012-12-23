@@ -14,6 +14,7 @@
 			<basic name="creatorUserId" />
 			<basic name="destinationUserId" />
 			<basic name="gardenImageId" />
+			<basic name="imageTitle" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -43,6 +44,7 @@
 	<mapped-superclass class="net.sareweb.barazkide.model.impl.GardenModelImpl">
 		<attributes>
 			<id name="gardenId" />
+			<basic name="gardenFolderId" />
 			<basic name="gardenImageId" />
 			<basic name="ownerUserId" />
 			<basic name="createDate">
@@ -57,6 +59,7 @@
 			</basic>
 			<basic name="lat" />
 			<basic name="lng" />
+			<basic name="imageTitle" />
 			<transient name="modelAttributes" />
 			<transient name="ownerUserUuid" />
 			<transient name="primaryKey" />

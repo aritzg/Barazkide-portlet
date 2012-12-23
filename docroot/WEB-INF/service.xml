@@ -10,6 +10,7 @@
 		<column name="gardenId" type="long" primary="true" />
 		
 		<!-- FK fields -->
+		<column name="gardenFolderId" type="long"/>
 		<column name="gardenImageId" type="long"/>
 		<column name="ownerUserId" type="long" />
 		
@@ -21,7 +22,8 @@
 		<column name="comment" type="String" />
 		<column name="lat" type="double" />
 		<column name="lng" type="double" />
-
+		<column name="imageTitle" type="String" />
+		
 		<!-- Order -->
 		<order by="desc">
 			<order-column name="createDate" />
@@ -77,6 +79,7 @@
 		<column name="creatorUserId" type="long"/>
 		<column name="destinationUserId" type="long"/>
 		<column name="gardenImageId" type="long"/>
+		<column name="imageTitle" type="String"/>
 		
 		<column name="createDate" type="Date" />
 		<column name="eventType" type="String"/>

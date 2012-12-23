@@ -16,6 +16,7 @@
 		<property name="creatorUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="destinationUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="gardenImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="imageTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="eventText" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -32,6 +33,7 @@
 		<id name="gardenId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="gardenFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="gardenImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ownerUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -40,6 +42,7 @@
 		<property name="comment" type="com.liferay.portal.dao.orm.hibernate.StringType" column="comment_" />
 		<property name="lat" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="lng" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="imageTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="net.sareweb.barazkide.model.impl.GardenImageImpl" table="Barazkide_GardenImage">
 		<id name="gardenImageId" type="long">

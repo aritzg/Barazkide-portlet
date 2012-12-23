@@ -34,7 +34,7 @@ import java.util.Date;
 public class EventCacheModel implements CacheModel<Event>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{eventId=");
 		sb.append(eventId);
@@ -46,6 +46,8 @@ public class EventCacheModel implements CacheModel<Event>, Serializable {
 		sb.append(destinationUserId);
 		sb.append(", gardenImageId=");
 		sb.append(gardenImageId);
+		sb.append(", imageTitle=");
+		sb.append(imageTitle);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", eventType=");
@@ -65,6 +67,13 @@ public class EventCacheModel implements CacheModel<Event>, Serializable {
 		eventImpl.setCreatorUserId(creatorUserId);
 		eventImpl.setDestinationUserId(destinationUserId);
 		eventImpl.setGardenImageId(gardenImageId);
+
+		if (imageTitle == null) {
+			eventImpl.setImageTitle(StringPool.BLANK);
+		}
+		else {
+			eventImpl.setImageTitle(imageTitle);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			eventImpl.setCreateDate(null);
@@ -97,6 +106,7 @@ public class EventCacheModel implements CacheModel<Event>, Serializable {
 	public long creatorUserId;
 	public long destinationUserId;
 	public long gardenImageId;
+	public String imageTitle;
 	public long createDate;
 	public String eventType;
 	public String eventText;

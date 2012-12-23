@@ -34,10 +34,12 @@ import java.util.Date;
 public class GardenCacheModel implements CacheModel<Garden>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{gardenId=");
 		sb.append(gardenId);
+		sb.append(", gardenFolderId=");
+		sb.append(gardenFolderId);
 		sb.append(", gardenImageId=");
 		sb.append(gardenImageId);
 		sb.append(", ownerUserId=");
@@ -54,6 +56,8 @@ public class GardenCacheModel implements CacheModel<Garden>, Serializable {
 		sb.append(lat);
 		sb.append(", lng=");
 		sb.append(lng);
+		sb.append(", imageTitle=");
+		sb.append(imageTitle);
 		sb.append("}");
 
 		return sb.toString();
@@ -63,6 +67,7 @@ public class GardenCacheModel implements CacheModel<Garden>, Serializable {
 		GardenImpl gardenImpl = new GardenImpl();
 
 		gardenImpl.setGardenId(gardenId);
+		gardenImpl.setGardenFolderId(gardenFolderId);
 		gardenImpl.setGardenImageId(gardenImageId);
 		gardenImpl.setOwnerUserId(ownerUserId);
 
@@ -97,12 +102,20 @@ public class GardenCacheModel implements CacheModel<Garden>, Serializable {
 		gardenImpl.setLat(lat);
 		gardenImpl.setLng(lng);
 
+		if (imageTitle == null) {
+			gardenImpl.setImageTitle(StringPool.BLANK);
+		}
+		else {
+			gardenImpl.setImageTitle(imageTitle);
+		}
+
 		gardenImpl.resetOriginalValues();
 
 		return gardenImpl;
 	}
 
 	public long gardenId;
+	public long gardenFolderId;
 	public long gardenImageId;
 	public long ownerUserId;
 	public long createDate;
@@ -111,4 +124,5 @@ public class GardenCacheModel implements CacheModel<Garden>, Serializable {
 	public String comment;
 	public double lat;
 	public double lng;
+	public String imageTitle;
 }

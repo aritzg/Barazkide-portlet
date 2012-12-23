@@ -81,6 +81,21 @@ public class GardenServiceSoap {
 		}
 	}
 
+	public static net.sareweb.barazkide.model.GardenSoap updateGardenImage(
+		long gardenId, java.lang.String imageTitle) throws RemoteException {
+		try {
+			net.sareweb.barazkide.model.Garden returnValue = GardenServiceUtil.updateGardenImage(gardenId,
+					imageTitle);
+
+			return net.sareweb.barazkide.model.GardenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static net.sareweb.barazkide.model.GardenSoap[] getGardens()
 		throws RemoteException {
 		try {

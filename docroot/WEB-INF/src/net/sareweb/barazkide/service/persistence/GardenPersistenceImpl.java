@@ -299,6 +299,7 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 		gardenImpl.setPrimaryKey(garden.getPrimaryKey());
 
 		gardenImpl.setGardenId(garden.getGardenId());
+		gardenImpl.setGardenFolderId(garden.getGardenFolderId());
 		gardenImpl.setGardenImageId(garden.getGardenImageId());
 		gardenImpl.setOwnerUserId(garden.getOwnerUserId());
 		gardenImpl.setCreateDate(garden.getCreateDate());
@@ -307,6 +308,7 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 		gardenImpl.setComment(garden.getComment());
 		gardenImpl.setLat(garden.getLat());
 		gardenImpl.setLng(garden.getLng());
+		gardenImpl.setImageTitle(garden.getImageTitle());
 
 		return gardenImpl;
 	}

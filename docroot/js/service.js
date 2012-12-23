@@ -23,6 +23,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Garden",
 	{
 		addGarden: true,
+		updateGardenImage: true,
 		getGardens: true,
 		getUserGardensFromDate: true,
 		getFollowedGardensOlderThanDate: true,

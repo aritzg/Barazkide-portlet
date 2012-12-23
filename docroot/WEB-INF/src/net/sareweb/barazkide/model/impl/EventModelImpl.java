@@ -71,11 +71,12 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			{ "creatorUserId", Types.BIGINT },
 			{ "destinationUserId", Types.BIGINT },
 			{ "gardenImageId", Types.BIGINT },
+			{ "imageTitle", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "eventType", Types.VARCHAR },
 			{ "eventText", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Barazkide_Event (eventId LONG not null primary key,gardenId LONG,creatorUserId LONG,destinationUserId LONG,gardenImageId LONG,createDate DATE null,eventType VARCHAR(75) null,eventText VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Barazkide_Event (eventId LONG not null primary key,gardenId LONG,creatorUserId LONG,destinationUserId LONG,gardenImageId LONG,imageTitle VARCHAR(75) null,createDate DATE null,eventType VARCHAR(75) null,eventText VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Event";
 	public static final String ORDER_BY_JPQL = " ORDER BY event.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Barazkide_Event.createDate DESC";
@@ -111,6 +112,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		model.setCreatorUserId(soapModel.getCreatorUserId());
 		model.setDestinationUserId(soapModel.getDestinationUserId());
 		model.setGardenImageId(soapModel.getGardenImageId());
+		model.setImageTitle(soapModel.getImageTitle());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setEventType(soapModel.getEventType());
 		model.setEventText(soapModel.getEventText());
@@ -177,6 +179,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		attributes.put("creatorUserId", getCreatorUserId());
 		attributes.put("destinationUserId", getDestinationUserId());
 		attributes.put("gardenImageId", getGardenImageId());
+		attributes.put("imageTitle", getImageTitle());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("eventType", getEventType());
 		attributes.put("eventText", getEventText());
@@ -214,6 +217,12 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		if (gardenImageId != null) {
 			setGardenImageId(gardenImageId);
+		}
+
+		String imageTitle = (String)attributes.get("imageTitle");
+
+		if (imageTitle != null) {
+			setImageTitle(imageTitle);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -311,6 +320,20 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	@JSON
+	public String getImageTitle() {
+		if (_imageTitle == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _imageTitle;
+		}
+	}
+
+	public void setImageTitle(String imageTitle) {
+		_imageTitle = imageTitle;
+	}
+
+	@JSON
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -386,6 +409,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		eventImpl.setCreatorUserId(getCreatorUserId());
 		eventImpl.setDestinationUserId(getDestinationUserId());
 		eventImpl.setGardenImageId(getGardenImageId());
+		eventImpl.setImageTitle(getImageTitle());
 		eventImpl.setCreateDate(getCreateDate());
 		eventImpl.setEventType(getEventType());
 		eventImpl.setEventText(getEventText());
@@ -464,6 +488,14 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		eventCacheModel.gardenImageId = getGardenImageId();
 
+		eventCacheModel.imageTitle = getImageTitle();
+
+		String imageTitle = eventCacheModel.imageTitle;
+
+		if ((imageTitle != null) && (imageTitle.length() == 0)) {
+			eventCacheModel.imageTitle = null;
+		}
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -494,7 +526,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{eventId=");
 		sb.append(getEventId());
@@ -506,6 +538,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(getDestinationUserId());
 		sb.append(", gardenImageId=");
 		sb.append(getGardenImageId());
+		sb.append(", imageTitle=");
+		sb.append(getImageTitle());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", eventType=");
@@ -518,7 +552,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("net.sareweb.barazkide.model.Event");
@@ -543,6 +577,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(
 			"<column><column-name>gardenImageId</column-name><column-value><![CDATA[");
 		sb.append(getGardenImageId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>imageTitle</column-name><column-value><![CDATA[");
+		sb.append(getImageTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -575,6 +613,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	private long _destinationUserId;
 	private String _destinationUserUuid;
 	private long _gardenImageId;
+	private String _imageTitle;
 	private Date _createDate;
 	private String _eventType;
 	private String _eventText;
