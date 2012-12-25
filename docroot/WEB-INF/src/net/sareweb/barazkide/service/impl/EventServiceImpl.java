@@ -46,7 +46,7 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link net.sareweb.barazkide.service.EventServiceUtil} to access the event remote service.
 	 */
 	
-	public Event addEvent(long gardenId, long creatorUserId, long destinationUserId, long gardenImageId, String eventType, String eventText) throws SystemException{
+	public Event addEvent(long gardenId, long creatorUserId, long destinationUserId, String eventType, String eventText, long folderId, String imageTitle) throws SystemException{
 		Event event = EventLocalServiceUtil.createEvent(CounterLocalServiceUtil.increment());
 		event.setGardenId(gardenId);
 		event.setCreatorUserId(creatorUserId);
@@ -55,6 +55,8 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 		event.setCreateDate(new Date());
 		event.setEventType(eventType);
 		event.setEventText(decode(eventText));
+		event.setImageTitle(imageTitle);
+		event.setFolderId(folderId);
 		
 		return EventLocalServiceUtil.addEvent(event);
 	}

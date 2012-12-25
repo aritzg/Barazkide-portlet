@@ -86,7 +86,8 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 				"value.object.column.bitmask.enabled.net.sareweb.barazkide.model.Membership"),
 			true);
 	public static long GARDENID_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long STATUS_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -280,7 +281,19 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 	}
 
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	public long getColumnBitmask() {
@@ -382,6 +395,10 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 
 		membershipModelImpl._setOriginalGardenId = false;
 
+		membershipModelImpl._originalStatus = membershipModelImpl._status;
+
+		membershipModelImpl._setOriginalStatus = false;
+
 		membershipModelImpl._columnBitmask = 0;
 	}
 
@@ -475,6 +492,8 @@ public class MembershipModelImpl extends BaseModelImpl<Membership>
 	private boolean _setOriginalGardenId;
 	private Date _membershipDate;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private Membership _escapedModelProxy;
 }

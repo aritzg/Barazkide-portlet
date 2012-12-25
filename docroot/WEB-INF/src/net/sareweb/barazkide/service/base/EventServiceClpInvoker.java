@@ -34,8 +34,8 @@ public class EventServiceClpInvoker {
 		_methodName66 = "addEvent";
 
 		_methodParameterTypes66 = new String[] {
-				"long", "long", "long", "long", "java.lang.String",
-				"java.lang.String"
+				"long", "long", "long", "java.lang.String", "java.lang.String",
+				"long", "java.lang.String"
 			};
 
 		_methodName67 = "findEventsInFollowedGardensOlderThanDate";
@@ -72,8 +72,8 @@ public class EventServiceClpInvoker {
 			return EventServiceUtil.addEvent(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue(),
-				(java.lang.String)arguments[4], (java.lang.String)arguments[5]);
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				((Long)arguments[5]).longValue(), (java.lang.String)arguments[6]);
 		}
 
 		if (_methodName67.equals(name) &&

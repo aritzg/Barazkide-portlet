@@ -141,9 +141,10 @@ public class MembershipServiceSoap {
 	}
 
 	public static net.sareweb.barazkide.model.MembershipSoap[] findMemberUsers(
-		long gardenId) throws RemoteException {
+		long gardenId, int status) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.User> returnValue = MembershipServiceUtil.findMemberUsers(gardenId);
+			java.util.List<com.liferay.portal.model.User> returnValue = MembershipServiceUtil.findMemberUsers(gardenId,
+					status);
 
 			return null;//net.sareweb.barazkide.model.MembershipSoap.toSoapModels(returnValue);
 		}

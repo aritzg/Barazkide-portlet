@@ -15,7 +15,7 @@
 		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="creatorUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="destinationUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="gardenImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="imageTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />

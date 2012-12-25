@@ -20,6 +20,7 @@ import java.util.List;
 import net.sareweb.barazkide.model.Membership;
 import net.sareweb.barazkide.service.MembershipLocalServiceUtil;
 import net.sareweb.barazkide.service.base.MembershipServiceBaseImpl;
+import net.sareweb.barazkide.util.Constants;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -54,7 +55,7 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 			membership.setUserId(userId);
 			membership.setGardenId(gardenId);
 			membership.setMembershipDate(new Date());
-			membership.setStatus(1);
+			membership.setStatus(Constants.MEMBERSHIP_STATUS_MEMBER);
 			MembershipLocalServiceUtil.addMembership(membership);
 			return true;
 		}
@@ -70,7 +71,7 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 			membership.setUserId(userId);
 			membership.setGardenId(gardenId);
 			membership.setMembershipDate(new Date());
-			membership.setStatus(0);
+			membership.setStatus(Constants.MEMBERSHIP_STATUS_REQUESTED);
 			MembershipLocalServiceUtil.addMembership(membership);
 			return true;
 		}
@@ -83,7 +84,7 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 	public boolean acceptMembershipRequest(long userId, long gardenId){
 		try{
 			Membership membership = membershipPersistence.fetchByUserAndGarden(userId, gardenId);
-			membership.setStatus(1);
+			membership.setStatus(Constants.MEMBERSHIP_STATUS_MEMBER);
 			MembershipLocalServiceUtil.addMembership(membership);
 			return true;
 		}
@@ -96,7 +97,7 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 	public boolean rejectMembershipRequest(long userId, long gardenId){
 		try{
 			Membership membership = membershipPersistence.fetchByUserAndGarden(userId, gardenId);
-			membership.setStatus(2);
+			membership.setStatus(Constants.MEMBERSHIP_STATUS_REJECTED);
 			MembershipLocalServiceUtil.addMembership(membership);
 			return true;
 		}
@@ -117,10 +118,19 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 		}
 	}
 	
-	public List<User> findMemberUsers(long gardenId){
+	public List<User> findMemberUsers(long gardenId, int status){
 		List<Membership> memberships;
 		try {
-			memberships = membershipPersistence.findByGarden(gardenId);
+			switch (status) {
+			case Constants.MEMBERSHIP_STATUS_ANY:
+				memberships = membershipPersistence.findByGarden(gardenId);
+				break;
+
+			default:
+				memberships = membershipPersistence.findByGardenAndStatus(gardenId, status);
+				break;
+			}
+			
 		} catch (SystemException e) {
 			e.printStackTrace();
 			return null;

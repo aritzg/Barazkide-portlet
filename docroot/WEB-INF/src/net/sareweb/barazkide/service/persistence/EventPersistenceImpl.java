@@ -343,7 +343,7 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		eventImpl.setGardenId(event.getGardenId());
 		eventImpl.setCreatorUserId(event.getCreatorUserId());
 		eventImpl.setDestinationUserId(event.getDestinationUserId());
-		eventImpl.setGardenImageId(event.getGardenImageId());
+		eventImpl.setFolderId(event.getFolderId());
 		eventImpl.setImageTitle(event.getImageTitle());
 		eventImpl.setCreateDate(event.getCreateDate());
 		eventImpl.setEventType(event.getEventType());

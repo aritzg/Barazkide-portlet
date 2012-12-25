@@ -32,7 +32,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
+import net.sareweb.barazkide.model.Event;
 import net.sareweb.barazkide.model.Garden;
+import net.sareweb.barazkide.service.EventLocalServiceUtil;
 import net.sareweb.barazkide.service.GardenLocalServiceUtil;
 import net.sareweb.barazkide.service.MembershipServiceUtil;
 import net.sareweb.barazkide.service.base.GardenServiceBaseImpl;
@@ -88,6 +90,16 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 	public Garden updateGardenImage(long gardenId, String imageTitle) throws PortalException, SystemException{
 		Garden garden = GardenLocalServiceUtil.getGarden(gardenId);
 		garden.setImageTitle(imageTitle);
+		
+		Event event = EventLocalServiceUtil.createEvent(CounterLocalServiceUtil.increment());
+		event.setCreatorUserId(getGuestOrUserId());
+		event.setCreateDate(new Date());
+		event.setEventType("IMAGE");
+		event.setGardenId(gardenId);
+		event.setImageTitle(imageTitle);
+		event.setFolderId(garden.getGardenFolderId());
+		EventLocalServiceUtil.addEvent(event);
+		
 		return GardenLocalServiceUtil.updateGarden(garden);
 	}
 	

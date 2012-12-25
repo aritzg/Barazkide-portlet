@@ -70,13 +70,13 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			{ "gardenId", Types.BIGINT },
 			{ "creatorUserId", Types.BIGINT },
 			{ "destinationUserId", Types.BIGINT },
-			{ "gardenImageId", Types.BIGINT },
+			{ "folderId", Types.BIGINT },
 			{ "imageTitle", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "eventType", Types.VARCHAR },
 			{ "eventText", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Barazkide_Event (eventId LONG not null primary key,gardenId LONG,creatorUserId LONG,destinationUserId LONG,gardenImageId LONG,imageTitle VARCHAR(75) null,createDate DATE null,eventType VARCHAR(75) null,eventText VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Barazkide_Event (eventId LONG not null primary key,gardenId LONG,creatorUserId LONG,destinationUserId LONG,folderId LONG,imageTitle VARCHAR(75) null,createDate DATE null,eventType VARCHAR(75) null,eventText VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Event";
 	public static final String ORDER_BY_JPQL = " ORDER BY event.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Barazkide_Event.createDate DESC";
@@ -111,7 +111,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		model.setGardenId(soapModel.getGardenId());
 		model.setCreatorUserId(soapModel.getCreatorUserId());
 		model.setDestinationUserId(soapModel.getDestinationUserId());
-		model.setGardenImageId(soapModel.getGardenImageId());
+		model.setFolderId(soapModel.getFolderId());
 		model.setImageTitle(soapModel.getImageTitle());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setEventType(soapModel.getEventType());
@@ -178,7 +178,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		attributes.put("gardenId", getGardenId());
 		attributes.put("creatorUserId", getCreatorUserId());
 		attributes.put("destinationUserId", getDestinationUserId());
-		attributes.put("gardenImageId", getGardenImageId());
+		attributes.put("folderId", getFolderId());
 		attributes.put("imageTitle", getImageTitle());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("eventType", getEventType());
@@ -213,10 +213,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			setDestinationUserId(destinationUserId);
 		}
 
-		Long gardenImageId = (Long)attributes.get("gardenImageId");
+		Long folderId = (Long)attributes.get("folderId");
 
-		if (gardenImageId != null) {
-			setGardenImageId(gardenImageId);
+		if (folderId != null) {
+			setFolderId(folderId);
 		}
 
 		String imageTitle = (String)attributes.get("imageTitle");
@@ -311,12 +311,12 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	@JSON
-	public long getGardenImageId() {
-		return _gardenImageId;
+	public long getFolderId() {
+		return _folderId;
 	}
 
-	public void setGardenImageId(long gardenImageId) {
-		_gardenImageId = gardenImageId;
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
 	}
 
 	@JSON
@@ -408,7 +408,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		eventImpl.setGardenId(getGardenId());
 		eventImpl.setCreatorUserId(getCreatorUserId());
 		eventImpl.setDestinationUserId(getDestinationUserId());
-		eventImpl.setGardenImageId(getGardenImageId());
+		eventImpl.setFolderId(getFolderId());
 		eventImpl.setImageTitle(getImageTitle());
 		eventImpl.setCreateDate(getCreateDate());
 		eventImpl.setEventType(getEventType());
@@ -486,7 +486,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		eventCacheModel.destinationUserId = getDestinationUserId();
 
-		eventCacheModel.gardenImageId = getGardenImageId();
+		eventCacheModel.folderId = getFolderId();
 
 		eventCacheModel.imageTitle = getImageTitle();
 
@@ -536,8 +536,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(getCreatorUserId());
 		sb.append(", destinationUserId=");
 		sb.append(getDestinationUserId());
-		sb.append(", gardenImageId=");
-		sb.append(getGardenImageId());
+		sb.append(", folderId=");
+		sb.append(getFolderId());
 		sb.append(", imageTitle=");
 		sb.append(getImageTitle());
 		sb.append(", createDate=");
@@ -575,8 +575,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(getDestinationUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>gardenImageId</column-name><column-value><![CDATA[");
-		sb.append(getGardenImageId());
+			"<column><column-name>folderId</column-name><column-value><![CDATA[");
+		sb.append(getFolderId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>imageTitle</column-name><column-value><![CDATA[");
@@ -612,7 +612,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	private String _creatorUserUuid;
 	private long _destinationUserId;
 	private String _destinationUserUuid;
-	private long _gardenImageId;
+	private long _folderId;
 	private String _imageTitle;
 	private Date _createDate;
 	private String _eventType;

@@ -96,6 +96,28 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 			MembershipModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGarden",
 			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GARDENANDSTATUS =
+		new FinderPath(MembershipModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipModelImpl.FINDER_CACHE_ENABLED, MembershipImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGardenAndStatus",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENANDSTATUS =
+		new FinderPath(MembershipModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipModelImpl.FINDER_CACHE_ENABLED, MembershipImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGardenAndStatus",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			MembershipModelImpl.GARDENID_COLUMN_BITMASK |
+			MembershipModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_GARDENANDSTATUS = new FinderPath(MembershipModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByGardenAndStatus",
+			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_USERANDGARDEN = new FinderPath(MembershipModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipModelImpl.FINDER_CACHE_ENABLED, MembershipImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserAndGarden",
@@ -353,6 +375,29 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GARDEN, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDEN,
+					args);
+			}
+
+			if ((membershipModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENANDSTATUS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(membershipModelImpl.getOriginalGardenId()),
+						Integer.valueOf(membershipModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GARDENANDSTATUS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENANDSTATUS,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(membershipModelImpl.getGardenId()),
+						Integer.valueOf(membershipModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GARDENANDSTATUS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENANDSTATUS,
 					args);
 			}
 		}
@@ -882,6 +927,409 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 	}
 
 	/**
+	 * Returns all the memberships where gardenId = &#63; and status = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @return the matching memberships
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Membership> findByGardenAndStatus(long gardenId, int status)
+		throws SystemException {
+		return findByGardenAndStatus(gardenId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the memberships where gardenId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @param start the lower bound of the range of memberships
+	 * @param end the upper bound of the range of memberships (not inclusive)
+	 * @return the range of matching memberships
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Membership> findByGardenAndStatus(long gardenId, int status,
+		int start, int end) throws SystemException {
+		return findByGardenAndStatus(gardenId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the memberships where gardenId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @param start the lower bound of the range of memberships
+	 * @param end the upper bound of the range of memberships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching memberships
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Membership> findByGardenAndStatus(long gardenId, int status,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GARDENANDSTATUS;
+			finderArgs = new Object[] { gardenId, status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GARDENANDSTATUS;
+			finderArgs = new Object[] {
+					gardenId, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Membership> list = (List<Membership>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Membership membership : list) {
+				if ((gardenId != membership.getGardenId()) ||
+						(status != membership.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_MEMBERSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_GARDENANDSTATUS_GARDENID_2);
+
+			query.append(_FINDER_COLUMN_GARDENANDSTATUS_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(gardenId);
+
+				qPos.add(status);
+
+				list = (List<Membership>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first membership in the ordered set where gardenId = &#63; and status = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching membership
+	 * @throws net.sareweb.barazkide.NoSuchMembershipException if a matching membership could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership findByGardenAndStatus_First(long gardenId, int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchMembershipException, SystemException {
+		Membership membership = fetchByGardenAndStatus_First(gardenId, status,
+				orderByComparator);
+
+		if (membership != null) {
+			return membership;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("gardenId=");
+		msg.append(gardenId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipException(msg.toString());
+	}
+
+	/**
+	 * Returns the first membership in the ordered set where gardenId = &#63; and status = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching membership, or <code>null</code> if a matching membership could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership fetchByGardenAndStatus_First(long gardenId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Membership> list = findByGardenAndStatus(gardenId, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last membership in the ordered set where gardenId = &#63; and status = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching membership
+	 * @throws net.sareweb.barazkide.NoSuchMembershipException if a matching membership could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership findByGardenAndStatus_Last(long gardenId, int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchMembershipException, SystemException {
+		Membership membership = fetchByGardenAndStatus_Last(gardenId, status,
+				orderByComparator);
+
+		if (membership != null) {
+			return membership;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("gardenId=");
+		msg.append(gardenId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchMembershipException(msg.toString());
+	}
+
+	/**
+	 * Returns the last membership in the ordered set where gardenId = &#63; and status = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching membership, or <code>null</code> if a matching membership could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership fetchByGardenAndStatus_Last(long gardenId, int status,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByGardenAndStatus(gardenId, status);
+
+		List<Membership> list = findByGardenAndStatus(gardenId, status,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the memberships before and after the current membership in the ordered set where gardenId = &#63; and status = &#63;.
+	 *
+	 * @param membershipId the primary key of the current membership
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next membership
+	 * @throws net.sareweb.barazkide.NoSuchMembershipException if a membership with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Membership[] findByGardenAndStatus_PrevAndNext(long membershipId,
+		long gardenId, int status, OrderByComparator orderByComparator)
+		throws NoSuchMembershipException, SystemException {
+		Membership membership = findByPrimaryKey(membershipId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Membership[] array = new MembershipImpl[3];
+
+			array[0] = getByGardenAndStatus_PrevAndNext(session, membership,
+					gardenId, status, orderByComparator, true);
+
+			array[1] = membership;
+
+			array[2] = getByGardenAndStatus_PrevAndNext(session, membership,
+					gardenId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Membership getByGardenAndStatus_PrevAndNext(Session session,
+		Membership membership, long gardenId, int status,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MEMBERSHIP_WHERE);
+
+		query.append(_FINDER_COLUMN_GARDENANDSTATUS_GARDENID_2);
+
+		query.append(_FINDER_COLUMN_GARDENANDSTATUS_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(gardenId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(membership);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Membership> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Returns the membership where userId = &#63; and gardenId = &#63; or throws a {@link net.sareweb.barazkide.NoSuchMembershipException} if it could not be found.
 	 *
 	 * @param userId the user ID
@@ -1157,6 +1605,20 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 	}
 
 	/**
+	 * Removes all the memberships where gardenId = &#63; and status = &#63; from the database.
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByGardenAndStatus(long gardenId, int status)
+		throws SystemException {
+		for (Membership membership : findByGardenAndStatus(gardenId, status)) {
+			remove(membership);
+		}
+	}
+
+	/**
 	 * Removes the membership where userId = &#63; and gardenId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1226,6 +1688,65 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_GARDEN,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of memberships where gardenId = &#63; and status = &#63;.
+	 *
+	 * @param gardenId the garden ID
+	 * @param status the status
+	 * @return the number of matching memberships
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByGardenAndStatus(long gardenId, int status)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { gardenId, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_GARDENANDSTATUS,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_MEMBERSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_GARDENANDSTATUS_GARDENID_2);
+
+			query.append(_FINDER_COLUMN_GARDENANDSTATUS_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(gardenId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_GARDENANDSTATUS,
 					finderArgs, count);
 
 				closeSession(session);
@@ -1384,6 +1905,8 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 	private static final String _SQL_COUNT_MEMBERSHIP = "SELECT COUNT(membership) FROM Membership membership";
 	private static final String _SQL_COUNT_MEMBERSHIP_WHERE = "SELECT COUNT(membership) FROM Membership membership WHERE ";
 	private static final String _FINDER_COLUMN_GARDEN_GARDENID_2 = "membership.gardenId = ?";
+	private static final String _FINDER_COLUMN_GARDENANDSTATUS_GARDENID_2 = "membership.gardenId = ? AND ";
+	private static final String _FINDER_COLUMN_GARDENANDSTATUS_STATUS_2 = "membership.status = ?";
 	private static final String _FINDER_COLUMN_USERANDGARDEN_USERID_2 = "membership.userId = ? AND ";
 	private static final String _FINDER_COLUMN_USERANDGARDEN_GARDENID_2 = "membership.gardenId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "membership.";

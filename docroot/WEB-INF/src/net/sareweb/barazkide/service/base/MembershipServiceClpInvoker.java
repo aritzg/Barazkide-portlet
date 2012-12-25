@@ -53,7 +53,7 @@ public class MembershipServiceClpInvoker {
 
 		_methodName71 = "findMemberUsers";
 
-		_methodParameterTypes71 = new String[] { "long" };
+		_methodParameterTypes71 = new String[] { "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -100,7 +100,8 @@ public class MembershipServiceClpInvoker {
 
 		if (_methodName71.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
-			return MembershipServiceUtil.findMemberUsers(((Long)arguments[0]).longValue());
+			return MembershipServiceUtil.findMemberUsers(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		throw new UnsupportedOperationException();

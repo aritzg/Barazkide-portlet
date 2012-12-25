@@ -67,12 +67,12 @@ import java.rmi.RemoteException;
 public class EventServiceSoap {
 	public static net.sareweb.barazkide.model.EventSoap addEvent(
 		long gardenId, long creatorUserId, long destinationUserId,
-		long gardenImageId, java.lang.String eventType,
-		java.lang.String eventText) throws RemoteException {
+		java.lang.String eventType, java.lang.String eventText, long folderId,
+		java.lang.String imageTitle) throws RemoteException {
 		try {
 			net.sareweb.barazkide.model.Event returnValue = EventServiceUtil.addEvent(gardenId,
-					creatorUserId, destinationUserId, gardenImageId, eventType,
-					eventText);
+					creatorUserId, destinationUserId, eventType, eventText,
+					folderId, imageTitle);
 
 			return net.sareweb.barazkide.model.EventSoap.toSoapModel(returnValue);
 		}

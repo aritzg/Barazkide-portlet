@@ -44,8 +44,8 @@ public class EventCacheModel implements CacheModel<Event>, Serializable {
 		sb.append(creatorUserId);
 		sb.append(", destinationUserId=");
 		sb.append(destinationUserId);
-		sb.append(", gardenImageId=");
-		sb.append(gardenImageId);
+		sb.append(", folderId=");
+		sb.append(folderId);
 		sb.append(", imageTitle=");
 		sb.append(imageTitle);
 		sb.append(", createDate=");
@@ -66,7 +66,7 @@ public class EventCacheModel implements CacheModel<Event>, Serializable {
 		eventImpl.setGardenId(gardenId);
 		eventImpl.setCreatorUserId(creatorUserId);
 		eventImpl.setDestinationUserId(destinationUserId);
-		eventImpl.setGardenImageId(gardenImageId);
+		eventImpl.setFolderId(folderId);
 
 		if (imageTitle == null) {
 			eventImpl.setImageTitle(StringPool.BLANK);
@@ -105,7 +105,7 @@ public class EventCacheModel implements CacheModel<Event>, Serializable {
 	public long gardenId;
 	public long creatorUserId;
 	public long destinationUserId;
-	public long gardenImageId;
+	public long folderId;
 	public String imageTitle;
 	public long createDate;
 	public String eventType;

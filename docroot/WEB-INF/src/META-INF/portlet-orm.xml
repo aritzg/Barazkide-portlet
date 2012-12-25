@@ -13,7 +13,7 @@
 			<basic name="gardenId" />
 			<basic name="creatorUserId" />
 			<basic name="destinationUserId" />
-			<basic name="gardenImageId" />
+			<basic name="folderId" />
 			<basic name="imageTitle" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>

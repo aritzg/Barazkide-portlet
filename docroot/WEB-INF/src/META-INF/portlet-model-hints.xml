@@ -6,7 +6,7 @@
 		<field name="gardenId" type="long" />
 		<field name="creatorUserId" type="long" />
 		<field name="destinationUserId" type="long" />
-		<field name="gardenImageId" type="long" />
+		<field name="folderId" type="long" />
 		<field name="imageTitle" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="eventType" type="String" />

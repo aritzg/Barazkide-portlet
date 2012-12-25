@@ -45,6 +45,10 @@
 		<finder name="Garden" return-type="Collection">
 		    <finder-column name="gardenId"/>
 		</finder>
+		<finder name="GardenAndStatus" return-type="Collection">
+		    <finder-column name="gardenId"/>
+		    <finder-column name="status"/>
+		</finder>
 		<finder name="UserAndGarden" return-type="Membership">
 		    <finder-column name="userId"/>
 		    <finder-column name="gardenId"/>
@@ -78,7 +82,7 @@
 		<column name="gardenId" type="long"/>
 		<column name="creatorUserId" type="long"/>
 		<column name="destinationUserId" type="long"/>
-		<column name="gardenImageId" type="long"/>
+		<column name="folderId" type="long"/>
 		<column name="imageTitle" type="String"/>
 		
 		<column name="createDate" type="Date" />
