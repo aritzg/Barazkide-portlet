@@ -61,20 +61,20 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 		return EventLocalServiceUtil.addEvent(event);
 	}
 	
-	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, long followingDate, int blockSize) throws SystemException{
-		return eventFinder.findEventsInFollowedGardensOlderThanDate(userId, followingDate, blockSize);
+	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, String eventType, long followingDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInFollowedGardensOlderThanDate(userId, eventType, followingDate, blockSize);
 	}
 	
-	public List<Event> findEventsInFollowedGardensNewerThanDate(long userId, long followingDate, int blockSize) throws SystemException{
-		return eventFinder.findEventsInFollowedGardensNewerThanDate(userId, followingDate, blockSize);
+	public List<Event> findEventsInFollowedGardensNewerThanDate(long userId, String eventType, long followingDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInFollowedGardensNewerThanDate(userId, eventType, followingDate, blockSize);
 	}
 	
-	public List<Event> findEventsInGardenOlderThanDate(long gardenId, long eventDate, int blockSize) throws SystemException{
-		return eventFinder.findEventsInGardenOlderThanDate(gardenId, eventDate, blockSize);
+	public List<Event> findEventsInGardenOlderThanDate(long gardenId, String eventType, long eventDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInGardenOlderThanDate(gardenId, eventType, eventDate, blockSize);
 	}
 	
-	public List<Event> findEventsInGardenNewerThanDate(long gardenId, long eventDate, int blockSize) throws SystemException{
-		return eventFinder.findEventsInGardenNewerThanDate(gardenId, eventDate, blockSize);
+	public List<Event> findEventsInGardenNewerThanDate(long gardenId, String eventType, long eventDate, int blockSize) throws SystemException{
+		return eventFinder.findEventsInGardenNewerThanDate(gardenId, eventType, eventDate, blockSize);
 	}
 	
 	private String decode(String codedString){

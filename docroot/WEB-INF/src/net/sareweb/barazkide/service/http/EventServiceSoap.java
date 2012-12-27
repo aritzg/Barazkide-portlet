@@ -84,11 +84,11 @@ public class EventServiceSoap {
 	}
 
 	public static net.sareweb.barazkide.model.EventSoap[] findEventsInFollowedGardensOlderThanDate(
-		long userId, long followingDate, int blockSize)
-		throws RemoteException {
+		long userId, java.lang.String eventType, long followingDate,
+		int blockSize) throws RemoteException {
 		try {
 			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInFollowedGardensOlderThanDate(userId,
-					followingDate, blockSize);
+					eventType, followingDate, blockSize);
 
 			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
 		}
@@ -100,11 +100,11 @@ public class EventServiceSoap {
 	}
 
 	public static net.sareweb.barazkide.model.EventSoap[] findEventsInFollowedGardensNewerThanDate(
-		long userId, long followingDate, int blockSize)
-		throws RemoteException {
+		long userId, java.lang.String eventType, long followingDate,
+		int blockSize) throws RemoteException {
 		try {
 			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInFollowedGardensNewerThanDate(userId,
-					followingDate, blockSize);
+					eventType, followingDate, blockSize);
 
 			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
 		}
@@ -116,10 +116,11 @@ public class EventServiceSoap {
 	}
 
 	public static net.sareweb.barazkide.model.EventSoap[] findEventsInGardenOlderThanDate(
-		long gardenId, long eventDate, int blockSize) throws RemoteException {
+		long gardenId, java.lang.String eventType, long eventDate, int blockSize)
+		throws RemoteException {
 		try {
 			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInGardenOlderThanDate(gardenId,
-					eventDate, blockSize);
+					eventType, eventDate, blockSize);
 
 			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
 		}
@@ -131,10 +132,11 @@ public class EventServiceSoap {
 	}
 
 	public static net.sareweb.barazkide.model.EventSoap[] findEventsInGardenNewerThanDate(
-		long gardenId, long eventDate, int blockSize) throws RemoteException {
+		long gardenId, java.lang.String eventType, long eventDate, int blockSize)
+		throws RemoteException {
 		try {
 			java.util.List<net.sareweb.barazkide.model.Event> returnValue = EventServiceUtil.findEventsInGardenNewerThanDate(gardenId,
-					eventDate, blockSize);
+					eventType, eventDate, blockSize);
 
 			return net.sareweb.barazkide.model.EventSoap.toSoapModels(returnValue);
 		}

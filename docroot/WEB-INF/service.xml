@@ -134,4 +134,28 @@
 		
 	</entity>
 	
+	<entity name="Badge" local-service="true" remote-service="true" cache-enabled="false">
+
+	    <!-- PK fields -->
+		<column name="badgeId" type="long" primary="true" />
+		
+		<column name="badgeType" type="String"/>
+		<column name="badgeTextKey" type="String"/>
+		<column name="badgeImageUrl" type="String"/>
+		<column name="createDate" type="Date" />
+		
+	</entity>
+	
+	<entity name="GardenBadge" local-service="true" remote-service="false" cache-enabled="false">
+
+	    <!-- PK fields -->
+		<column name="gardenBadgeId" type="long" primary="true" />
+		
+		<column name="gardenId" type="long"/>
+		<column name="badgeId" type="long"/>
+
+		<column name="obtainedDate" type="Date" />
+		
+	</entity>
+	
 </service-builder>

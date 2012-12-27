@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="net.sareweb.barazkide.model.Badge">
+		<field name="badgeId" type="long" />
+		<field name="badgeType" type="String" />
+		<field name="badgeTextKey" type="String" />
+		<field name="badgeImageUrl" type="String" />
+		<field name="createDate" type="Date" />
+	</model>
 	<model name="net.sareweb.barazkide.model.Event">
 		<field name="eventId" type="long" />
 		<field name="gardenId" type="long" />
@@ -30,6 +37,12 @@
 		<field name="lat" type="double" />
 		<field name="lng" type="double" />
 		<field name="imageTitle" type="String" />
+	</model>
+	<model name="net.sareweb.barazkide.model.GardenBadge">
+		<field name="gardenBadgeId" type="long" />
+		<field name="gardenId" type="long" />
+		<field name="badgeId" type="long" />
+		<field name="obtainedDate" type="Date" />
 	</model>
 	<model name="net.sareweb.barazkide.model.GardenImage">
 		<field name="gardenImageId" type="long" />

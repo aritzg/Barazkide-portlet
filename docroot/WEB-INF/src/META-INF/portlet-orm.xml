@@ -7,6 +7,20 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.BadgeModelImpl">
+		<attributes>
+			<id name="badgeId" />
+			<basic name="badgeType" />
+			<basic name="badgeTextKey" />
+			<basic name="badgeImageUrl" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="net.sareweb.barazkide.model.impl.EventModelImpl">
 		<attributes>
 			<id name="eventId" />
@@ -66,6 +80,19 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="net.sareweb.barazkide.model.impl.GardenBadgeModelImpl">
+		<attributes>
+			<id name="gardenBadgeId" />
+			<basic name="gardenId" />
+			<basic name="badgeId" />
+			<basic name="obtainedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="net.sareweb.barazkide.model.impl.GardenImageModelImpl">
 		<attributes>
 			<id name="gardenImageId" />
@@ -112,6 +139,10 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<entity class="net.sareweb.barazkide.model.impl.BadgeImpl" name="Badge">
+		<table name="Barazkide_Badge" />
+		<attributes />
+	</entity>
 	<entity class="net.sareweb.barazkide.model.impl.EventImpl" name="Event">
 		<table name="Barazkide_Event" />
 		<attributes />
@@ -122,6 +153,10 @@
 	</entity>
 	<entity class="net.sareweb.barazkide.model.impl.GardenImpl" name="Garden">
 		<table name="Barazkide_Garden" />
+		<attributes />
+	</entity>
+	<entity class="net.sareweb.barazkide.model.impl.GardenBadgeImpl" name="GardenBadge">
+		<table name="Barazkide_GardenBadge" />
 		<attributes />
 	</entity>
 	<entity class="net.sareweb.barazkide.model.impl.GardenImageImpl" name="GardenImage">

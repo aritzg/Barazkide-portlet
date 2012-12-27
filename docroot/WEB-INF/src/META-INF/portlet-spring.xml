@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="net.sareweb.barazkide.service.BadgeLocalService" class="net.sareweb.barazkide.service.impl.BadgeLocalServiceImpl" />
+	<bean id="net.sareweb.barazkide.service.BadgeService" class="net.sareweb.barazkide.service.impl.BadgeServiceImpl" />
+	<bean id="net.sareweb.barazkide.service.persistence.BadgePersistence" class="net.sareweb.barazkide.service.persistence.BadgePersistenceImpl" parent="basePersistence" />
+	<bean id="net.sareweb.barazkide.service.persistence.BadgeFinder" class="net.sareweb.barazkide.service.persistence.BadgeFinderImpl" parent="basePersistence" />
 	<bean id="net.sareweb.barazkide.service.EventLocalService" class="net.sareweb.barazkide.service.impl.EventLocalServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.EventService" class="net.sareweb.barazkide.service.impl.EventServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.EventPersistence" class="net.sareweb.barazkide.service.persistence.EventPersistenceImpl" parent="basePersistence" />
@@ -12,6 +16,8 @@
 	<bean id="net.sareweb.barazkide.service.GardenService" class="net.sareweb.barazkide.service.impl.GardenServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.GardenPersistence" class="net.sareweb.barazkide.service.persistence.GardenPersistenceImpl" parent="basePersistence" />
 	<bean id="net.sareweb.barazkide.service.persistence.GardenFinder" class="net.sareweb.barazkide.service.persistence.GardenFinderImpl" parent="basePersistence" />
+	<bean id="net.sareweb.barazkide.service.GardenBadgeLocalService" class="net.sareweb.barazkide.service.impl.GardenBadgeLocalServiceImpl" />
+	<bean id="net.sareweb.barazkide.service.persistence.GardenBadgePersistence" class="net.sareweb.barazkide.service.persistence.GardenBadgePersistenceImpl" parent="basePersistence" />
 	<bean id="net.sareweb.barazkide.service.GardenImageLocalService" class="net.sareweb.barazkide.service.impl.GardenImageLocalServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.GardenImageService" class="net.sareweb.barazkide.service.impl.GardenImageServiceImpl" />
 	<bean id="net.sareweb.barazkide.service.persistence.GardenImagePersistence" class="net.sareweb.barazkide.service.persistence.GardenImagePersistenceImpl" parent="basePersistence" />

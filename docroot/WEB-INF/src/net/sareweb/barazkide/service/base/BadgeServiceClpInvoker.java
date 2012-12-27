@@ -14,15 +14,15 @@
 
 package net.sareweb.barazkide.service.base;
 
-import net.sareweb.barazkide.service.RatingServiceUtil;
+import net.sareweb.barazkide.service.BadgeServiceUtil;
 
 import java.util.Arrays;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RatingServiceClpInvoker {
-	public RatingServiceClpInvoker() {
+public class BadgeServiceClpInvoker {
+	public BadgeServiceClpInvoker() {
 		_methodName72 = "getBeanIdentifier";
 
 		_methodParameterTypes72 = new String[] {  };
@@ -31,40 +31,26 @@ public class RatingServiceClpInvoker {
 
 		_methodParameterTypes73 = new String[] { "java.lang.String" };
 
-		_methodName78 = "addRating";
+		_methodName78 = "getGardenBadges";
 
-		_methodParameterTypes78 = new String[] {
-				"long", "java.lang.String", "long", "double"
-			};
-
-		_methodName79 = "getAvgRating";
-
-		_methodParameterTypes79 = new String[] { "long" };
+		_methodParameterTypes78 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
 		if (_methodName72.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
-			return RatingServiceUtil.getBeanIdentifier();
+			return BadgeServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName73.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
-			RatingServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			BadgeServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName78.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
-			RatingServiceUtil.addRating(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(),
-				((Double)arguments[3]).doubleValue());
-		}
-
-		if (_methodName79.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
-			return RatingServiceUtil.getAvgRating(((Long)arguments[0]).longValue());
+			return BadgeServiceUtil.getGardenBadges(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -76,6 +62,4 @@ public class RatingServiceClpInvoker {
 	private String[] _methodParameterTypes73;
 	private String _methodName78;
 	private String[] _methodParameterTypes78;
-	private String _methodName79;
-	private String[] _methodParameterTypes79;
 }

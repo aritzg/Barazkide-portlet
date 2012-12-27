@@ -2,12 +2,23 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="net.sareweb.barazkide.model.Badge" />
 	<import class="net.sareweb.barazkide.model.Event" />
 	<import class="net.sareweb.barazkide.model.Following" />
 	<import class="net.sareweb.barazkide.model.Garden" />
+	<import class="net.sareweb.barazkide.model.GardenBadge" />
 	<import class="net.sareweb.barazkide.model.GardenImage" />
 	<import class="net.sareweb.barazkide.model.Membership" />
 	<import class="net.sareweb.barazkide.model.Rating" />
+	<class name="net.sareweb.barazkide.model.impl.BadgeImpl" table="Barazkide_Badge">
+		<id name="badgeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="badgeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="badgeTextKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="badgeImageUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+	</class>
 	<class name="net.sareweb.barazkide.model.impl.EventImpl" table="Barazkide_Event">
 		<id name="eventId" type="long">
 			<generator class="assigned" />
@@ -43,6 +54,14 @@
 		<property name="lat" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="lng" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="imageTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="net.sareweb.barazkide.model.impl.GardenBadgeImpl" table="Barazkide_GardenBadge">
+		<id name="gardenBadgeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="gardenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="badgeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="obtainedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="net.sareweb.barazkide.model.impl.GardenImageImpl" table="Barazkide_GardenImage">
 		<id name="gardenImageId" type="long">

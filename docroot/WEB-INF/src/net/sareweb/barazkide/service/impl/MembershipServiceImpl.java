@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sareweb.barazkide.model.Membership;
+import net.sareweb.barazkide.service.EventServiceUtil;
 import net.sareweb.barazkide.service.MembershipLocalServiceUtil;
 import net.sareweb.barazkide.service.base.MembershipServiceBaseImpl;
 import net.sareweb.barazkide.util.Constants;
@@ -57,6 +58,12 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 			membership.setMembershipDate(new Date());
 			membership.setStatus(Constants.MEMBERSHIP_STATUS_MEMBER);
 			MembershipLocalServiceUtil.addMembership(membership);
+			try{
+				EventServiceUtil.addEvent(gardenId, getGuestOrUserId(), userId, Constants.EVENT_TYPE_ADD_MEMBER, "", 0, "");
+			}
+			catch(Exception eventEx){
+				eventEx.printStackTrace();
+			}
 			return true;
 		}
 		catch(Exception e){
@@ -73,6 +80,12 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 			membership.setMembershipDate(new Date());
 			membership.setStatus(Constants.MEMBERSHIP_STATUS_REQUESTED);
 			MembershipLocalServiceUtil.addMembership(membership);
+			try{
+				EventServiceUtil.addEvent(gardenId, getGuestOrUserId(), 0, Constants.EVENT_TYPE_REQUEST_MEMBERSHIP, "", 0, "");
+			}
+			catch(Exception eventEx){
+				eventEx.printStackTrace();
+			}
 			return true;
 		}
 		catch(Exception e){
@@ -86,6 +99,12 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 			Membership membership = membershipPersistence.fetchByUserAndGarden(userId, gardenId);
 			membership.setStatus(Constants.MEMBERSHIP_STATUS_MEMBER);
 			MembershipLocalServiceUtil.addMembership(membership);
+			try{
+				EventServiceUtil.addEvent(gardenId, getGuestOrUserId(), userId, Constants.EVENT_TYPE_ADD_MEMBER, "", 0, "");
+			}
+			catch(Exception eventEx){
+				eventEx.printStackTrace();
+			}
 			return true;
 		}
 		catch(Exception e){
@@ -141,7 +160,6 @@ public class MembershipServiceImpl extends MembershipServiceBaseImpl {
 		Long[] users = new Long[memberships.size()];
 		int i =0;
 		for(Membership membership : memberships){
-			System.out.println("membership.getUserId() " + membership.getUserId());
 			users[i]=membership.getUserId();
 			i++;
 		}

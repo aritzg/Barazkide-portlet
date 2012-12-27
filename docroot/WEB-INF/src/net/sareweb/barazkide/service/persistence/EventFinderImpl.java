@@ -27,7 +27,7 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 	public static String FIND_EVENTS_IN_GARDEN_NEWER = EventFinder.class
 			.getName() + ".findEventsInGardenNewerThanDate";
 
-	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, long followingDate, int blockSize) throws SystemException {
+	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, String eventType, long followingDate, int blockSize) throws SystemException {
 
 		List<Event> events = new ArrayList<Event>();
 		Session session = null;
@@ -38,8 +38,11 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 			q.addEntity("event", EventImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+			
 			qPos.add(userId);
 			qPos.add(new Date(followingDate));
+			if(eventType==null)eventType="";
+			qPos.add("%" + eventType + "%");
 
 			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
 		} catch (Exception e) {
@@ -50,7 +53,7 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 		return events;
 	}
 	
-	public List<Event> findEventsInFollowedGardensNewerThanDate(long userId, long followingDate, int blockSize) throws SystemException {
+	public List<Event> findEventsInFollowedGardensNewerThanDate(long userId, String eventType, long followingDate, int blockSize) throws SystemException {
 
 		List<Event> events = new ArrayList<Event>();
 		Session session = null;
@@ -63,6 +66,8 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(userId);
 			qPos.add(new Date(followingDate));
+			if(eventType==null)eventType="";
+			qPos.add("%" + eventType + "%");
 
 			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
 		} catch (Exception e) {
@@ -73,7 +78,7 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 		return events;
 	}
 
-	public List<Event> findEventsInGardenOlderThanDate(long gardenId, long eventDate, int blockSize) throws SystemException {
+	public List<Event> findEventsInGardenOlderThanDate(long gardenId, String eventType, long eventDate, int blockSize) throws SystemException {
 
 		List<Event> events = new ArrayList<Event>();
 		Session session = null;
@@ -86,6 +91,8 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(gardenId);
 			qPos.add(new Date(eventDate));
+			if(eventType==null)eventType="";
+			qPos.add("%" + eventType + "%");
 
 			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
 		} catch (Exception e) {
@@ -96,7 +103,7 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 		return events;
 	}
 	
-	public List<Event> findEventsInGardenNewerThanDate(long gardenId, long eventDate, int blockSize) throws SystemException {
+	public List<Event> findEventsInGardenNewerThanDate(long gardenId, String eventType, long eventDate, int blockSize) throws SystemException {
 
 		List<Event> events = new ArrayList<Event>();
 		Session session = null;
@@ -109,6 +116,8 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(gardenId);
 			qPos.add(new Date(eventDate));
+			if(eventType==null)eventType="";
+			qPos.add("%" + eventType + "%");
 
 			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
 		} catch (Exception e) {

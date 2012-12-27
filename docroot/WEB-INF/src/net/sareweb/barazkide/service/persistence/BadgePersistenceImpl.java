@@ -40,10 +40,10 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import net.sareweb.barazkide.NoSuchGardenException;
-import net.sareweb.barazkide.model.Garden;
-import net.sareweb.barazkide.model.impl.GardenImpl;
-import net.sareweb.barazkide.model.impl.GardenModelImpl;
+import net.sareweb.barazkide.NoSuchBadgeException;
+import net.sareweb.barazkide.model.Badge;
+import net.sareweb.barazkide.model.impl.BadgeImpl;
+import net.sareweb.barazkide.model.impl.BadgeModelImpl;
 
 import java.io.Serializable;
 
@@ -52,71 +52,70 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The persistence implementation for the garden service.
+ * The persistence implementation for the badge service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
  * @author A.Galdos
- * @see GardenPersistence
- * @see GardenUtil
+ * @see BadgePersistence
+ * @see BadgeUtil
  * @generated
  */
-public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
-	implements GardenPersistence {
+public class BadgePersistenceImpl extends BasePersistenceImpl<Badge>
+	implements BadgePersistence {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link GardenUtil} to access the garden persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link BadgeUtil} to access the badge persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = GardenImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_ENTITY = BadgeImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(GardenModelImpl.ENTITY_CACHE_ENABLED,
-			GardenModelImpl.FINDER_CACHE_ENABLED, GardenImpl.class,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+			BadgeModelImpl.FINDER_CACHE_ENABLED, BadgeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(GardenModelImpl.ENTITY_CACHE_ENABLED,
-			GardenModelImpl.FINDER_CACHE_ENABLED, GardenImpl.class,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+			BadgeModelImpl.FINDER_CACHE_ENABLED, BadgeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(GardenModelImpl.ENTITY_CACHE_ENABLED,
-			GardenModelImpl.FINDER_CACHE_ENABLED, Long.class,
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+			BadgeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 
 	/**
-	 * Caches the garden in the entity cache if it is enabled.
+	 * Caches the badge in the entity cache if it is enabled.
 	 *
-	 * @param garden the garden
+	 * @param badge the badge
 	 */
-	public void cacheResult(Garden garden) {
-		EntityCacheUtil.putResult(GardenModelImpl.ENTITY_CACHE_ENABLED,
-			GardenImpl.class, garden.getPrimaryKey(), garden);
+	public void cacheResult(Badge badge) {
+		EntityCacheUtil.putResult(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+			BadgeImpl.class, badge.getPrimaryKey(), badge);
 
-		garden.resetOriginalValues();
+		badge.resetOriginalValues();
 	}
 
 	/**
-	 * Caches the gardens in the entity cache if it is enabled.
+	 * Caches the badges in the entity cache if it is enabled.
 	 *
-	 * @param gardens the gardens
+	 * @param badges the badges
 	 */
-	public void cacheResult(List<Garden> gardens) {
-		for (Garden garden : gardens) {
-			if (EntityCacheUtil.getResult(
-						GardenModelImpl.ENTITY_CACHE_ENABLED, GardenImpl.class,
-						garden.getPrimaryKey()) == null) {
-				cacheResult(garden);
+	public void cacheResult(List<Badge> badges) {
+		for (Badge badge : badges) {
+			if (EntityCacheUtil.getResult(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+						BadgeImpl.class, badge.getPrimaryKey()) == null) {
+				cacheResult(badge);
 			}
 			else {
-				garden.resetOriginalValues();
+				badge.resetOriginalValues();
 			}
 		}
 	}
 
 	/**
-	 * Clears the cache for all gardens.
+	 * Clears the cache for all badges.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -125,10 +124,10 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 	@Override
 	public void clearCache() {
 		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(GardenImpl.class.getName());
+			CacheRegistryUtil.clear(BadgeImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(GardenImpl.class.getName());
+		EntityCacheUtil.clearCache(BadgeImpl.class.getName());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -136,90 +135,90 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 	}
 
 	/**
-	 * Clears the cache for the garden.
+	 * Clears the cache for the badge.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
-	public void clearCache(Garden garden) {
-		EntityCacheUtil.removeResult(GardenModelImpl.ENTITY_CACHE_ENABLED,
-			GardenImpl.class, garden.getPrimaryKey());
+	public void clearCache(Badge badge) {
+		EntityCacheUtil.removeResult(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+			BadgeImpl.class, badge.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
-	public void clearCache(List<Garden> gardens) {
+	public void clearCache(List<Badge> badges) {
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (Garden garden : gardens) {
-			EntityCacheUtil.removeResult(GardenModelImpl.ENTITY_CACHE_ENABLED,
-				GardenImpl.class, garden.getPrimaryKey());
+		for (Badge badge : badges) {
+			EntityCacheUtil.removeResult(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+				BadgeImpl.class, badge.getPrimaryKey());
 		}
 	}
 
 	/**
-	 * Creates a new garden with the primary key. Does not add the garden to the database.
+	 * Creates a new badge with the primary key. Does not add the badge to the database.
 	 *
-	 * @param gardenId the primary key for the new garden
-	 * @return the new garden
+	 * @param badgeId the primary key for the new badge
+	 * @return the new badge
 	 */
-	public Garden create(long gardenId) {
-		Garden garden = new GardenImpl();
+	public Badge create(long badgeId) {
+		Badge badge = new BadgeImpl();
 
-		garden.setNew(true);
-		garden.setPrimaryKey(gardenId);
+		badge.setNew(true);
+		badge.setPrimaryKey(badgeId);
 
-		return garden;
+		return badge;
 	}
 
 	/**
-	 * Removes the garden with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the badge with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param gardenId the primary key of the garden
-	 * @return the garden that was removed
-	 * @throws net.sareweb.barazkide.NoSuchGardenException if a garden with the primary key could not be found
+	 * @param badgeId the primary key of the badge
+	 * @return the badge that was removed
+	 * @throws net.sareweb.barazkide.NoSuchBadgeException if a badge with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Garden remove(long gardenId)
-		throws NoSuchGardenException, SystemException {
-		return remove(Long.valueOf(gardenId));
+	public Badge remove(long badgeId)
+		throws NoSuchBadgeException, SystemException {
+		return remove(Long.valueOf(badgeId));
 	}
 
 	/**
-	 * Removes the garden with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the badge with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the garden
-	 * @return the garden that was removed
-	 * @throws net.sareweb.barazkide.NoSuchGardenException if a garden with the primary key could not be found
+	 * @param primaryKey the primary key of the badge
+	 * @return the badge that was removed
+	 * @throws net.sareweb.barazkide.NoSuchBadgeException if a badge with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Garden remove(Serializable primaryKey)
-		throws NoSuchGardenException, SystemException {
+	public Badge remove(Serializable primaryKey)
+		throws NoSuchBadgeException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Garden garden = (Garden)session.get(GardenImpl.class, primaryKey);
+			Badge badge = (Badge)session.get(BadgeImpl.class, primaryKey);
 
-			if (garden == null) {
+			if (badge == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchGardenException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				throw new NoSuchBadgeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
 					primaryKey);
 			}
 
-			return remove(garden);
+			return remove(badge);
 		}
-		catch (NoSuchGardenException nsee) {
+		catch (NoSuchBadgeException nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -231,15 +230,15 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 	}
 
 	@Override
-	protected Garden removeImpl(Garden garden) throws SystemException {
-		garden = toUnwrappedModel(garden);
+	protected Badge removeImpl(Badge badge) throws SystemException {
+		badge = toUnwrappedModel(badge);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, garden);
+			BatchSessionUtil.delete(session, badge);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -248,26 +247,26 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 			closeSession(session);
 		}
 
-		clearCache(garden);
+		clearCache(badge);
 
-		return garden;
+		return badge;
 	}
 
 	@Override
-	public Garden updateImpl(net.sareweb.barazkide.model.Garden garden,
+	public Badge updateImpl(net.sareweb.barazkide.model.Badge badge,
 		boolean merge) throws SystemException {
-		garden = toUnwrappedModel(garden);
+		badge = toUnwrappedModel(badge);
 
-		boolean isNew = garden.isNew();
+		boolean isNew = badge.isNew();
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, garden, merge);
+			BatchSessionUtil.update(session, badge, merge);
 
-			garden.setNew(false);
+			badge.setNew(false);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -282,104 +281,98 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
-		EntityCacheUtil.putResult(GardenModelImpl.ENTITY_CACHE_ENABLED,
-			GardenImpl.class, garden.getPrimaryKey(), garden);
+		EntityCacheUtil.putResult(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+			BadgeImpl.class, badge.getPrimaryKey(), badge);
 
-		return garden;
+		return badge;
 	}
 
-	protected Garden toUnwrappedModel(Garden garden) {
-		if (garden instanceof GardenImpl) {
-			return garden;
+	protected Badge toUnwrappedModel(Badge badge) {
+		if (badge instanceof BadgeImpl) {
+			return badge;
 		}
 
-		GardenImpl gardenImpl = new GardenImpl();
+		BadgeImpl badgeImpl = new BadgeImpl();
 
-		gardenImpl.setNew(garden.isNew());
-		gardenImpl.setPrimaryKey(garden.getPrimaryKey());
+		badgeImpl.setNew(badge.isNew());
+		badgeImpl.setPrimaryKey(badge.getPrimaryKey());
 
-		gardenImpl.setGardenId(garden.getGardenId());
-		gardenImpl.setGardenFolderId(garden.getGardenFolderId());
-		gardenImpl.setGardenImageId(garden.getGardenImageId());
-		gardenImpl.setOwnerUserId(garden.getOwnerUserId());
-		gardenImpl.setCreateDate(garden.getCreateDate());
-		gardenImpl.setModifiedDate(garden.getModifiedDate());
-		gardenImpl.setName(garden.getName());
-		gardenImpl.setComment(garden.getComment());
-		gardenImpl.setLat(garden.getLat());
-		gardenImpl.setLng(garden.getLng());
-		gardenImpl.setImageTitle(garden.getImageTitle());
+		badgeImpl.setBadgeId(badge.getBadgeId());
+		badgeImpl.setBadgeType(badge.getBadgeType());
+		badgeImpl.setBadgeTextKey(badge.getBadgeTextKey());
+		badgeImpl.setBadgeImageUrl(badge.getBadgeImageUrl());
+		badgeImpl.setCreateDate(badge.getCreateDate());
 
-		return gardenImpl;
+		return badgeImpl;
 	}
 
 	/**
-	 * Returns the garden with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the badge with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the garden
-	 * @return the garden
-	 * @throws com.liferay.portal.NoSuchModelException if a garden with the primary key could not be found
+	 * @param primaryKey the primary key of the badge
+	 * @return the badge
+	 * @throws com.liferay.portal.NoSuchModelException if a badge with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Garden findByPrimaryKey(Serializable primaryKey)
+	public Badge findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchModelException, SystemException {
 		return findByPrimaryKey(((Long)primaryKey).longValue());
 	}
 
 	/**
-	 * Returns the garden with the primary key or throws a {@link net.sareweb.barazkide.NoSuchGardenException} if it could not be found.
+	 * Returns the badge with the primary key or throws a {@link net.sareweb.barazkide.NoSuchBadgeException} if it could not be found.
 	 *
-	 * @param gardenId the primary key of the garden
-	 * @return the garden
-	 * @throws net.sareweb.barazkide.NoSuchGardenException if a garden with the primary key could not be found
+	 * @param badgeId the primary key of the badge
+	 * @return the badge
+	 * @throws net.sareweb.barazkide.NoSuchBadgeException if a badge with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Garden findByPrimaryKey(long gardenId)
-		throws NoSuchGardenException, SystemException {
-		Garden garden = fetchByPrimaryKey(gardenId);
+	public Badge findByPrimaryKey(long badgeId)
+		throws NoSuchBadgeException, SystemException {
+		Badge badge = fetchByPrimaryKey(badgeId);
 
-		if (garden == null) {
+		if (badge == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + gardenId);
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + badgeId);
 			}
 
-			throw new NoSuchGardenException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				gardenId);
+			throw new NoSuchBadgeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				badgeId);
 		}
 
-		return garden;
+		return badge;
 	}
 
 	/**
-	 * Returns the garden with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the badge with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the garden
-	 * @return the garden, or <code>null</code> if a garden with the primary key could not be found
+	 * @param primaryKey the primary key of the badge
+	 * @return the badge, or <code>null</code> if a badge with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Garden fetchByPrimaryKey(Serializable primaryKey)
+	public Badge fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
 		return fetchByPrimaryKey(((Long)primaryKey).longValue());
 	}
 
 	/**
-	 * Returns the garden with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the badge with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param gardenId the primary key of the garden
-	 * @return the garden, or <code>null</code> if a garden with the primary key could not be found
+	 * @param badgeId the primary key of the badge
+	 * @return the badge, or <code>null</code> if a badge with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Garden fetchByPrimaryKey(long gardenId) throws SystemException {
-		Garden garden = (Garden)EntityCacheUtil.getResult(GardenModelImpl.ENTITY_CACHE_ENABLED,
-				GardenImpl.class, gardenId);
+	public Badge fetchByPrimaryKey(long badgeId) throws SystemException {
+		Badge badge = (Badge)EntityCacheUtil.getResult(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+				BadgeImpl.class, badgeId);
 
-		if (garden == _nullGarden) {
+		if (badge == _nullBadge) {
 			return null;
 		}
 
-		if (garden == null) {
+		if (badge == null) {
 			Session session = null;
 
 			boolean hasException = false;
@@ -387,8 +380,8 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 			try {
 				session = openSession();
 
-				garden = (Garden)session.get(GardenImpl.class,
-						Long.valueOf(gardenId));
+				badge = (Badge)session.get(BadgeImpl.class,
+						Long.valueOf(badgeId));
 			}
 			catch (Exception e) {
 				hasException = true;
@@ -396,61 +389,61 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 				throw processException(e);
 			}
 			finally {
-				if (garden != null) {
-					cacheResult(garden);
+				if (badge != null) {
+					cacheResult(badge);
 				}
 				else if (!hasException) {
-					EntityCacheUtil.putResult(GardenModelImpl.ENTITY_CACHE_ENABLED,
-						GardenImpl.class, gardenId, _nullGarden);
+					EntityCacheUtil.putResult(BadgeModelImpl.ENTITY_CACHE_ENABLED,
+						BadgeImpl.class, badgeId, _nullBadge);
 				}
 
 				closeSession(session);
 			}
 		}
 
-		return garden;
+		return badge;
 	}
 
 	/**
-	 * Returns all the gardens.
+	 * Returns all the badges.
 	 *
-	 * @return the gardens
+	 * @return the badges
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Garden> findAll() throws SystemException {
+	public List<Badge> findAll() throws SystemException {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the gardens.
+	 * Returns a range of all the badges.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of gardens
-	 * @param end the upper bound of the range of gardens (not inclusive)
-	 * @return the range of gardens
+	 * @param start the lower bound of the range of badges
+	 * @param end the upper bound of the range of badges (not inclusive)
+	 * @return the range of badges
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Garden> findAll(int start, int end) throws SystemException {
+	public List<Badge> findAll(int start, int end) throws SystemException {
 		return findAll(start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the gardens.
+	 * Returns an ordered range of all the badges.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of gardens
-	 * @param end the upper bound of the range of gardens (not inclusive)
+	 * @param start the lower bound of the range of badges
+	 * @param end the upper bound of the range of badges (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of gardens
+	 * @return the ordered range of badges
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Garden> findAll(int start, int end,
+	public List<Badge> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = new Object[] { start, end, orderByComparator };
@@ -465,7 +458,7 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Garden> list = (List<Garden>)FinderCacheUtil.getResult(finderPath,
+		List<Badge> list = (List<Badge>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -476,7 +469,7 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 				query = new StringBundler(2 +
 						(orderByComparator.getOrderByFields().length * 3));
 
-				query.append(_SQL_SELECT_GARDEN);
+				query.append(_SQL_SELECT_BADGE);
 
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
 					orderByComparator);
@@ -484,7 +477,7 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_GARDEN.concat(GardenModelImpl.ORDER_BY_JPQL);
+				sql = _SQL_SELECT_BADGE;
 			}
 
 			Session session = null;
@@ -495,13 +488,13 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 				Query q = session.createQuery(sql);
 
 				if (orderByComparator == null) {
-					list = (List<Garden>)QueryUtil.list(q, getDialect(), start,
+					list = (List<Badge>)QueryUtil.list(q, getDialect(), start,
 							end, false);
 
 					Collections.sort(list);
 				}
 				else {
-					list = (List<Garden>)QueryUtil.list(q, getDialect(), start,
+					list = (List<Badge>)QueryUtil.list(q, getDialect(), start,
 							end);
 				}
 			}
@@ -526,20 +519,20 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 	}
 
 	/**
-	 * Removes all the gardens from the database.
+	 * Removes all the badges from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void removeAll() throws SystemException {
-		for (Garden garden : findAll()) {
-			remove(garden);
+		for (Badge badge : findAll()) {
+			remove(badge);
 		}
 	}
 
 	/**
-	 * Returns the number of gardens.
+	 * Returns the number of badges.
 	 *
-	 * @return the number of gardens
+	 * @return the number of badges
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
@@ -552,7 +545,7 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_GARDEN);
+				Query q = session.createQuery(_SQL_COUNT_BADGE);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -575,19 +568,19 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 	}
 
 	/**
-	 * Initializes the garden persistence.
+	 * Initializes the badge persistence.
 	 */
 	public void afterPropertiesSet() {
 		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
 					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.net.sareweb.barazkide.model.Garden")));
+						"value.object.listener.net.sareweb.barazkide.model.Badge")));
 
 		if (listenerClassNames.length > 0) {
 			try {
-				List<ModelListener<Garden>> listenersList = new ArrayList<ModelListener<Garden>>();
+				List<ModelListener<Badge>> listenersList = new ArrayList<ModelListener<Badge>>();
 
 				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<Garden>)InstanceFactory.newInstance(
+					listenersList.add((ModelListener<Badge>)InstanceFactory.newInstance(
 							listenerClassName));
 				}
 
@@ -600,7 +593,7 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(GardenImpl.class.getName());
+		EntityCacheUtil.removeCache(BadgeImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
@@ -625,28 +618,28 @@ public class GardenPersistenceImpl extends BasePersistenceImpl<Garden>
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private static final String _SQL_SELECT_GARDEN = "SELECT garden FROM Garden garden";
-	private static final String _SQL_COUNT_GARDEN = "SELECT COUNT(garden) FROM Garden garden";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "garden.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Garden exists with the primary key ";
+	private static final String _SQL_SELECT_BADGE = "SELECT badge FROM Badge badge";
+	private static final String _SQL_COUNT_BADGE = "SELECT COUNT(badge) FROM Badge badge";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "badge.";
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Badge exists with the primary key ";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(GardenPersistenceImpl.class);
-	private static Garden _nullGarden = new GardenImpl() {
+	private static Log _log = LogFactoryUtil.getLog(BadgePersistenceImpl.class);
+	private static Badge _nullBadge = new BadgeImpl() {
 			@Override
 			public Object clone() {
 				return this;
 			}
 
 			@Override
-			public CacheModel<Garden> toCacheModel() {
-				return _nullGardenCacheModel;
+			public CacheModel<Badge> toCacheModel() {
+				return _nullBadgeCacheModel;
 			}
 		};
 
-	private static CacheModel<Garden> _nullGardenCacheModel = new CacheModel<Garden>() {
-			public Garden toEntityModel() {
-				return _nullGarden;
+	private static CacheModel<Badge> _nullBadgeCacheModel = new CacheModel<Badge>() {
+			public Badge toEntityModel() {
+				return _nullBadge;
 			}
 		};
 }

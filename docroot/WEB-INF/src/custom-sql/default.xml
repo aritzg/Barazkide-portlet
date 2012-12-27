@@ -4,4 +4,5 @@
 	<sql file="custom-sql/garden.xml" />
 	<sql file="custom-sql/membership.xml" />
 	<sql file="custom-sql/rating.xml" />
+	<sql file="custom-sql/badge.xml" />
 </custom-sql>

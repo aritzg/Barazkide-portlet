@@ -1884,12 +1884,16 @@ public class MembershipPersistenceImpl extends BasePersistenceImpl<Membership>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = BadgePersistence.class)
+	protected BadgePersistence badgePersistence;
 	@BeanReference(type = EventPersistence.class)
 	protected EventPersistence eventPersistence;
 	@BeanReference(type = FollowingPersistence.class)
 	protected FollowingPersistence followingPersistence;
 	@BeanReference(type = GardenPersistence.class)
 	protected GardenPersistence gardenPersistence;
+	@BeanReference(type = GardenBadgePersistence.class)
+	protected GardenBadgePersistence gardenBadgePersistence;
 	@BeanReference(type = GardenImagePersistence.class)
 	protected GardenImagePersistence gardenImagePersistence;
 	@BeanReference(type = MembershipPersistence.class)

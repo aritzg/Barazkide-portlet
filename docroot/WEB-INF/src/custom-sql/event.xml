@@ -18,6 +18,8 @@
     	Barazkide_Following.userId = ?
     	AND
     	Barazkide_Event.createDate < ?
+    	AND
+    	Barazkide_Event.eventType LIKE ? 
 
 	ORDER BY
 		Barazkide_Event.createDate DESC
@@ -41,6 +43,8 @@
     	Barazkide_Following.userId = ?
     	AND
     	Barazkide_Event.createDate > ?
+    	AND
+    	Barazkide_Event.eventType LIKE ?
 
 	ORDER BY
 		Barazkide_Event.createDate DESC
@@ -56,6 +60,8 @@
     	Barazkide_Event.gardenId = ?
     	AND
     	Barazkide_Event.createDate < ?
+    	AND
+    	Barazkide_Event.eventType LIKE ?
 
 	ORDER BY
 		Barazkide_Event.createDate DESC
@@ -71,6 +77,8 @@
     	Barazkide_Event.gardenId = ?
     	AND
     	Barazkide_Event.createDate > ?
+    	AND
+    	Barazkide_Event.eventType LIKE ?
 
 	ORDER BY
 		Barazkide_Event.createDate DESC

@@ -30,10 +30,13 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 
 import net.sareweb.barazkide.model.Garden;
+import net.sareweb.barazkide.service.BadgeLocalService;
+import net.sareweb.barazkide.service.BadgeService;
 import net.sareweb.barazkide.service.EventLocalService;
 import net.sareweb.barazkide.service.EventService;
 import net.sareweb.barazkide.service.FollowingLocalService;
 import net.sareweb.barazkide.service.FollowingService;
+import net.sareweb.barazkide.service.GardenBadgeLocalService;
 import net.sareweb.barazkide.service.GardenImageLocalService;
 import net.sareweb.barazkide.service.GardenImageService;
 import net.sareweb.barazkide.service.GardenLocalService;
@@ -42,9 +45,12 @@ import net.sareweb.barazkide.service.MembershipLocalService;
 import net.sareweb.barazkide.service.MembershipService;
 import net.sareweb.barazkide.service.RatingLocalService;
 import net.sareweb.barazkide.service.RatingService;
+import net.sareweb.barazkide.service.persistence.BadgeFinder;
+import net.sareweb.barazkide.service.persistence.BadgePersistence;
 import net.sareweb.barazkide.service.persistence.EventFinder;
 import net.sareweb.barazkide.service.persistence.EventPersistence;
 import net.sareweb.barazkide.service.persistence.FollowingPersistence;
+import net.sareweb.barazkide.service.persistence.GardenBadgePersistence;
 import net.sareweb.barazkide.service.persistence.GardenFinder;
 import net.sareweb.barazkide.service.persistence.GardenImagePersistence;
 import net.sareweb.barazkide.service.persistence.GardenPersistence;
@@ -74,6 +80,78 @@ public abstract class GardenServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link net.sareweb.barazkide.service.GardenServiceUtil} to access the garden remote service.
 	 */
+
+	/**
+	 * Returns the badge local service.
+	 *
+	 * @return the badge local service
+	 */
+	public BadgeLocalService getBadgeLocalService() {
+		return badgeLocalService;
+	}
+
+	/**
+	 * Sets the badge local service.
+	 *
+	 * @param badgeLocalService the badge local service
+	 */
+	public void setBadgeLocalService(BadgeLocalService badgeLocalService) {
+		this.badgeLocalService = badgeLocalService;
+	}
+
+	/**
+	 * Returns the badge remote service.
+	 *
+	 * @return the badge remote service
+	 */
+	public BadgeService getBadgeService() {
+		return badgeService;
+	}
+
+	/**
+	 * Sets the badge remote service.
+	 *
+	 * @param badgeService the badge remote service
+	 */
+	public void setBadgeService(BadgeService badgeService) {
+		this.badgeService = badgeService;
+	}
+
+	/**
+	 * Returns the badge persistence.
+	 *
+	 * @return the badge persistence
+	 */
+	public BadgePersistence getBadgePersistence() {
+		return badgePersistence;
+	}
+
+	/**
+	 * Sets the badge persistence.
+	 *
+	 * @param badgePersistence the badge persistence
+	 */
+	public void setBadgePersistence(BadgePersistence badgePersistence) {
+		this.badgePersistence = badgePersistence;
+	}
+
+	/**
+	 * Returns the badge finder.
+	 *
+	 * @return the badge finder
+	 */
+	public BadgeFinder getBadgeFinder() {
+		return badgeFinder;
+	}
+
+	/**
+	 * Sets the badge finder.
+	 *
+	 * @param badgeFinder the badge finder
+	 */
+	public void setBadgeFinder(BadgeFinder badgeFinder) {
+		this.badgeFinder = badgeFinder;
+	}
 
 	/**
 	 * Returns the event local service.
@@ -273,6 +351,44 @@ public abstract class GardenServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setGardenFinder(GardenFinder gardenFinder) {
 		this.gardenFinder = gardenFinder;
+	}
+
+	/**
+	 * Returns the garden badge local service.
+	 *
+	 * @return the garden badge local service
+	 */
+	public GardenBadgeLocalService getGardenBadgeLocalService() {
+		return gardenBadgeLocalService;
+	}
+
+	/**
+	 * Sets the garden badge local service.
+	 *
+	 * @param gardenBadgeLocalService the garden badge local service
+	 */
+	public void setGardenBadgeLocalService(
+		GardenBadgeLocalService gardenBadgeLocalService) {
+		this.gardenBadgeLocalService = gardenBadgeLocalService;
+	}
+
+	/**
+	 * Returns the garden badge persistence.
+	 *
+	 * @return the garden badge persistence
+	 */
+	public GardenBadgePersistence getGardenBadgePersistence() {
+		return gardenBadgePersistence;
+	}
+
+	/**
+	 * Sets the garden badge persistence.
+	 *
+	 * @param gardenBadgePersistence the garden badge persistence
+	 */
+	public void setGardenBadgePersistence(
+		GardenBadgePersistence gardenBadgePersistence) {
+		this.gardenBadgePersistence = gardenBadgePersistence;
 	}
 
 	/**
@@ -660,6 +776,14 @@ public abstract class GardenServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
+	@BeanReference(type = BadgeLocalService.class)
+	protected BadgeLocalService badgeLocalService;
+	@BeanReference(type = BadgeService.class)
+	protected BadgeService badgeService;
+	@BeanReference(type = BadgePersistence.class)
+	protected BadgePersistence badgePersistence;
+	@BeanReference(type = BadgeFinder.class)
+	protected BadgeFinder badgeFinder;
 	@BeanReference(type = EventLocalService.class)
 	protected EventLocalService eventLocalService;
 	@BeanReference(type = EventService.class)
@@ -682,6 +806,10 @@ public abstract class GardenServiceBaseImpl extends BaseServiceImpl
 	protected GardenPersistence gardenPersistence;
 	@BeanReference(type = GardenFinder.class)
 	protected GardenFinder gardenFinder;
+	@BeanReference(type = GardenBadgeLocalService.class)
+	protected GardenBadgeLocalService gardenBadgeLocalService;
+	@BeanReference(type = GardenBadgePersistence.class)
+	protected GardenBadgePersistence gardenBadgePersistence;
 	@BeanReference(type = GardenImageLocalService.class)
 	protected GardenImageLocalService gardenImageLocalService;
 	@BeanReference(type = GardenImageService.class)

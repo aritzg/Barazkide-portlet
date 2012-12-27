@@ -14,33 +14,33 @@
 
 package net.sareweb.barazkide.service.base;
 
-import net.sareweb.barazkide.service.RatingLocalServiceUtil;
+import net.sareweb.barazkide.service.BadgeLocalServiceUtil;
 
 import java.util.Arrays;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RatingLocalServiceClpInvoker {
-	public RatingLocalServiceClpInvoker() {
-		_methodName0 = "addRating";
+public class BadgeLocalServiceClpInvoker {
+	public BadgeLocalServiceClpInvoker() {
+		_methodName0 = "addBadge";
 
 		_methodParameterTypes0 = new String[] {
-				"net.sareweb.barazkide.model.Rating"
+				"net.sareweb.barazkide.model.Badge"
 			};
 
-		_methodName1 = "createRating";
+		_methodName1 = "createBadge";
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "deleteRating";
+		_methodName2 = "deleteBadge";
 
 		_methodParameterTypes2 = new String[] { "long" };
 
-		_methodName3 = "deleteRating";
+		_methodName3 = "deleteBadge";
 
 		_methodParameterTypes3 = new String[] {
-				"net.sareweb.barazkide.model.Rating"
+				"net.sareweb.barazkide.model.Badge"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -72,11 +72,11 @@ public class RatingLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.dao.orm.DynamicQuery"
 			};
 
-		_methodName9 = "fetchRating";
+		_methodName9 = "fetchBadge";
 
 		_methodParameterTypes9 = new String[] { "long" };
 
-		_methodName10 = "getRating";
+		_methodName10 = "getBadge";
 
 		_methodParameterTypes10 = new String[] { "long" };
 
@@ -84,24 +84,24 @@ public class RatingLocalServiceClpInvoker {
 
 		_methodParameterTypes11 = new String[] { "java.io.Serializable" };
 
-		_methodName12 = "getRatings";
+		_methodName12 = "getBadges";
 
 		_methodParameterTypes12 = new String[] { "int", "int" };
 
-		_methodName13 = "getRatingsCount";
+		_methodName13 = "getBadgesCount";
 
 		_methodParameterTypes13 = new String[] {  };
 
-		_methodName14 = "updateRating";
+		_methodName14 = "updateBadge";
 
 		_methodParameterTypes14 = new String[] {
-				"net.sareweb.barazkide.model.Rating"
+				"net.sareweb.barazkide.model.Badge"
 			};
 
-		_methodName15 = "updateRating";
+		_methodName15 = "updateBadge";
 
 		_methodParameterTypes15 = new String[] {
-				"net.sareweb.barazkide.model.Rating", "boolean"
+				"net.sareweb.barazkide.model.Badge", "boolean"
 			};
 
 		_methodName88 = "getBeanIdentifier";
@@ -117,44 +117,44 @@ public class RatingLocalServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName0.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
-			return RatingLocalServiceUtil.addRating((net.sareweb.barazkide.model.Rating)arguments[0]);
+			return BadgeLocalServiceUtil.addBadge((net.sareweb.barazkide.model.Badge)arguments[0]);
 		}
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return RatingLocalServiceUtil.createRating(((Long)arguments[0]).longValue());
+			return BadgeLocalServiceUtil.createBadge(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return RatingLocalServiceUtil.deleteRating(((Long)arguments[0]).longValue());
+			return BadgeLocalServiceUtil.deleteBadge(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
-			return RatingLocalServiceUtil.deleteRating((net.sareweb.barazkide.model.Rating)arguments[0]);
+			return BadgeLocalServiceUtil.deleteBadge((net.sareweb.barazkide.model.Badge)arguments[0]);
 		}
 
 		if (_methodName4.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
-			return RatingLocalServiceUtil.dynamicQuery();
+			return BadgeLocalServiceUtil.dynamicQuery();
 		}
 
 		if (_methodName5.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
-			return RatingLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return BadgeLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName6.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
-			return RatingLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return BadgeLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName7.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
-			return RatingLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return BadgeLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
@@ -162,54 +162,54 @@ public class RatingLocalServiceClpInvoker {
 
 		if (_methodName8.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
-			return RatingLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return BadgeLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName9.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
-			return RatingLocalServiceUtil.fetchRating(((Long)arguments[0]).longValue());
+			return BadgeLocalServiceUtil.fetchBadge(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return RatingLocalServiceUtil.getRating(((Long)arguments[0]).longValue());
+			return BadgeLocalServiceUtil.getBadge(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return RatingLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
+			return BadgeLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
 		}
 
 		if (_methodName12.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-			return RatingLocalServiceUtil.getRatings(((Integer)arguments[0]).intValue(),
+			return BadgeLocalServiceUtil.getBadges(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName13.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-			return RatingLocalServiceUtil.getRatingsCount();
+			return BadgeLocalServiceUtil.getBadgesCount();
 		}
 
 		if (_methodName14.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-			return RatingLocalServiceUtil.updateRating((net.sareweb.barazkide.model.Rating)arguments[0]);
+			return BadgeLocalServiceUtil.updateBadge((net.sareweb.barazkide.model.Badge)arguments[0]);
 		}
 
 		if (_methodName15.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-			return RatingLocalServiceUtil.updateRating((net.sareweb.barazkide.model.Rating)arguments[0],
+			return BadgeLocalServiceUtil.updateBadge((net.sareweb.barazkide.model.Badge)arguments[0],
 				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName88.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
-			return RatingLocalServiceUtil.getBeanIdentifier();
+			return BadgeLocalServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName89.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-			RatingLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			BadgeLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

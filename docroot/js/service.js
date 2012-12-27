@@ -1,6 +1,13 @@
 Liferay.Service.register("Liferay.Service.Barazkide", "net.sareweb.barazkide.service", "Barazkide-portlet");
 
 Liferay.Service.registerClass(
+	Liferay.Service.Barazkide, "Badge",
+	{
+		getGardenBadges: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Barazkide, "Event",
 	{
 		addEvent: true,

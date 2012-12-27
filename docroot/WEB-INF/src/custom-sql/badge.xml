@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql
+		id="net.sareweb.barazkide.service.persistence.BadgeFinder.getGardenBadges">
+	<![CDATA[
+	SELECT Barazkide_Badge.*
+    FROM 
+    	Barazkide_Badge
+    jOIN
+    	Barazkide_GardenBadge
+    ON
+    	Barazkide_Badge.badgeId=Barazkide_GardenBadge.badgeId
+    WHERE
+    	Barazkide_GardenBadge.gardenId = ?
+    ORDER BY
+    	Barazkide_GardenBadge.obtainedDate DESC
+    ]]>
+	</sql>
+
+</custom-sql>
