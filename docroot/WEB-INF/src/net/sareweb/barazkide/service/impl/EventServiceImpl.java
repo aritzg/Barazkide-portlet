@@ -77,6 +77,14 @@ public class EventServiceImpl extends EventServiceBaseImpl {
 		return eventFinder.findEventsInGardenNewerThanDate(gardenId, eventType, eventDate, blockSize);
 	}
 	
+	public List<Event> findImageTypeEventsInGardenOlderThanDate(long gardenId, long eventDate, int blockSize) throws SystemException{
+		return eventFinder.findImageTypeEventsInGardenOlderThanDate(gardenId, eventDate, blockSize);
+	}
+	
+	public List<Event> findImageTypeEventsInGardenNewerThanDate(long gardenId, long eventDate, int blockSize) throws SystemException{
+		return eventFinder.findImageTypeEventsInGardenNewerThanDate(gardenId, eventDate, blockSize);
+	}
+	
 	private String decode(String codedString){
 		try {
 			return URLDecoder.decode(codedString, "UTF-8");

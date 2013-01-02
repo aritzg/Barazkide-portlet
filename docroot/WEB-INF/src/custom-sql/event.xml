@@ -84,4 +84,40 @@
 		Barazkide_Event.createDate DESC
     ]]>
 	</sql>
+	<sql
+		id="net.sareweb.barazkide.service.persistence.EventFinder.findImageTypeEventsInGardenOlderThanDate">
+	<![CDATA[
+	SELECT Barazkide_Event.*
+    FROM
+    	Barazkide_Event
+    WHERE
+    	Barazkide_Event.gardenId = ?
+    	AND
+    	Barazkide_Event.createDate < ?
+    	AND
+    	Barazkide_Event.imageTitle IS NOT NULL
+    	AND
+    	(Barazkide_Event.eventType='IMAGE' OR Barazkide_Event.eventType='COMMENT')
+	ORDER BY
+		Barazkide_Event.createDate DESC
+    ]]>
+	</sql>
+	<sql
+		id="net.sareweb.barazkide.service.persistence.EventFinder.findImageTypeEventsInGardenNewerThanDate">
+	<![CDATA[
+	SELECT Barazkide_Event.*
+    FROM
+    	Barazkide_Event
+    WHERE
+    	Barazkide_Event.gardenId = ?
+    	AND
+    	Barazkide_Event.createDate > ?
+    	AND
+    	Barazkide_Event.imageTitle IS NOT NULL
+    	AND
+    	(Barazkide_Event.eventType='IMAGE' OR Barazkide_Event.eventType='COMMENT')
+	ORDER BY
+		Barazkide_Event.createDate DESC
+    ]]>
+	</sql>
 </custom-sql>

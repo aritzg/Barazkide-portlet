@@ -14,7 +14,9 @@ Liferay.Service.registerClass(
 		findEventsInFollowedGardensOlderThanDate: true,
 		findEventsInFollowedGardensNewerThanDate: true,
 		findEventsInGardenOlderThanDate: true,
-		findEventsInGardenNewerThanDate: true
+		findEventsInGardenNewerThanDate: true,
+		findImageTypeEventsInGardenOlderThanDate: true,
+		findImageTypeEventsInGardenNewerThanDate: true
 	}
 );
 

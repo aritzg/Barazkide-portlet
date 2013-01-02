@@ -26,6 +26,10 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 			.getName() + ".findEventsInGardenOlderThanDate";
 	public static String FIND_EVENTS_IN_GARDEN_NEWER = EventFinder.class
 			.getName() + ".findEventsInGardenNewerThanDate";
+	public static String FIND_IMAGE_TYPE_EVENTS_IN_GARDEN_OLDER = EventFinder.class
+			.getName() + ".findImageTypeEventsInGardenOlderThanDate";
+	public static String FIND_IMAGE_TYPE_EVENTS_IN_GARDEN_NEWER = EventFinder.class
+			.getName() + ".findImageTypeEventsInGardenNewerThanDate";
 
 	public List<Event> findEventsInFollowedGardensOlderThanDate(long userId, String eventType, long followingDate, int blockSize) throws SystemException {
 
@@ -118,6 +122,52 @@ public class EventFinderImpl extends BasePersistenceImpl<Event> implements
 			qPos.add(new Date(eventDate));
 			if(eventType==null)eventType="";
 			qPos.add("%" + eventType + "%");
+
+			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
+		} catch (Exception e) {
+			throw new SystemException(e);
+		} finally {
+			closeSession(session);
+		}
+		return events;
+	}
+	
+	public List<Event> findImageTypeEventsInGardenOlderThanDate(long gardenId, long eventDate, int blockSize) throws SystemException {
+
+		List<Event> events = new ArrayList<Event>();
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_EVENTS_IN_GARDEN_OLDER);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addEntity("event", EventImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(gardenId);
+			qPos.add(new Date(eventDate));
+
+			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
+		} catch (Exception e) {
+			throw new SystemException(e);
+		} finally {
+			closeSession(session);
+		}
+		return events;
+	}
+	
+	public List<Event> findImageTypeEventsInGardenNewerThanDate(long gardenId, long eventDate, int blockSize) throws SystemException {
+
+		List<Event> events = new ArrayList<Event>();
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_EVENTS_IN_GARDEN_NEWER);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addEntity("event", EventImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(gardenId);
+			qPos.add(new Date(eventDate));
 
 			events = (List<Event>) QueryUtil.list(q, getDialect(), 0, blockSize);
 		} catch (Exception e) {

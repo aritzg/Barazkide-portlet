@@ -61,6 +61,14 @@ public class EventServiceClpInvoker {
 		_methodParameterTypes82 = new String[] {
 				"long", "java.lang.String", "long", "int"
 			};
+
+		_methodName83 = "findImageTypeEventsInGardenOlderThanDate";
+
+		_methodParameterTypes83 = new String[] { "long", "long", "int" };
+
+		_methodName84 = "findImageTypeEventsInGardenNewerThanDate";
+
+		_methodParameterTypes84 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -116,6 +124,20 @@ public class EventServiceClpInvoker {
 				((Integer)arguments[3]).intValue());
 		}
 
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+			return EventServiceUtil.findImageTypeEventsInGardenOlderThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName84.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
+			return EventServiceUtil.findImageTypeEventsInGardenNewerThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -133,4 +155,8 @@ public class EventServiceClpInvoker {
 	private String[] _methodParameterTypes81;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
+	private String _methodName84;
+	private String[] _methodParameterTypes84;
 }
