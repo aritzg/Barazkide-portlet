@@ -38,6 +38,7 @@ import net.sareweb.barazkide.service.EventLocalServiceUtil;
 import net.sareweb.barazkide.service.GardenLocalServiceUtil;
 import net.sareweb.barazkide.service.MembershipServiceUtil;
 import net.sareweb.barazkide.service.base.GardenServiceBaseImpl;
+import net.sareweb.barazkide.util.Constants;
 
 /**
  * The implementation of the garden remote service.
@@ -94,10 +95,27 @@ public class GardenServiceImpl extends GardenServiceBaseImpl {
 		Event event = EventLocalServiceUtil.createEvent(CounterLocalServiceUtil.increment());
 		event.setCreatorUserId(getGuestOrUserId());
 		event.setCreateDate(new Date());
-		event.setEventType("IMAGE");
+		event.setEventType(Constants.EVENT_TYPE_IMAGE);
 		event.setGardenId(gardenId);
 		event.setImageTitle(imageTitle);
 		event.setFolderId(garden.getGardenFolderId());
+		EventLocalServiceUtil.addEvent(event);
+		
+		return GardenLocalServiceUtil.updateGarden(garden);
+	}
+	
+	public Garden updateGardenLocation(long gardenId, double lat, double lng) throws PortalException, SystemException{
+		Garden garden = GardenLocalServiceUtil.getGarden(gardenId);
+		garden.setLat(lat);
+		garden.setLng(lng);
+		
+		Event event = EventLocalServiceUtil.createEvent(CounterLocalServiceUtil.increment());
+		event.setCreatorUserId(getGuestOrUserId());
+		event.setCreateDate(new Date());
+		event.setEventType(Constants.EVENT_TYPE_LOCATION);
+		event.setGardenId(gardenId);
+		event.setLat(lat);
+		event.setLng(lng);
 		EventLocalServiceUtil.addEvent(event);
 		
 		return GardenLocalServiceUtil.updateGarden(garden);

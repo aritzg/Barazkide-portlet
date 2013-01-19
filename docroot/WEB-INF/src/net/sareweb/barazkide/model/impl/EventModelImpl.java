@@ -72,11 +72,13 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			{ "destinationUserId", Types.BIGINT },
 			{ "folderId", Types.BIGINT },
 			{ "imageTitle", Types.VARCHAR },
+			{ "lat", Types.DOUBLE },
+			{ "lng", Types.DOUBLE },
 			{ "createDate", Types.TIMESTAMP },
 			{ "eventType", Types.VARCHAR },
 			{ "eventText", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Barazkide_Event (eventId LONG not null primary key,gardenId LONG,creatorUserId LONG,destinationUserId LONG,folderId LONG,imageTitle VARCHAR(75) null,createDate DATE null,eventType VARCHAR(75) null,eventText VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Barazkide_Event (eventId LONG not null primary key,gardenId LONG,creatorUserId LONG,destinationUserId LONG,folderId LONG,imageTitle VARCHAR(75) null,lat DOUBLE,lng DOUBLE,createDate DATE null,eventType VARCHAR(75) null,eventText VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Barazkide_Event";
 	public static final String ORDER_BY_JPQL = " ORDER BY event.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Barazkide_Event.createDate DESC";
@@ -113,6 +115,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		model.setDestinationUserId(soapModel.getDestinationUserId());
 		model.setFolderId(soapModel.getFolderId());
 		model.setImageTitle(soapModel.getImageTitle());
+		model.setLat(soapModel.getLat());
+		model.setLng(soapModel.getLng());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setEventType(soapModel.getEventType());
 		model.setEventText(soapModel.getEventText());
@@ -180,6 +184,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		attributes.put("destinationUserId", getDestinationUserId());
 		attributes.put("folderId", getFolderId());
 		attributes.put("imageTitle", getImageTitle());
+		attributes.put("lat", getLat());
+		attributes.put("lng", getLng());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("eventType", getEventType());
 		attributes.put("eventText", getEventText());
@@ -223,6 +229,18 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 		if (imageTitle != null) {
 			setImageTitle(imageTitle);
+		}
+
+		Double lat = (Double)attributes.get("lat");
+
+		if (lat != null) {
+			setLat(lat);
+		}
+
+		Double lng = (Double)attributes.get("lng");
+
+		if (lng != null) {
+			setLng(lng);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -334,6 +352,24 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	@JSON
+	public double getLat() {
+		return _lat;
+	}
+
+	public void setLat(double lat) {
+		_lat = lat;
+	}
+
+	@JSON
+	public double getLng() {
+		return _lng;
+	}
+
+	public void setLng(double lng) {
+		_lng = lng;
+	}
+
+	@JSON
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -410,6 +446,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		eventImpl.setDestinationUserId(getDestinationUserId());
 		eventImpl.setFolderId(getFolderId());
 		eventImpl.setImageTitle(getImageTitle());
+		eventImpl.setLat(getLat());
+		eventImpl.setLng(getLng());
 		eventImpl.setCreateDate(getCreateDate());
 		eventImpl.setEventType(getEventType());
 		eventImpl.setEventText(getEventText());
@@ -496,6 +534,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 			eventCacheModel.imageTitle = null;
 		}
 
+		eventCacheModel.lat = getLat();
+
+		eventCacheModel.lng = getLng();
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -526,7 +568,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{eventId=");
 		sb.append(getEventId());
@@ -540,6 +582,10 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(getFolderId());
 		sb.append(", imageTitle=");
 		sb.append(getImageTitle());
+		sb.append(", lat=");
+		sb.append(getLat());
+		sb.append(", lng=");
+		sb.append(getLng());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", eventType=");
@@ -552,7 +598,7 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("net.sareweb.barazkide.model.Event");
@@ -581,6 +627,14 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 		sb.append(
 			"<column><column-name>imageTitle</column-name><column-value><![CDATA[");
 		sb.append(getImageTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lat</column-name><column-value><![CDATA[");
+		sb.append(getLat());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lng</column-name><column-value><![CDATA[");
+		sb.append(getLng());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -614,6 +668,8 @@ public class EventModelImpl extends BaseModelImpl<Event> implements EventModel {
 	private String _destinationUserUuid;
 	private long _folderId;
 	private String _imageTitle;
+	private double _lat;
+	private double _lng;
 	private Date _createDate;
 	private String _eventType;
 	private String _eventText;

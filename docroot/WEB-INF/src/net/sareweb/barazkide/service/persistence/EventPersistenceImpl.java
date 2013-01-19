@@ -345,6 +345,8 @@ public class EventPersistenceImpl extends BasePersistenceImpl<Event>
 		eventImpl.setDestinationUserId(event.getDestinationUserId());
 		eventImpl.setFolderId(event.getFolderId());
 		eventImpl.setImageTitle(event.getImageTitle());
+		eventImpl.setLat(event.getLat());
+		eventImpl.setLng(event.getLng());
 		eventImpl.setCreateDate(event.getCreateDate());
 		eventImpl.setEventType(event.getEventType());
 		eventImpl.setEventText(event.getEventText());

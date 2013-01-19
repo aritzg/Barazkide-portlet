@@ -33,6 +33,7 @@ Liferay.Service.registerClass(
 	{
 		addGarden: true,
 		updateGardenImage: true,
+		updateGardenLocation: true,
 		getGardens: true,
 		getUserGardensFromDate: true,
 		getFollowedGardensOlderThanDate: true,

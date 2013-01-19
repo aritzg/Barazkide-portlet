@@ -29,6 +29,8 @@
 			<basic name="destinationUserId" />
 			<basic name="folderId" />
 			<basic name="imageTitle" />
+			<basic name="lat" />
+			<basic name="lng" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>

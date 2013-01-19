@@ -28,6 +28,8 @@
 		<property name="destinationUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="imageTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lat" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="lng" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="eventText" type="com.liferay.portal.dao.orm.hibernate.StringType" />

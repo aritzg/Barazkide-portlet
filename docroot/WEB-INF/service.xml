@@ -84,6 +84,8 @@
 		<column name="destinationUserId" type="long"/>
 		<column name="folderId" type="long"/>
 		<column name="imageTitle" type="String"/>
+		<column name="lat" type="double" />
+		<column name="lng" type="double" />
 		
 		<column name="createDate" type="Date" />
 		<column name="eventType" type="String"/>

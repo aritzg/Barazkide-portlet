@@ -42,29 +42,33 @@ public class GardenServiceClpInvoker {
 
 		_methodParameterTypes79 = new String[] { "long", "java.lang.String" };
 
-		_methodName80 = "getGardens";
+		_methodName80 = "updateGardenLocation";
 
-		_methodParameterTypes80 = new String[] {  };
+		_methodParameterTypes80 = new String[] { "long", "double", "double" };
 
-		_methodName81 = "getUserGardensFromDate";
+		_methodName81 = "getGardens";
 
-		_methodParameterTypes81 = new String[] { "long", "long", "boolean", "int" };
+		_methodParameterTypes81 = new String[] {  };
 
-		_methodName82 = "getFollowedGardensOlderThanDate";
+		_methodName82 = "getUserGardensFromDate";
 
-		_methodParameterTypes82 = new String[] { "long", "long", "int" };
+		_methodParameterTypes82 = new String[] { "long", "long", "boolean", "int" };
 
-		_methodName83 = "getFollowedGardensNewerThanDate";
+		_methodName83 = "getFollowedGardensOlderThanDate";
 
 		_methodParameterTypes83 = new String[] { "long", "long", "int" };
 
-		_methodName84 = "getParticipatingGardensOlderThanDate";
+		_methodName84 = "getFollowedGardensNewerThanDate";
 
 		_methodParameterTypes84 = new String[] { "long", "long", "int" };
 
-		_methodName85 = "getParticipatingGardensNewerThanDate";
+		_methodName85 = "getParticipatingGardensOlderThanDate";
 
 		_methodParameterTypes85 = new String[] { "long", "long", "int" };
+
+		_methodName86 = "getParticipatingGardensNewerThanDate";
+
+		_methodParameterTypes86 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -96,40 +100,47 @@ public class GardenServiceClpInvoker {
 
 		if (_methodName80.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
-			return GardenServiceUtil.getGardens();
+			return GardenServiceUtil.updateGardenLocation(((Long)arguments[0]).longValue(),
+				((Double)arguments[1]).doubleValue(),
+				((Double)arguments[2]).doubleValue());
 		}
 
 		if (_methodName81.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
+			return GardenServiceUtil.getGardens();
+		}
+
+		if (_methodName82.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
 			return GardenServiceUtil.getUserGardensFromDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName82.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
-			return GardenServiceUtil.getFollowedGardensOlderThanDate(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				((Integer)arguments[2]).intValue());
-		}
-
 		if (_methodName83.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return GardenServiceUtil.getFollowedGardensNewerThanDate(((Long)arguments[0]).longValue(),
+			return GardenServiceUtil.getFollowedGardensOlderThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName84.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return GardenServiceUtil.getParticipatingGardensOlderThanDate(((Long)arguments[0]).longValue(),
+			return GardenServiceUtil.getFollowedGardensNewerThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName85.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+			return GardenServiceUtil.getParticipatingGardensOlderThanDate(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName86.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
 			return GardenServiceUtil.getParticipatingGardensNewerThanDate(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
@@ -158,4 +169,6 @@ public class GardenServiceClpInvoker {
 	private String[] _methodParameterTypes84;
 	private String _methodName85;
 	private String[] _methodParameterTypes85;
+	private String _methodName86;
+	private String[] _methodParameterTypes86;
 }
